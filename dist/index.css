@@ -1,0 +1,8 @@
+body {
+    margin: 0;
+}
+
+.game-container {
+    width: 640px;
+    height: 480px;
+}

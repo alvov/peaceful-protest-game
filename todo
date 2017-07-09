@@ -1,0 +1,37 @@
+MVP
+- one level
+- loading screen
+- start screen
+- pause screen
+- end screen
+- protesters & cops
+- protesters: move, show/hide poster
+- cops: move
+- cops FOV: circle
+- points for showing poster timer
+- kill: disappear
+- mobile support
+- rollup/babel
+- graphics
+
+Cpx Prf Feature
+?   ?   multiple stages
+?   ?   obstacles (pathfinding)
+?   ?   passersby
+?   ?   cops in disguise
+?   ?   protesters: shout
+?   ?   protesters: distract
+?   ?   protesters: disguise
+?   ?   cops FOV: cone
+?   ?   points for passersby
+?   ?   extra points for photographers
+?   ?   extra points for position
+?   ?   rpg-like upgrades for points/shares
+?   ?   kill: prison bus
+?   ?   play for cops
+?   ?   sounds
+?   ?   music
+?   ?   level description
+?   ?   high score
+
+?   ?   phaser custom build
