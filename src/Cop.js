@@ -6,35 +6,54 @@ const ACTIONS = {
 const SPEED = 30;
 
 class Cop {
-    constructor({ game, x, y }) {
+    constructor({ game, x, y, FOV }) {
         this.game = game;
+
+        this.FOV = FOV;
+
         this.sprite = game.add.sprite(x, y, 'cop', 0);
         this.sprite.anchor.set(0.5);
 
         game.physics.arcade.enable(this.sprite);
 
-        this.wander();
         this.stayingTimeout = null;
+        this.target = null;
+
+        this.wander();
     }
 
     update() {
+        if (this.target) {
+            if (this.FOV.graphics.containsPoint(this.target.sprite.body.center)) {
+                this.moveTo(this.target.sprite.body.center);
+            } else {
+                this.wander();
+                this.target = null;
+            }
+        }
 
+        this.FOV.update({
+            x: this.sprite.body.center.x,
+            y: this.sprite.body.center.y,
+            angle: this.sprite.body.angle,
+            mode: this.target ? 'active' : 'normal'
+        });
     }
 
     wander() {
         this.sprite.body.onMoveComplete.removeAll();
         const nextAction = this.game.rnd.between(0, 1);
         switch (nextAction) {
-            case ACTIONS.walk: {
-                this.sprite.body.onMoveComplete.addOnce(this.wander, this);
-                this.moveTo(this.getNextCoords());
-            }
             case ACTIONS.stay:
                 this.stayingTimeout = setTimeout(() => {
                     this.wander();
                 }, this.game.rnd.between(1000, 3000));
-            default:
-                // do nothing
+                break;
+            case ACTIONS.walk: {
+                this.sprite.body.onMoveComplete.addOnce(this.wander, this);
+                this.moveTo(this.getNextCoords());
+                break;
+            }
         }
     }
 
@@ -48,6 +67,7 @@ class Cop {
 
     stopMoving() {
         this.sprite.body.stopMovement(true);
+        clearTimeout(this.stayingTimeout);
     }
 
     getNextCoords() {
@@ -64,6 +84,11 @@ class Cop {
             x = this.game.rnd.between(0, this.sprite.x);
         }
         return { x, y };
+    }
+
+    follow(target) {
+        this.target = target;
+        this.stopMoving();
     }
 }
 
