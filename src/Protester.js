@@ -1,78 +1,61 @@
-const SPEED = 80;
+import { SPEED_PROTESTER } from './constants.js';
+import Character from './Character.js';
 
-class Protester {
-    constructor({ game, x, y }) {
-        this.game = game;
-        this.sprite = game.add.sprite(x, y, 'protester', 0);
+class Protester extends Character {
+    constructor({ game, x, y, spriteKey = 'protester' }) {
+        super({ game });
+
+        this.sprite = this.game.add.sprite(x, y, spriteKey, 0);
+        this.sprite.mz = this;
         this.sprite.anchor.set(0.5);
+        this.sprite.scale.set(0.5);
         // this.sprite.crop(new Phaser.Rectangle(35, 45, 30, 46));
         this.sprite.inputEnabled = true;
         this.sprite.input.priorityID = 1;
-        this.sprite.events.onInputUp.add(this.handleClick, this);
 
         this.game.physics.arcade.enable(this.sprite);
         this.sprite.body.collideWorldBounds = true;
 
-        this.showPoster = false;
-        this.score = 0;
-        this.showedPosterAt = null;
+        this.posterSprite = this.sprite.addChild(this.game.make.sprite(-80, -120, 'poster', 0));
+        this.posterSprite.bringToTop();
+        this.posterSprite.exists = false;
 
-        // this.sprite.body.onMoveComplete.add(this.stopMoving, this);
+        this.showPoster = false;
+        this.speed = SPEED_PROTESTER;
+        this.stayingTimeout = null;
     }
 
     update() {
-        if (this.showPoster) {
-            this.sprite.frame = 1;
-        } else {
-            this.sprite.frame = 0;
-        }
-
-        if (this.showedPosterAt) {
-            this.flushScore();
-            this.showedPosterAt = Date.now();
-        }
+        this.posterSprite.exists = this.showPoster;
     }
 
-    handleClick() {
-        if (this.sprite.body.isMoving) {
-            this.stopMoving();
+    wander() {
+        this.sprite.body.onMoveComplete.removeAll();
+        const nextAction = this.game.rnd.between(0, 9);
+        if (nextAction === 0) {
+            this.stayingTimeout = setTimeout(() => {
+                this.wander();
+            }, this.game.rnd.between(1000, 3000));
+
+            this.togglePoster(true);
         } else {
-            this.togglePoster();
+            this.sprite.body.onMoveComplete.addOnce(this.wander, this);
+            this.moveTo(this.getNextCoords());
         }
     }
 
     togglePoster(on = !this.showPoster) {
-        if (on === this.showPoster) {
-            return;
-        }
-
-        // count score
-        if (on) {
-            this.showedPosterAt = Date.now();
-        } else {
-            this.flushScore();
-        }
-
         this.showPoster = on;
-    }
-
-    flushScore() {
-        this.score += Date.now() - this.showedPosterAt;
-        this.showedPosterAt = null;
     }
 
     moveTo({ x, y }) {
         this.togglePoster(false);
-
-        const distance = this.game.physics.arcade.distanceToXY(this.sprite, x, y);
-        const duration = distance / SPEED * 1000; // ms
-        const angle = this.game.math.radToDeg(this.game.physics.arcade.angleToXY(this.sprite, x, y));
-
-        this.sprite.body.moveTo(duration, distance, angle);
+        super.moveTo({ x, y });
     }
 
-    stopMoving() {
-        this.sprite.body.stopMovement(true);
+    kill() {
+        this.sprite.kill();
+        clearTimeout(this.stayingTimeout);
     }
 }
 

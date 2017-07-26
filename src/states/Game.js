@@ -1,19 +1,23 @@
+import Player from './../Player.js';
 import Protester from './../Protester.js';
 import Cop from './../Cop.js';
 import CopFOV from './../CopFOV.js';
-
-const COPS_COUNT = 3;
+import { COPS_COUNT, PROTESTERS_COUNT, WINNING_SCORE } from '../constants.js';
 
 class Game {
     preload() {
-        this.game.mz = {
+        this.mz = {
+            score: 0,
             eventHandler: null,
             objects: {
-                cops: [],
-                protester: null,
+                player: null,
                 textScore: null
             },
-            groups: {}
+            groups: {
+                protesters: null,
+                cops: null,
+                menu: null
+            }
         };
     }
 
@@ -23,83 +27,164 @@ class Game {
 
         this.game.add.image(0, 0, this.bitmap);
 
+        this.mz.groups.copsFOV = this.game.add.group();
+        this.mz.groups.cops = this.game.add.group();
+
         for (let i = 0; i < COPS_COUNT; i++) {
             const copFOV = new CopFOV({ game: this.game });
+            this.mz.groups.copsFOV.add(copFOV.graphics);
+
             const cop = new Cop({
                 game: this.game,
-                x: this.game.rnd.between(0, this.game.world.width),
-                y: this.game.rnd.between(0, this.game.world.height),
+                x: this.game.rnd.between(100, this.game.world.width - 100),
+                y: this.game.rnd.between(100, this.game.world.height - 100),
                 FOV: copFOV
             });
-            this.game.mz.objects.cops.push(cop);
+            this.mz.groups.cops.add(cop.sprite);
+            cop.wander();
         }
 
-        this.game.mz.objects.protester = new Protester({
+        this.mz.groups.protesters = this.game.add.group();
+        for (let i = 0; i < PROTESTERS_COUNT; i++) {
+            const protester = new Protester({
+                game: this.game,
+                x: this.game.rnd.between(100, this.game.world.width - 100),
+                y: this.game.rnd.between(100, this.game.world.height - 100)
+            });
+            this.mz.groups.protesters.add(protester.sprite);
+            protester.wander();
+        }
+
+        this.mz.objects.player = new Player({
             game: this.game,
             x: this.game.world.centerX,
             y: this.game.world.centerY
         });
 
-        this.game.mz.groups.menu = this.game.add.group();
-        this.game.mz.objects.textScore = this.game.add.text(
+        this.mz.groups.menu = this.game.add.group();
+        this.mz.objects.textScore = this.game.add.text(
             this.game.world.width - 10,
             20,
-            '0',
+            `${this.mz.objects.player.score} / ${WINNING_SCORE}`,
             {
                 font: '25px Arial',
                 fill: '#fff',
                 align: 'right'
             }
         );
-        this.game.mz.objects.textScore.anchor.set(1, 0.5);
-        this.game.mz.groups.menu.add(this.game.mz.objects.textScore);
+        this.mz.objects.textScore.anchor.set(1, 0.5);
+        this.mz.groups.menu.add(this.mz.objects.textScore);
 
         // click on field
-        this.game.mz.eventHandler = this.game.add.sprite(0, 0);
-        this.game.mz.eventHandler.fixedToCamera = true;
-        this.game.mz.eventHandler.scale.setTo(this.game.width, this.game.height);
-        this.game.mz.eventHandler.inputEnabled = true;
-        this.game.mz.eventHandler.input.priorityID = 0;
-        this.game.mz.eventHandler.events.onInputUp.add(this.handleClick, this);
+        this.mz.eventHandler = this.game.add.sprite(0, 0);
+        this.mz.eventHandler.fixedToCamera = true;
+        this.mz.eventHandler.scale.setTo(this.game.width, this.game.height);
+        this.mz.eventHandler.inputEnabled = true;
+        this.mz.eventHandler.input.priorityID = 0;
+        this.mz.eventHandler.events.onInputUp.add(this.handleClick, this);
     }
 
     update() {
-        // this.game.physics.arcade.overlap(
-        //     this.game.mz.protester.sprite,
-        //     this.game.mz.cops[0].sprite,
-        //     this.game.mz.cops[0].handleOverlap,
-        //     null,
-        //     this.game.mz.cops[0]
-        // );
-        this.game.mz.objects.protester.update();
+        this.mz.objects.player.update();
 
-        this.game.mz.objects.textScore.setText(Math.floor(this.game.mz.objects.protester.score / 1000));
+        this.mz.score = Math.floor(this.mz.objects.player.score / 1000);
 
-        for (let i = 0; i < this.game.mz.objects.cops.length; i++) {
-            const cop = this.game.mz.objects.cops[i];
+        this.mz.objects.textScore.setText(`${this.mz.score} / ${WINNING_SCORE}`);
+
+        this.mz.groups.protesters.forEach(sprite => {
+            sprite.mz.update();
+        });
+
+        this.mz.groups.cops.forEach(copSprite => {
+            const copFOV = copSprite.mz.FOV;
+            let target = null;
+            let distanceToTarget = Infinity;
             if (
-                this.game.mz.objects.protester.showPoster &&
-                cop.FOV.graphics.containsPoint(this.game.mz.objects.protester.sprite.body.center)
+                this.mz.objects.player.showPoster &&
+                copFOV.graphics.containsPoint(this.mz.objects.player.sprite.body.center)
             ) {
-                cop.follow(this.game.mz.objects.protester);
+                target = this.mz.objects.player.sprite;
+                distanceToTarget = this.game.physics.arcade.distanceBetween(copSprite, target);
             }
 
-            cop.update();
-        }
+            this.mz.groups.protesters.forEach(protesterSprite => {
+                if (!protesterSprite.exists) {
+                    return;
+                }
+                if (
+                    protesterSprite.mz.showPoster &&
+                    copFOV.graphics.containsPoint(protesterSprite.body.center)
+                ) {
+                    const distanceToProtester = this.game.physics.arcade.distanceBetween(copSprite, protesterSprite);
+                    if (distanceToProtester < distanceToTarget) {
+                        target = protesterSprite;
+                        distanceToTarget = distanceToProtester;
+                    }
+                }
+            });
+
+            if (target) {
+                copSprite.mz.follow(target);
+            }
+
+            copSprite.mz.update();
+        });
+
+        this.game.physics.arcade.overlap(
+            this.mz.groups.protesters,
+            this.mz.groups.cops,
+            ({ mz: protester }, { mz: cop }) => {
+                protester.kill();
+                cop.target = null;
+                cop.wander();
+            },
+            (protesterSprite, { mz: cop }) => {
+                return cop.target === protesterSprite;
+            }
+        );
+
+        this.game.physics.arcade.overlap(
+            this.mz.objects.player.sprite,
+            this.mz.groups.cops,
+            () => {
+                this.endGame();
+            },
+            (playerSprite, { mz: cop }) => {
+                return cop.target === playerSprite;
+            }
+        );
+
+        this.checkWin();
     }
 
     render() {
-        // this.game.debug.body(this.game.mz.objects.protester.sprite);
-        // for (let i = 0; i < this.game.mz.objects.cops.length; i++) {
-        //     this.game.debug.body(this.game.mz.objects.cops[i].sprite);
-        // }
+        // this.game.debug.body(this.mz.objects.player.sprite);
+        // this.mz.groups.cops.forEach(sprite => {
+        //     this.game.debug.body(sprite);
+        // });
+        // this.mz.groups.protesters.forEach(sprite => {
+        //     this.game.debug.body(sprite);
+        // });
     }
 
     handleClick(sprite, pointer) {
-        this.game.mz.objects.protester.moveTo({
+        this.mz.objects.player.moveTo({
             x: pointer.x,
             y: pointer.y
         });
+    }
+
+    endGame() {
+        this.mz.groups.cops.forEach(sprite => {
+            sprite.mz.kill();
+        });
+        this.state.start('EndMenu', true);
+    }
+
+    checkWin() {
+        if (this.mz.score >= WINNING_SCORE) {
+            this.endGame();
+        }
     }
 }
 

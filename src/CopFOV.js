@@ -8,12 +8,11 @@ class CopFOV {
         this.game = game;
 
         this.graphics = this.game.add.graphics(0, 0);
-        this.color = 0;
     }
 
     update({ x, y, angle, mode }) {
         this.graphics.clear();
-        this.graphics.beginFill(COLORS[mode || 'normal'], 0.5);
+        this.graphics.beginFill(COLORS[mode || 'normal'], 0.4);
         this.graphics.arc(
             x,
             y,
