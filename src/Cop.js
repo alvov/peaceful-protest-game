@@ -20,12 +20,7 @@ class Cop extends Character {
 
     update() {
         if (this.target) {
-            if (this.FOV.graphics.containsPoint(this.target)) {
-                this.moveTo(this.target);
-            } else {
-                this.wander();
-                this.target = null;
-            }
+            this.moveTo(this.target);
         }
 
         this.FOV.update({
@@ -40,6 +35,7 @@ class Cop extends Character {
         this.sprite.body.onMoveComplete.removeAll();
         const nextAction = this.game.rnd.between(0, 2);
         if (nextAction === 0) {
+            clearTimeout(this.stayingTimeout);
             this.stayingTimeout = setTimeout(() => {
                 this.wander();
             }, this.game.rnd.between(1000, 3000));
@@ -60,13 +56,23 @@ class Cop extends Character {
     }
 
     follow(target) {
+        if (target === this.target) {
+            return;
+        }
+
         this.target = target;
         // stop regular moving
         this.stopMoving();
+
+        // if target is gone
+        if (!this.target) {
+            this.wander();
+        }
     }
 
     kill() {
         this.stopMoving();
+        this.sprite.body.onMoveComplete.removeAll();
         this.sprite.kill();
     }
 }

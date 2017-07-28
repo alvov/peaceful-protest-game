@@ -2,7 +2,7 @@ import { SPEED_PROTESTER } from './constants.js';
 import Character from './Character.js';
 
 class Protester extends Character {
-    constructor({ game, x, y, spriteKey = 'protester' }) {
+    constructor({ game, x, y, spriteKey, activity }) {
         super({ game });
 
         this.sprite = this.game.add.sprite(x, y, spriteKey, 0);
@@ -20,6 +20,7 @@ class Protester extends Character {
         this.posterSprite.bringToTop();
         this.posterSprite.exists = false;
 
+        this.activity = activity;
         this.showPoster = false;
         this.speed = SPEED_PROTESTER;
         this.stayingTimeout = null;
@@ -31,11 +32,12 @@ class Protester extends Character {
 
     wander() {
         this.sprite.body.onMoveComplete.removeAll();
-        const nextAction = this.game.rnd.between(0, 9);
+        const nextAction = this.game.rnd.between(0, this.activity);
         if (nextAction === 0) {
+            clearTimeout(this.stayingTimeout);
             this.stayingTimeout = setTimeout(() => {
                 this.wander();
-            }, this.game.rnd.between(1000, 3000));
+            }, this.game.rnd.between(3000, 6000));
 
             this.togglePoster(true);
         } else {
@@ -54,8 +56,9 @@ class Protester extends Character {
     }
 
     kill() {
-        this.sprite.kill();
         clearTimeout(this.stayingTimeout);
+        this.sprite.body.onMoveComplete.removeAll();
+        this.sprite.kill();
     }
 }
 

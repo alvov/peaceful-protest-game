@@ -1,6 +1,8 @@
-class Boot{
+class Boot {
     init() {
-        this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+        // this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        // this.scale.pageAlignHorizontally = true;
+        // this.scale.pageAlignVertically = true;
     }
 
     preload() {

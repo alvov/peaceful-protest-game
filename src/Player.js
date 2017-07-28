@@ -1,16 +1,20 @@
 import Protester from './Protester.js';
 import { SPEED_PLAYER } from './constants.js';
 
+const DEFAULT_SCORE_GAIN_SPEED = 1;
+
 class Player extends Protester {
     constructor({ game, x, y }) {
         super({ game, x, y, spriteKey: 'player' });
 
         this.speed = SPEED_PLAYER;
         this.score = 0;
+        this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
         this.showedPosterAt = null;
 
         // events
         this.sprite.events.onInputUp.add(this.handleClick, this);
+        this.sprite.input.priorityID = 2;
         this.game.onPause.add(this.handleGamePause, this);
         this.game.onResume.add(this.handleGameResume, this);
     }
@@ -22,6 +26,8 @@ class Player extends Protester {
             this.flushScore();
             this.showedPosterAt = Date.now();
         }
+
+        this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
     }
 
     handleGamePause() {
@@ -60,7 +66,7 @@ class Player extends Protester {
     }
 
     flushScore() {
-        this.score += Date.now() - this.showedPosterAt;
+        this.score += this.scoreGainSpeed * (Date.now() - this.showedPosterAt);
         this.showedPosterAt = null;
     }
 

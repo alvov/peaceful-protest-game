@@ -1,5 +1,7 @@
 class EndMenu {
     create() {
+        this.game.world.resize(this.game.width, this.game.height);
+
         this.title = this.game.add.text(this.world.centerX, 2 / 3 * this.world.centerY, 'Game over');
         this.title.anchor.setTo(0.5);
 
