@@ -3,16 +3,9 @@ import Character from './Character.js';
 
 class Cop extends Character {
     constructor({ game, x, y, FOV }) {
-        super({ game });
+        super({ game, x, y, spriteKey: 'cop' });
 
         this.FOV = FOV;
-
-        this.sprite = game.add.sprite(x, y, 'cop', 0);
-        this.sprite.mz = this;
-        this.sprite.anchor.set(0.5);
-        this.sprite.scale.set(0.5);
-
-        game.physics.arcade.enable(this.sprite);
 
         this.stayingTimeout = null;
         this.target = null;

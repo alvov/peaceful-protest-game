@@ -3,18 +3,10 @@ import Character from './Character.js';
 
 class Protester extends Character {
     constructor({ game, x, y, spriteKey, activity }) {
-        super({ game });
+        super({ game, x, y, spriteKey });
 
-        this.sprite = this.game.add.sprite(x, y, spriteKey, 0);
-        this.sprite.mz = this;
-        this.sprite.anchor.set(0.5);
-        this.sprite.scale.set(0.5);
-        // this.sprite.crop(new Phaser.Rectangle(35, 45, 30, 46));
         this.sprite.inputEnabled = true;
         this.sprite.input.priorityID = 1;
-
-        this.game.physics.arcade.enable(this.sprite);
-        this.sprite.body.collideWorldBounds = true;
 
         this.posterSprite = this.sprite.addChild(this.game.make.sprite(-80, -120, 'poster', 0));
         this.posterSprite.bringToTop();
@@ -51,6 +43,9 @@ class Protester extends Character {
     }
 
     moveTo({ x, y }) {
+        if (this.sprite.body.moves) {
+
+        }
         this.togglePoster(false);
         super.moveTo({ x, y });
     }

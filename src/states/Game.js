@@ -16,7 +16,7 @@ class Game {
     init() {
         this.mz = {
             score: 0,
-            timer: null,
+            startTime: null,
             timePassed: 0, // ms
             eventHandler: null,
             objects: {
@@ -129,7 +129,7 @@ class Game {
         this.mz.eventHandler.input.priorityID = 1;
         this.mz.eventHandler.events.onInputUp.add(this.handleClick, this);
 
-        this.mz.timer = Date.now();
+        this.mz.startTime = Date.now();
     }
 
     update() {
@@ -160,6 +160,11 @@ class Game {
 
         // update cops
         this.mz.groups.cops.forEachExists(copSprite => {
+            if (this.mz.objects.player.showPoster) {
+                copSprite.mz.attractionPoint = { ...this.mz.objects.player.sprite.body.center };
+            } else {
+                copSprite.mz.attractionPoint = null;
+            }
             // find target for a cop
             let newTarget = null;
             let distanceToTarget = Infinity;
@@ -216,7 +221,13 @@ class Game {
             }
         );
 
-        this.mz.timePassed = Date.now() - this.mz.timer;
+        // this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.protesters);
+        // this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.cops);
+        // this.game.physics.arcade.collide(this.mz.groups.cops, this.mz.groups.protesters);
+        // this.game.physics.arcade.collide(this.mz.groups.cops);
+        // this.game.physics.arcade.collide(this.mz.groups.protesters);
+
+        this.mz.timePassed = Date.now() - this.mz.startTime;
         this.mz.objects.textTimer.setText(this.getFormattedTime(this.mz.timePassed));
 
         this.checkWin();

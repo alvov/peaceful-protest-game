@@ -8,13 +8,21 @@ class Player extends Protester {
         super({ game, x, y, spriteKey: 'player' });
 
         this.speed = SPEED_PLAYER;
+
         this.score = 0;
         this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
         this.showedPosterAt = null;
 
+        this.sprite.body.immovable = true;
+
+        this.moveTarget = null;
+
         // events
         this.sprite.events.onInputUp.add(this.handleClick, this);
         this.sprite.input.priorityID = 2;
+
+        this.sprite.body.onMoveComplete.add(this.resetSpeed, this);
+
         this.game.onPause.add(this.handleGamePause, this);
         this.game.onResume.add(this.handleGameResume, this);
     }
@@ -65,6 +73,21 @@ class Player extends Protester {
         super.togglePoster(on);
     }
 
+    moveTo({ x, y }) {
+        if (
+            this.sprite.body.moves &&
+            this.moveTarget &&
+            Math.abs(this.moveTarget.x - x) < 30 &&
+            Math.abs(this.moveTarget.y - y) < 30
+        ) {
+            this.speed += 5;
+        } else {
+            this.resetSpeed();
+        }
+        this.moveTarget = { x, y };
+        super.moveTo({ x, y });
+    }
+
     flushScore() {
         this.score += this.scoreGainSpeed * (Date.now() - this.showedPosterAt);
         this.showedPosterAt = null;
@@ -72,6 +95,10 @@ class Player extends Protester {
 
     stopMoving() {
         this.sprite.body.stopMovement(true);
+    }
+
+    resetSpeed() {
+        this.speed = SPEED_PLAYER;
     }
 }
 

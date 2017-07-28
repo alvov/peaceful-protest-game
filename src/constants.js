@@ -2,7 +2,7 @@ export const WORLD_WIDTH = 600;
 export const WORLD_HEIGHT = 600;
 
 export const COPS_COUNT = 3;
-export const PROTESTERS_COUNT = 10;
+export const PROTESTERS_COUNT = 30;
 
 export const TIME = 3 * 60; // s
 export const WINNING_SCORE = 100;

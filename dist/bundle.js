@@ -96,18 +96,10 @@ var Protester = function (_Character) {
 
         _classCallCheck(this, Protester);
 
-        var _this = _possibleConstructorReturn(this, (Protester.__proto__ || Object.getPrototypeOf(Protester)).call(this, { game: game }));
+        var _this = _possibleConstructorReturn(this, (Protester.__proto__ || Object.getPrototypeOf(Protester)).call(this, { game: game, x: x, y: y, spriteKey: spriteKey }));
 
-        _this.sprite = _this.game.add.sprite(x, y, spriteKey, 0);
-        _this.sprite.mz = _this;
-        _this.sprite.anchor.set(0.5);
-        _this.sprite.scale.set(0.5);
-        // this.sprite.crop(new Phaser.Rectangle(35, 45, 30, 46));
         _this.sprite.inputEnabled = true;
         _this.sprite.input.priorityID = 1;
-
-        _this.game.physics.arcade.enable(_this.sprite);
-        _this.sprite.body.collideWorldBounds = true;
 
         _this.posterSprite = _this.sprite.addChild(_this.game.make.sprite(-80, -120, 'poster', 0));
         _this.posterSprite.bringToTop();
@@ -157,6 +149,7 @@ var Protester = function (_Character) {
             var x = _ref2.x,
                 y = _ref2.y;
 
+            if (this.sprite.body.moves) {}
             this.togglePoster(false);
             _get(Protester.prototype.__proto__ || Object.getPrototypeOf(Protester.prototype), 'moveTo', this).call(this, { x: x, y: y });
         }
@@ -406,7 +399,7 @@ var Game = function () {
         value: function init() {
             this.mz = {
                 score: 0,
-                timer: null,
+                startTime: null,
                 timePassed: 0, // ms
                 eventHandler: null,
                 objects: {
@@ -510,7 +503,7 @@ var Game = function () {
             this.mz.eventHandler.input.priorityID = 1;
             this.mz.eventHandler.events.onInputUp.add(this.handleClick, this);
 
-            this.mz.timer = Date.now();
+            this.mz.startTime = Date.now();
         }
     }, {
         key: 'update',
@@ -542,6 +535,11 @@ var Game = function () {
 
             // update cops
             this.mz.groups.cops.forEachExists(function (copSprite) {
+                if (_this.mz.objects.player.showPoster) {
+                    copSprite.mz.attractionPoint = _extends({}, _this.mz.objects.player.sprite.body.center);
+                } else {
+                    copSprite.mz.attractionPoint = null;
+                }
                 // find target for a cop
                 var newTarget = null;
                 var distanceToTarget = Infinity;
@@ -587,7 +585,13 @@ var Game = function () {
                 return cop.target === playerSprite;
             });
 
-            this.mz.timePassed = Date.now() - this.mz.timer;
+            // this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.protesters);
+            // this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.cops);
+            // this.game.physics.arcade.collide(this.mz.groups.cops, this.mz.groups.protesters);
+            // this.game.physics.arcade.collide(this.mz.groups.cops);
+            // this.game.physics.arcade.collide(this.mz.groups.protesters);
+
+            this.mz.timePassed = Date.now() - this.mz.startTime;
             this.mz.objects.textTimer.setText(this.getFormattedTime(this.mz.timePassed));
 
             this.checkWin();
@@ -700,13 +704,21 @@ var Player = function (_Protester) {
         var _this = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, { game: game, x: x, y: y, spriteKey: 'player' }));
 
         _this.speed = __WEBPACK_IMPORTED_MODULE_1__constants_js__["g" /* SPEED_PLAYER */];
+
         _this.score = 0;
         _this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
         _this.showedPosterAt = null;
 
+        _this.sprite.body.immovable = true;
+
+        _this.moveTarget = null;
+
         // events
         _this.sprite.events.onInputUp.add(_this.handleClick, _this);
         _this.sprite.input.priorityID = 2;
+
+        _this.sprite.body.onMoveComplete.add(_this.resetSpeed, _this);
+
         _this.game.onPause.add(_this.handleGamePause, _this);
         _this.game.onResume.add(_this.handleGameResume, _this);
         return _this;
@@ -766,6 +778,20 @@ var Player = function (_Protester) {
             _get(Player.prototype.__proto__ || Object.getPrototypeOf(Player.prototype), 'togglePoster', this).call(this, on);
         }
     }, {
+        key: 'moveTo',
+        value: function moveTo(_ref2) {
+            var x = _ref2.x,
+                y = _ref2.y;
+
+            if (this.sprite.body.moves && this.moveTarget && Math.abs(this.moveTarget.x - x) < 30 && Math.abs(this.moveTarget.y - y) < 30) {
+                this.speed += 5;
+            } else {
+                this.resetSpeed();
+            }
+            this.moveTarget = { x: x, y: y };
+            _get(Player.prototype.__proto__ || Object.getPrototypeOf(Player.prototype), 'moveTo', this).call(this, { x: x, y: y });
+        }
+    }, {
         key: 'flushScore',
         value: function flushScore() {
             this.score += this.scoreGainSpeed * (Date.now() - this.showedPosterAt);
@@ -775,6 +801,11 @@ var Player = function (_Protester) {
         key: 'stopMoving',
         value: function stopMoving() {
             this.sprite.body.stopMovement(true);
+        }
+    }, {
+        key: 'resetSpeed',
+        value: function resetSpeed() {
+            this.speed = __WEBPACK_IMPORTED_MODULE_1__constants_js__["g" /* SPEED_PLAYER */];
         }
     }]);
 
@@ -815,16 +846,9 @@ var Cop = function (_Character) {
 
         _classCallCheck(this, Cop);
 
-        var _this = _possibleConstructorReturn(this, (Cop.__proto__ || Object.getPrototypeOf(Cop)).call(this, { game: game }));
+        var _this = _possibleConstructorReturn(this, (Cop.__proto__ || Object.getPrototypeOf(Cop)).call(this, { game: game, x: x, y: y, spriteKey: 'cop' }));
 
         _this.FOV = FOV;
-
-        _this.sprite = game.add.sprite(x, y, 'cop', 0);
-        _this.sprite.mz = _this;
-        _this.sprite.anchor.set(0.5);
-        _this.sprite.scale.set(0.5);
-
-        game.physics.arcade.enable(_this.sprite);
 
         _this.stayingTimeout = null;
         _this.target = null;
@@ -919,11 +943,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Character = function () {
     function Character(_ref) {
-        var game = _ref.game;
+        var game = _ref.game,
+            x = _ref.x,
+            y = _ref.y,
+            spriteKey = _ref.spriteKey;
 
         _classCallCheck(this, Character);
 
         this.game = game;
+
+        this.sprite = this.game.add.sprite(x, y, spriteKey, 0);
+        this.sprite.mz = this;
+        this.sprite.anchor.set(0.5);
+        this.sprite.scale.set(0.5);
+
+        this.game.physics.arcade.enable(this.sprite);
+        this.sprite.body.collideWorldBounds = true;
+        // this.sprite.body.bounce.set(0);
+
+        this.attractionPoint = null;
     }
 
     _createClass(Character, [{
@@ -942,17 +980,30 @@ var Character = function () {
         key: 'getNextCoords',
         value: function getNextCoords() {
             var directions = [];
-            if (this.sprite.x > this.sprite.width) {
-                directions.push('left');
-            }
-            if (this.sprite.x < this.game.world.width - this.sprite.width) {
-                directions.push('right');
-            }
-            if (this.sprite.y > this.sprite.height) {
-                directions.push('top');
-            }
-            if (this.sprite.y < this.game.world.height - this.sprite.height) {
-                directions.push('bottom');
+            if (this.attractionPoint && this.game.rnd.between(0, 1)) {
+                if (this.attractionPoint.x > this.sprite.x) {
+                    directions.push('right');
+                } else {
+                    directions.push('left');
+                }
+                if (this.attractionPoint.y > this.sprite.y) {
+                    directions.push('bottom');
+                } else {
+                    directions.push('top');
+                }
+            } else {
+                if (this.sprite.x > this.sprite.width) {
+                    directions.push('left');
+                }
+                if (this.sprite.x < this.game.world.width - this.sprite.width) {
+                    directions.push('right');
+                }
+                if (this.sprite.y > this.sprite.height) {
+                    directions.push('top');
+                }
+                if (this.sprite.y < this.game.world.height - this.sprite.height) {
+                    directions.push('bottom');
+                }
             }
 
             var direction = this.game.rnd.between(0, directions.length - 1);
@@ -1092,7 +1143,7 @@ var WORLD_WIDTH = 600;
 var WORLD_HEIGHT = 600;
 
 var COPS_COUNT = 3;
-var PROTESTERS_COUNT = 10;
+var PROTESTERS_COUNT = 30;
 
 var TIME = 3 * 60; // s
 var WINNING_SCORE = 100;
