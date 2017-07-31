@@ -258,7 +258,7 @@ var Loading = function () {
     _createClass(Loading, [{
         key: 'preload',
         value: function preload() {
-            this.game.stage.backgroundColor = '#ccc';
+            this.game.stage.backgroundColor = '#000';
             // const loadingBar = this.add.sprite(this.world.centerX, this.world.centerY, "loading");
             // loadingBar.anchor.setTo(0.5);
             // this.load.setPreloadSprite(loadingBar);
@@ -272,6 +272,19 @@ var Loading = function () {
             this.game.load.spritesheet('buttons', 'assets/buttons.png', 100, 100);
 
             this.load.image('ground01', 'assets/ground01.jpg');
+
+            this.mz = {};
+            this.mz.progress = this.game.add.text(300, 300, 'Loading 0%', {
+                font: '26px Arial',
+                fill: '#fff',
+                align: 'right'
+            });
+            this.mz.progress.anchor.set(0.5);
+        }
+    }, {
+        key: 'loadUpdate',
+        value: function loadUpdate() {
+            this.mz.progress.setText('Loading ' + this.game.load.progress + '%');
         }
     }, {
         key: 'create',

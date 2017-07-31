@@ -1,5 +1,8 @@
 MVP
-- one level
++ one level
+- multiple protesters (var)
+- multiple levels
+- obstacles (pathfinding)
 - loading screen
 - start screen
 - pause screen
@@ -19,11 +22,11 @@ TechDebt
 - images as assets
 - menu via html
 - game config
-- cops FOV shape
++ cops FOV shape
 - menu screen
 - win screen
 - score as progress bar
-- level timer (score gain speed, running speed, cops interest)
++ level timer (score gain speed, running speed, cops interest)
 - loading screen
 + sprite borders
 - extend sprite object
@@ -31,8 +34,6 @@ TechDebt
 + speed up everything
 
 Cpx Prf Feature
-?   ?   multiple stages
-?   ?   obstacles (pathfinding)
 ?   ?   passersby
 ?   ?   cops in disguise
 ?   ?   protesters: shout
