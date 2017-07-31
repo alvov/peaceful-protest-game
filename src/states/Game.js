@@ -2,22 +2,13 @@ import Player from './../Player.js';
 import Protester from './../Protester.js';
 import Cop from './../Cop.js';
 import FOV from './../FOV.js';
-import {
-    WORLD_HEIGHT, WORLD_WIDTH,
-    COPS_COUNT,
-    PROTESTERS_COUNT,
-    WINNING_SCORE,
-    TIME,
-    FOV_COP_DISTANCE,
-    FOV_COP_ANGLE
-} from '../constants.js';
 
 class Game {
-    init() {
+    init(level) {
         this.mz = {
+            level,
             score: 0,
-            startTime: null,
-            timePassed: 0, // ms
+            timePassed: 0, // s
             eventHandler: null,
             objects: {
                 player: null,
@@ -33,7 +24,9 @@ class Game {
     }
 
     create() {
-        this.game.world.resize(WORLD_WIDTH, WORLD_HEIGHT);
+        this.game.stage.backgroundColor = '#ccc';
+
+        this.game.world.resize(this.mz.level.worldWidth, this.mz.level.worldHeight);
 
         this.mz.objects.bgTile = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'ground01');
         this.mz.objects.bgTile.fixedToCamera = true;
@@ -48,28 +41,30 @@ class Game {
             borderSprite.scale.set(0.25);
         }
 
-        for (let i = 0; i < COPS_COUNT; i++) {
+        for (let i = 0; i < this.mz.level.cops.count; i++) {
             const copFOV = new FOV({
                 game: this.game,
-                radius: FOV_COP_DISTANCE,
-                angle: FOV_COP_ANGLE
+                radius: this.mz.level.cops.fov.distance,
+                angle: this.mz.level.cops.fov.angle
             });
             this.mz.groups.copsFOV.add(copFOV.graphics);
 
             const cop = new Cop({
                 game: this.game,
                 ...this.getRandomCoordinates(),
-                FOV: copFOV
+                FOV: copFOV,
+                speed: this.mz.level.cops.speed
             });
             this.mz.groups.cops.add(cop.sprite);
             cop.wander();
         }
 
         this.mz.groups.protesters = this.game.add.group();
-        for (let i = 0; i < PROTESTERS_COUNT; i++) {
+        for (let i = 0; i < this.mz.level.protesters.count; i++) {
             const protester = new Protester({
                 game: this.game,
                 ...this.getRandomCoordinates(),
+                speed: this.mz.level.protesters.speed,
                 spriteKey: `protester${this.game.rnd.between(1, 3)}`,
                 activity: this.game.rnd.between(10, 20)
             });
@@ -80,7 +75,8 @@ class Game {
         this.mz.objects.player = new Player({
             game: this.game,
             x: this.game.world.centerX,
-            y: this.game.world.centerY
+            y: this.game.world.centerY,
+            speed: this.mz.level.player.speed,
         });
         this.game.camera.follow(this.mz.objects.player.sprite);
 
@@ -94,7 +90,7 @@ class Game {
         this.mz.objects.textScore = this.game.add.text(
             this.game.width - 10,
             20,
-            `x${this.mz.objects.player.scoreGainSpeed} ${this.mz.objects.player.score} / ${WINNING_SCORE}`,
+            `x${this.mz.objects.player.scoreGainSpeed} ${this.mz.objects.player.score} / ${this.mz.level.winningScore}`,
             {
                 font: '25px Arial',
                 fill: '#fff',
@@ -105,10 +101,14 @@ class Game {
         this.mz.objects.textScore.setShadow(2, 2, 'rgba(0, 0, 0, .5)', 0);
         this.mz.groups.menu.add(this.mz.objects.textScore);
 
+        const timer = this.game.time.create();
+        timer.loop(Phaser.Timer.SECOND, this.updateTimer, this);
+        timer.start();
+
         this.mz.objects.textTimer = this.game.add.text(
             this.game.width - 10,
             60,
-            this.getFormattedTime(this.mz.timePassed),
+            'this.getFormattedTime(this.mz.timePassed)',
             {
                 font: '25px Arial',
                 fill: '#fff',
@@ -128,8 +128,6 @@ class Game {
         this.mz.eventHandler.inputEnabled = true;
         this.mz.eventHandler.input.priorityID = 1;
         this.mz.eventHandler.events.onInputUp.add(this.handleClick, this);
-
-        this.mz.startTime = Date.now();
     }
 
     update() {
@@ -137,7 +135,7 @@ class Game {
 
         // count score gaining speed
         this.mz.groups.cops.forEachExists(copSprite => {
-            if (this.game.physics.arcade.distanceBetween(copSprite, this.mz.objects.player.sprite) < FOV_COP_DISTANCE) {
+            if (this.game.physics.arcade.distanceBetween(copSprite, this.mz.objects.player.sprite) < this.mz.level.cops.fov.distance) {
                 this.mz.objects.player.scoreGainSpeed += 1;
             }
         });
@@ -147,7 +145,7 @@ class Game {
 
         // draw score
         this.mz.objects.textScore.setText(
-            `x${this.mz.objects.player.scoreGainSpeed} ${this.mz.score} / ${WINNING_SCORE}`
+            `x${this.mz.objects.player.scoreGainSpeed} ${this.mz.score} / ${this.mz.level.winningScore}`
         );
 
         // update player
@@ -227,9 +225,6 @@ class Game {
         // this.game.physics.arcade.collide(this.mz.groups.cops);
         // this.game.physics.arcade.collide(this.mz.groups.protesters);
 
-        this.mz.timePassed = Date.now() - this.mz.startTime;
-        this.mz.objects.textTimer.setText(this.getFormattedTime(this.mz.timePassed));
-
         this.checkWin();
     }
 
@@ -262,6 +257,11 @@ class Game {
     //     this.scale.setUserScale(scaleFactor, scaleFactor);
     // }
 
+    updateTimer() {
+        this.mz.timePassed++;
+        this.mz.objects.textTimer.setText(this.getFormattedTime(this.mz.timePassed));
+    }
+
     endGame() {
         this.mz.groups.cops.forEachExists(sprite => {
             sprite.mz.kill();
@@ -274,8 +274,8 @@ class Game {
 
     checkWin() {
         if (
-            this.mz.score >= WINNING_SCORE ||
-            this.mz.timePassed > TIME * 1000
+            this.mz.score >= this.mz.level.winningScore ||
+            this.mz.timePassed > this.mz.level.duration
         ) {
             this.endGame();
         }
@@ -288,8 +288,8 @@ class Game {
         };
     }
 
-    getFormattedTime(ms) {
-        const s = TIME - Math.floor(ms / 1000);
+    getFormattedTime(secondsPassed) {
+        const s = this.mz.level.duration - secondsPassed;
         const min = Math.floor(s / 60);
         return String(min).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
     }

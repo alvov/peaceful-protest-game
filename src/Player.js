@@ -1,13 +1,10 @@
 import Protester from './Protester.js';
-import { SPEED_PLAYER } from './constants.js';
 
 const DEFAULT_SCORE_GAIN_SPEED = 1;
 
 class Player extends Protester {
-    constructor({ game, x, y }) {
-        super({ game, x, y, spriteKey: 'player' });
-
-        this.speed = SPEED_PLAYER;
+    constructor({ game, x, y, speed }) {
+        super({ game, x, y, speed, spriteKey: 'player' });
 
         this.score = 0;
         this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
@@ -80,7 +77,7 @@ class Player extends Protester {
             Math.abs(this.moveTarget.x - x) < 30 &&
             Math.abs(this.moveTarget.y - y) < 30
         ) {
-            this.speed += 5;
+            this.speed.current += 5;
         } else {
             this.resetSpeed();
         }
@@ -98,7 +95,7 @@ class Player extends Protester {
     }
 
     resetSpeed() {
-        this.speed = SPEED_PLAYER;
+        this.speed.current = this.speed.walking;
     }
 }
 

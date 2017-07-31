@@ -1,6 +1,11 @@
 class Character {
-    constructor({ game, x, y, spriteKey }) {
+    constructor({ game, x, y, speed, spriteKey }) {
         this.game = game;
+
+        this.speed = {
+            current: speed.walking,
+            ...speed
+        };
 
         this.sprite = this.game.add.sprite(x, y, spriteKey, 0);
         this.sprite.mz = this;
@@ -16,7 +21,7 @@ class Character {
 
     moveTo({ x, y }) {
         const distance = this.game.physics.arcade.distanceToXY(this.sprite, x, y);
-        const duration = distance / this.speed * 1000; // ms
+        const duration = distance / this.speed.current * 1000; // ms
         const angle = this.game.math.radToDeg(this.game.physics.arcade.angleToXY(this.sprite, x, y));
 
         this.sprite.body.moveTo(duration, distance, angle);

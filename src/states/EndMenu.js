@@ -1,4 +1,8 @@
 class EndMenu {
+    preload() {
+        this.game.stage.backgroundColor = '#ccc';
+    }
+
     create() {
         this.game.world.resize(this.game.width, this.game.height);
 

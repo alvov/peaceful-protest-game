@@ -1,9 +1,8 @@
-import { SPEED_COP_WALKING, SPEED_COP_RUNNING } from './constants.js';
 import Character from './Character.js';
 
 class Cop extends Character {
-    constructor({ game, x, y, FOV }) {
-        super({ game, x, y, spriteKey: 'cop' });
+    constructor({ game, x, y, FOV, speed }) {
+        super({ game, x, y, speed, spriteKey: 'cop' });
 
         this.FOV = FOV;
 
@@ -39,7 +38,7 @@ class Cop extends Character {
     }
 
     moveTo({ x, y }) {
-        this.speed = this.target ? SPEED_COP_RUNNING : SPEED_COP_WALKING;
+        this.speed.current = this.target ? this.speed.running : this.speed.walking;
         super.moveTo({ x, y });
     }
 

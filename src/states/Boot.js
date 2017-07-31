@@ -10,7 +10,12 @@ class Boot {
     }
 
     create() {
-        this.state.start('Loading');
+        this.state.start('Loading', true, false, {
+            assets: [
+                ['spritesheet', 'buttons', 'assets/buttons.png', 100, 100],
+            ],
+            nextState: ['StartMenu']
+        });
     }
 }
 
