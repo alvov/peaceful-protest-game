@@ -1,7 +1,7 @@
-import Player from './../Player.js';
-import Protester from './../Protester.js';
-import Cop from './../Cop.js';
-import FOV from './../FOV.js';
+import Player from './../objects/Player.js';
+import Protester from './../objects/Protester.js';
+import Cop from './../objects/Cop.js';
+import FOV from './../objects/FOV.js';
 
 class Game {
     init(level) {
@@ -28,7 +28,7 @@ class Game {
 
         this.game.world.resize(this.mz.level.worldWidth, this.mz.level.worldHeight);
 
-        this.mz.objects.bgTile = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'ground01');
+        this.mz.objects.bgTile = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'ground');
         this.mz.objects.bgTile.fixedToCamera = true;
 
         this.game.add.image(0, 0, this.bitmap);

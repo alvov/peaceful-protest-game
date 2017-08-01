@@ -1,3 +1,5 @@
+import pack from '../assets/pack.js';
+
 class Boot {
     init() {
         // this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -12,7 +14,7 @@ class Boot {
     create() {
         this.state.start('Loading', true, false, {
             assets: [
-                ['spritesheet', 'buttons', 'assets/buttons.png', 100, 100],
+                ['pack', 'initial', null, JSON.stringify(pack)]
             ],
             nextState: ['StartMenu']
         });

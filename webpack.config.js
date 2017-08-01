@@ -7,6 +7,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
+        publicPath: 'dist/',
         filename: '[name].js'
     },
     module: {
@@ -31,6 +32,13 @@ module.exports = {
                             'transform-object-rest-spread'
                         ]
                     }
+                }
+            },
+            {
+                test: /\.(jpg|png)$/,
+                loader: 'file-loader',
+                query: {
+                    outputPath: 'assets/'
                 }
             }
         ]

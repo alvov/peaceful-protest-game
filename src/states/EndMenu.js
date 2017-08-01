@@ -18,7 +18,7 @@ class EndMenu {
     }
 
     handleClickPlay() {
-        this.state.start('Game');
+        this.state.start('StartMenu');
     }
 }
 

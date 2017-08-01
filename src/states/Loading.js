@@ -16,6 +16,9 @@ class Loading {
 
         this.mz.config.assets.forEach(([assetType, ...assetParams]) => {
             switch (assetType) {
+                case 'pack':
+                    this.game.load.pack(...assetParams);
+                    break;
                 case 'spritesheet':
                     this.game.load.spritesheet(...assetParams);
                     break;

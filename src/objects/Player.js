@@ -22,6 +22,14 @@ class Player extends Protester {
 
         this.game.onPause.add(this.handleGamePause, this);
         this.game.onResume.add(this.handleGameResume, this);
+
+        this.keys = {
+            up: this.game.input.keyboard.addKey(Phaser.Keyboard.UP),
+            down: this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
+            left: this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
+            right: this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
+            space: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+        };
     }
 
     update() {
@@ -33,6 +41,41 @@ class Player extends Protester {
         }
 
         this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
+
+        if (
+            this.keys.up.isDown ||
+            this.keys.down.isDown ||
+            this.keys.left.isDown ||
+            this.keys.right.isDown
+        ) {
+            this.stopMoving();
+            this.togglePoster(false);
+            let inputSpeed = this.speed.current / 1000 * 16;
+
+            if (
+                this.keys.up.isDown && this.keys.left.isDown ||
+                this.keys.up.isDown && this.keys.right.isDown ||
+                this.keys.down.isDown && this.keys.left.isDown ||
+                this.keys.down.isDown && this.keys.right.isDown
+            ) {
+                inputSpeed *= 0.7;
+            }
+            if (this.keys.up.isDown) {
+                this.sprite.y -= inputSpeed;
+            }
+            if (this.keys.down.isDown) {
+                this.sprite.y += inputSpeed;
+            }
+            if (this.keys.left.isDown) {
+                this.sprite.x -= inputSpeed;
+            }
+            if (this.keys.right.isDown) {
+                this.sprite.x += inputSpeed;
+            }
+        }
+        if (this.keys.space.justDown) {
+            this.togglePoster();
+        }
     }
 
     handleGamePause() {
