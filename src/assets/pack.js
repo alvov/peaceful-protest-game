@@ -39,6 +39,13 @@ export default {
         },
         {
             type: 'spritesheet',
+            key: 'journalist',
+            url: require('./journalist01.png'),
+            frameWidth: 72,
+            frameHeight: 98
+        },
+        {
+            type: 'spritesheet',
             key: 'player',
             url: require('./player.png'),
             frameWidth: 60,
@@ -92,6 +99,13 @@ export default {
             key: 'cop',
             url: require('./cop01.png'),
             frameWidth: 88,
+            frameHeight: 98
+        },
+        {
+            type: 'spritesheet',
+            key: 'journalist',
+            url: require('./journalist01.png'),
+            frameWidth: 72,
             frameHeight: 98
         },
         {

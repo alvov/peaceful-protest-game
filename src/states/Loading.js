@@ -17,13 +17,17 @@ class Loading {
         this.mz.config.assets.forEach(([assetType, ...assetParams]) => {
             switch (assetType) {
                 case 'pack':
-                    this.game.load.pack(...assetParams);
+                    this.load.pack(...assetParams);
                     break;
                 case 'spritesheet':
-                    this.game.load.spritesheet(...assetParams);
+                    this.load.spritesheet(...assetParams);
                     break;
                 case 'image':
                     this.load.image(...assetParams);
+                    break;
+                case 'tilemap':
+                    debugger;
+                    this.load.tilemap(...assetParams);
                     break;
             }
         });

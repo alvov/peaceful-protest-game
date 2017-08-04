@@ -1,7 +1,7 @@
 MVP
 + one level
 + multiple protesters (var)
-- multiple levels
++ multiple levels
 - obstacles (pathfinding)
 - loading screen
 - start screen
@@ -19,7 +19,7 @@ MVP
 
 TechDebt
 + babel
-- images as assets
++ images as assets
 - menu via html
 - game config
 + cops FOV shape
@@ -32,6 +32,7 @@ TechDebt
 - extend sprite object
 + bundle phaser
 + speed up everything
+- phaser custom build
 
 Cpx Prf Feature
 ?   ?   passersby
@@ -41,7 +42,7 @@ Cpx Prf Feature
 ?   ?   protesters: disguise
 ?   ?   cops FOV: cone
 ?   ?   points for passersby
-?   ?   extra points for photographers
++   +   extra points for photographers
 ?   ?   extra points for position
 ?   ?   rpg-like upgrades for points/shares
 ?   ?   kill: prison bus
@@ -50,5 +51,3 @@ Cpx Prf Feature
 ?   ?   music
 ?   ?   level description
 ?   ?   high score
-
-?   ?   phaser custom build

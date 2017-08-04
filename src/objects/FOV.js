@@ -4,13 +4,15 @@ const COLORS = {
 };
 
 class FOV {
-    constructor({ game, radius, angle }) {
+    constructor({ game, radius, angle, colors = COLORS }) {
         this.game = game;
         this.radius = radius;
         this.halfViewAngle = this.game.math.degToRad(angle / 2);
+        this.colors = colors;
 
         this.graphics = this.game.add.graphics(0, 0);
         this.center = null;
+        this.exists = true;
     }
 
     update({ x, y, angle, mode }) {
@@ -25,7 +27,7 @@ class FOV {
         ];
 
         this.graphics.clear();
-        this.graphics.beginFill(COLORS[mode || 'normal'], 0.4);
+        this.graphics.beginFill(this.colors[mode || 'normal'], 0.4);
         this.graphics.moveTo(x, y);
         this.graphics.lineTo(...arcStart);
         this.graphics.arc(
@@ -45,11 +47,11 @@ class FOV {
         if (!this.center) {
             return false;
         }
-        const distance = this.game.physics.arcade.distanceToXY(this.center, x, y);
+        const distance = Phaser.Point.distance(this.center, { x, y });
         if (distance > this.radius) {
             return false;
         }
-        let angle = this.game.physics.arcade.angleToXY(this.center, x, y);
+        let angle = Phaser.Point.angle({ x, y }, this.center);
 
         const leftAngle = this.angle - this.halfViewAngle;
         const rightAngle = this.angle + this.halfViewAngle;
@@ -61,6 +63,11 @@ class FOV {
         angle -= 2 * Math.PI * Math.sign(angle);
 
         return leftAngle <= angle && angle <= rightAngle;
+    }
+
+    kill() {
+        this.graphics.destroy();
+        this.exists = false;
     }
 }
 

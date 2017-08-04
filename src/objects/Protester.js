@@ -1,6 +1,6 @@
-import Character from './Character.js';
+import Prefab from './Prefab.js';
 
-class Protester extends Character {
+class Protester extends Prefab {
     constructor({ game, x, y, speed, spriteKey, activity }) {
         super({ game, x, y, speed, spriteKey });
 
@@ -13,7 +13,7 @@ class Protester extends Character {
 
         this.activity = activity;
         this.showPoster = false;
-        this.stayingTimeout = null;
+        this.stayingTimer = this.game.time.create(false);
     }
 
     update() {
@@ -25,12 +25,12 @@ class Protester extends Character {
         const nextAction = this.game.rnd.between(0, this.activity);
         if (nextAction === 0) {
             this.sprite.body.onMoveComplete.addOnce(this.wander, this);
+            this.togglePoster(false);
             this.moveTo(this.getNextCoords());
         } else {
-            clearTimeout(this.stayingTimeout);
-            this.stayingTimeout = setTimeout(() => {
-                this.wander();
-            }, this.game.rnd.between(3000, 6000));
+            this.stayingTimer.stop(true);
+            this.stayingTimer.add(this.game.rnd.between(3000, 6000), this.wander, this);
+            this.stayingTimer.start();
 
             this.togglePoster(nextAction < 4);
         }
@@ -40,15 +40,11 @@ class Protester extends Character {
         this.showPoster = on;
     }
 
-    moveTo({ x, y }) {
-        this.togglePoster(false);
-        super.moveTo({ x, y });
-    }
-
     kill() {
-        clearTimeout(this.stayingTimeout);
+        this.stayingTimer.stop(true);
         this.sprite.body.onMoveComplete.removeAll();
-        this.sprite.kill();
+
+        super.kill();
     }
 }
 

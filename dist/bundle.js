@@ -103,6 +103,12 @@
         frameHeight: 94
     }, {
         type: 'spritesheet',
+        key: 'journalist',
+        url: __webpack_require__(317),
+        frameWidth: 72,
+        frameHeight: 98
+    }, {
+        type: 'spritesheet',
         key: 'player',
         url: __webpack_require__(115),
         frameWidth: 60,
@@ -148,6 +154,12 @@
         key: 'cop',
         url: __webpack_require__(304),
         frameWidth: 88,
+        frameHeight: 98
+    }, {
+        type: 'spritesheet',
+        key: 'journalist',
+        url: __webpack_require__(317),
+        frameWidth: 72,
         frameHeight: 98
     }, {
         type: 'spritesheet',
@@ -235,7 +247,7 @@ module.exports = __webpack_require__.p + "assets/d24af22e7dae1337a8cc1ffe5e7b1aa
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Character_js__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Prefab_js__ = __webpack_require__(314);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -248,8 +260,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var Protester = function (_Character) {
-    _inherits(Protester, _Character);
+var Protester = function (_Prefab) {
+    _inherits(Protester, _Prefab);
 
     function Protester(_ref) {
         var game = _ref.game,
@@ -272,7 +284,7 @@ var Protester = function (_Character) {
 
         _this.activity = activity;
         _this.showPoster = false;
-        _this.stayingTimeout = null;
+        _this.stayingTimer = _this.game.time.create(false);
         return _this;
     }
 
@@ -284,18 +296,16 @@ var Protester = function (_Character) {
     }, {
         key: 'wander',
         value: function wander() {
-            var _this2 = this;
-
             this.sprite.body.onMoveComplete.removeAll();
             var nextAction = this.game.rnd.between(0, this.activity);
             if (nextAction === 0) {
                 this.sprite.body.onMoveComplete.addOnce(this.wander, this);
+                this.togglePoster(false);
                 this.moveTo(this.getNextCoords());
             } else {
-                clearTimeout(this.stayingTimeout);
-                this.stayingTimeout = setTimeout(function () {
-                    _this2.wander();
-                }, this.game.rnd.between(3000, 6000));
+                this.stayingTimer.stop(true);
+                this.stayingTimer.add(this.game.rnd.between(3000, 6000), this.wander, this);
+                this.stayingTimer.start();
 
                 this.togglePoster(nextAction < 4);
             }
@@ -308,135 +318,19 @@ var Protester = function (_Character) {
             this.showPoster = on;
         }
     }, {
-        key: 'moveTo',
-        value: function moveTo(_ref2) {
-            var x = _ref2.x,
-                y = _ref2.y;
-
-            this.togglePoster(false);
-            _get(Protester.prototype.__proto__ || Object.getPrototypeOf(Protester.prototype), 'moveTo', this).call(this, { x: x, y: y });
-        }
-    }, {
         key: 'kill',
         value: function kill() {
-            clearTimeout(this.stayingTimeout);
+            this.stayingTimer.stop(true);
             this.sprite.body.onMoveComplete.removeAll();
-            this.sprite.kill();
+
+            _get(Protester.prototype.__proto__ || Object.getPrototypeOf(Protester.prototype), 'kill', this).call(this);
         }
     }]);
 
     return Protester;
-}(__WEBPACK_IMPORTED_MODULE_0__Character_js__["a" /* default */]);
+}(__WEBPACK_IMPORTED_MODULE_0__Prefab_js__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Protester);
-
-/***/ }),
-
-/***/ 121:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Character = function () {
-    function Character(_ref) {
-        var game = _ref.game,
-            x = _ref.x,
-            y = _ref.y,
-            speed = _ref.speed,
-            spriteKey = _ref.spriteKey;
-
-        _classCallCheck(this, Character);
-
-        this.game = game;
-
-        this.speed = _extends({
-            current: speed.walking
-        }, speed);
-
-        this.sprite = this.game.add.sprite(x, y, spriteKey, 0);
-        this.sprite.mz = this;
-        this.sprite.anchor.set(0.5);
-        this.sprite.scale.set(0.5);
-
-        this.game.physics.arcade.enable(this.sprite);
-        this.sprite.body.collideWorldBounds = true;
-        // this.sprite.body.bounce.set(0);
-
-        this.attractionPoint = null;
-    }
-
-    _createClass(Character, [{
-        key: 'moveTo',
-        value: function moveTo(_ref2) {
-            var x = _ref2.x,
-                y = _ref2.y;
-
-            var distance = this.game.physics.arcade.distanceToXY(this.sprite, x, y);
-            var duration = distance / this.speed.current * 1000; // ms
-            var angle = this.game.math.radToDeg(this.game.physics.arcade.angleToXY(this.sprite, x, y));
-
-            this.sprite.body.moveTo(duration, distance, angle);
-        }
-    }, {
-        key: 'getNextCoords',
-        value: function getNextCoords() {
-            var directions = [];
-            if (this.attractionPoint && this.game.rnd.between(0, 1)) {
-                if (this.attractionPoint.x > this.sprite.x) {
-                    directions.push('right');
-                } else {
-                    directions.push('left');
-                }
-                if (this.attractionPoint.y > this.sprite.y) {
-                    directions.push('bottom');
-                } else {
-                    directions.push('top');
-                }
-            } else {
-                if (this.sprite.x > this.sprite.width) {
-                    directions.push('left');
-                }
-                if (this.sprite.x < this.game.world.width - this.sprite.width) {
-                    directions.push('right');
-                }
-                if (this.sprite.y > this.sprite.height) {
-                    directions.push('top');
-                }
-                if (this.sprite.y < this.game.world.height - this.sprite.height) {
-                    directions.push('bottom');
-                }
-            }
-
-            var direction = this.game.rnd.between(0, directions.length - 1);
-            var x = this.sprite.x;
-            var y = this.sprite.y;
-            switch (directions[direction]) {
-                case 'left':
-                    x = this.game.rnd.between(this.sprite.width, this.sprite.x - 1);
-                    break;
-                case 'right':
-                    x = this.game.rnd.between(this.sprite.x + 1, this.game.world.width - this.sprite.width);
-                    break;
-                case 'top':
-                    y = this.game.rnd.between(this.sprite.height, this.sprite.y - 1);
-                    break;
-                case 'bottom':
-                    y = this.game.rnd.between(this.sprite.y + 1, this.game.world.height - this.sprite.height);
-                    break;
-            }
-            return { x: Math.round(x), y: Math.round(y) };
-        }
-    }]);
-
-    return Character;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (Character);
 
 /***/ }),
 
@@ -462,7 +356,7 @@ var game = new Phaser.Game({
     width: containerNode.clientWidth,
     height: containerNode.clientHeight,
     parent: containerNode,
-    antialias: false
+    antialias: true
 });
 
 game.state.add('Boot', __WEBPACK_IMPORTED_MODULE_0__states_Boot_js__["a" /* default */]);
@@ -606,7 +500,7 @@ var Loading = function () {
             // this.load.setPreloadSprite(loadingBar);
 
             this.mz.config.assets.forEach(function (_ref) {
-                var _game$load, _game$load2, _load;
+                var _load, _load2, _load3, _load4;
 
                 var _ref2 = _toArray(_ref),
                     assetType = _ref2[0],
@@ -614,13 +508,17 @@ var Loading = function () {
 
                 switch (assetType) {
                     case 'pack':
-                        (_game$load = _this.game.load).pack.apply(_game$load, _toConsumableArray(assetParams));
+                        (_load = _this.load).pack.apply(_load, _toConsumableArray(assetParams));
                         break;
                     case 'spritesheet':
-                        (_game$load2 = _this.game.load).spritesheet.apply(_game$load2, _toConsumableArray(assetParams));
+                        (_load2 = _this.load).spritesheet.apply(_load2, _toConsumableArray(assetParams));
                         break;
                     case 'image':
-                        (_load = _this.load).image.apply(_load, _toConsumableArray(assetParams));
+                        (_load3 = _this.load).image.apply(_load3, _toConsumableArray(assetParams));
+                        break;
+                    case 'tilemap':
+                        debugger;
+                        (_load4 = _this.load).tilemap.apply(_load4, _toConsumableArray(assetParams));
                         break;
                 }
             });
@@ -714,34 +612,52 @@ var StartMenu = function () {
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = ({
     level1: {
+        id: 'level1',
         worldWidth: 600,
         worldHeight: 600,
         duration: 2 * 60, // s
-        winningScore: 20,
+        winningScore: 60,
         cops: {
             count: 3,
             speed: {
-                walking: 50,
-                running: 60
+                value: 50,
+                running: 1.2
             },
             fov: {
                 distance: 150,
                 angle: 100
             }
         },
+        press: {
+            count: 3,
+            speed: {
+                value: 50
+            },
+            fov: {
+                distance: 200,
+                angle: 150
+            },
+            duration: 5, // s
+            points: 20
+        },
         protesters: {
             count: 30,
             speed: {
-                walking: 60
+                value: 60
             }
         },
         player: {
             speed: {
-                walking: 120
-            }
+                value: 100,
+                withPoster: 0.6,
+                running: 1.5
+            },
+            stamina: 100,
+            staminaCooldown: 5 // s
         }
     },
     level2: {
+        id: 'level2',
         worldWidth: 800,
         worldHeight: 800,
         duration: 3 * 60, // s
@@ -749,24 +665,40 @@ var StartMenu = function () {
         cops: {
             count: 5,
             speed: {
-                walking: 60,
-                running: 80
+                value: 60,
+                running: 1.2
             },
             fov: {
                 distance: 200,
                 angle: 120
             }
         },
+        press: {
+            count: 5,
+            speed: {
+                value: 50
+            },
+            fov: {
+                distance: 100,
+                angle: 100
+            },
+            duration: 7, //
+            points: 20
+        },
         protesters: {
             count: 30,
             speed: {
-                walking: 60
+                value: 60
             }
         },
         player: {
             speed: {
-                walking: 120
-            }
+                value: 100,
+                withPoster: 0.6,
+                running: 1.5
+            },
+            stamina: 200,
+            staminaCooldown: 5 // s
         }
     }
 });
@@ -826,7 +758,7 @@ var EndMenu = function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(311);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_Protester_js__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(312);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_FOV_js__ = __webpack_require__(313);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(316);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -851,6 +783,7 @@ var Game = function () {
                 score: 0,
                 timePassed: 0, // s
                 eventHandler: null,
+                map: null,
                 objects: {
                     player: null,
                     textScore: null,
@@ -859,6 +792,9 @@ var Game = function () {
                 groups: {
                     protesters: null,
                     cops: null,
+                    copsFOV: null,
+                    press: null,
+                    pressFOV: null,
                     menu: null
                 }
             };
@@ -873,10 +809,14 @@ var Game = function () {
             this.mz.objects.bgTile = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'ground');
             this.mz.objects.bgTile.fixedToCamera = true;
 
-            this.game.add.image(0, 0, this.bitmap);
+            // this.mz.map = this.game.add.tilemap('tilemap', 50, 50);
 
+            this.mz.groups.pressFOV = this.game.add.group();
             this.mz.groups.copsFOV = this.game.add.group();
+
+            this.mz.groups.press = this.game.add.group();
             this.mz.groups.cops = this.game.add.group();
+            this.mz.groups.obstacles = this.game.add.group();
 
             for (var i = 0; i < this.game.world.width; i += 100) {
                 var borderSprite = this.game.add.sprite(i, 0, 'border');
@@ -884,25 +824,39 @@ var Game = function () {
             }
 
             for (var _i = 0; _i < this.mz.level.cops.count; _i++) {
-                var copFOV = new __WEBPACK_IMPORTED_MODULE_3__objects_FOV_js__["a" /* default */]({
-                    game: this.game,
-                    radius: this.mz.level.cops.fov.distance,
-                    angle: this.mz.level.cops.fov.angle
-                });
-                this.mz.groups.copsFOV.add(copFOV.graphics);
-
                 var cop = new __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__["a" /* default */](_extends({
                     game: this.game
                 }, this.getRandomCoordinates(), {
-                    FOV: copFOV,
+                    fov: {
+                        group: this.mz.groups.copsFOV,
+                        distance: this.mz.level.cops.fov.distance,
+                        angle: this.mz.level.cops.fov.angle
+                    },
                     speed: this.mz.level.cops.speed
                 }));
                 this.mz.groups.cops.add(cop.sprite);
                 cop.wander();
             }
 
+            for (var _i2 = 0; _i2 < this.mz.level.press.count; _i2++) {
+                var journalist = new __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__["a" /* default */](_extends({
+                    game: this.game
+                }, this.getRandomCoordinates(), {
+                    fov: {
+                        group: this.mz.groups.pressFOV,
+                        distance: this.mz.level.press.fov.distance,
+                        angle: this.mz.level.press.fov.angle
+                    },
+                    speed: this.mz.level.press.speed,
+                    duration: this.mz.level.press.duration,
+                    points: this.mz.level.press.points
+                }));
+                this.mz.groups.press.add(journalist.sprite);
+                journalist.wander();
+            }
+
             this.mz.groups.protesters = this.game.add.group();
-            for (var _i2 = 0; _i2 < this.mz.level.protesters.count; _i2++) {
+            for (var _i3 = 0; _i3 < this.mz.level.protesters.count; _i3++) {
                 var protester = new __WEBPACK_IMPORTED_MODULE_1__objects_Protester_js__["a" /* default */](_extends({
                     game: this.game
                 }, this.getRandomCoordinates(), {
@@ -914,22 +868,21 @@ var Game = function () {
                 protester.wander();
             }
 
-            this.mz.objects.player = new __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__["a" /* default */]({
+            this.mz.objects.player = new __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__["a" /* default */](_extends({
                 game: this.game,
                 x: this.game.world.centerX,
-                y: this.game.world.centerY,
-                speed: this.mz.level.player.speed
-            });
+                y: this.game.world.centerY
+            }, this.mz.level.player));
             this.game.camera.follow(this.mz.objects.player.sprite);
 
-            for (var _i3 = 0; _i3 < this.game.world.width; _i3 += 100) {
-                var _borderSprite = this.game.add.sprite(_i3, this.game.world.height - 50, 'border');
+            for (var _i4 = 0; _i4 < this.game.world.width; _i4 += 100) {
+                var _borderSprite = this.game.add.sprite(_i4, this.game.world.height - 50, 'border');
                 _borderSprite.scale.set(0.25);
             }
 
             this.mz.groups.menu = this.game.add.group();
             this.mz.groups.menu.fixedToCamera = true;
-            this.mz.objects.textScore = this.game.add.text(this.game.width - 10, 20, 'x' + this.mz.objects.player.scoreGainSpeed + ' ' + this.mz.objects.player.score + ' / ' + this.mz.level.winningScore, {
+            this.mz.objects.textScore = this.game.add.text(this.game.width - 10, 20, '', {
                 font: '25px Arial',
                 fill: '#fff',
                 align: 'right'
@@ -942,7 +895,7 @@ var Game = function () {
             timer.loop(Phaser.Timer.SECOND, this.updateTimer, this);
             timer.start();
 
-            this.mz.objects.textTimer = this.game.add.text(this.game.width - 10, 60, 'this.getFormattedTime(this.mz.timePassed)', {
+            this.mz.objects.textTimer = this.game.add.text(this.game.width - 10, 60, '', {
                 font: '25px Arial',
                 fill: '#fff',
                 align: 'right'
@@ -969,17 +922,19 @@ var Game = function () {
             this.mz.objects.bgTile.tilePosition.set(-this.game.camera.x, -this.game.camera.y);
 
             // count score gaining speed
-            this.mz.groups.cops.forEachExists(function (copSprite) {
-                if (_this.game.physics.arcade.distanceBetween(copSprite, _this.mz.objects.player.sprite) < _this.mz.level.cops.fov.distance) {
-                    _this.mz.objects.player.scoreGainSpeed += 1;
-                }
-            });
+            // this.mz.groups.cops.forEachExists(copSprite => {
+            //     if (Phaser.Point.distance(copSprite, this.mz.objects.player.sprite) < this.mz.level.cops.fov.distance) {
+            //         this.mz.objects.player.scoreGainSpeed += 1;
+            //     }
+            // });
 
             // update score
-            this.mz.score = Math.floor(this.mz.objects.player.score / 1000);
+            this.mz.score = Math.floor(this.mz.objects.player.score);
 
             // draw score
-            this.mz.objects.textScore.setText('x' + this.mz.objects.player.scoreGainSpeed + ' ' + this.mz.score + ' / ' + this.mz.level.winningScore);
+            this.mz.objects.textScore.setText(
+            // `x${this.mz.objects.player.scoreGainSpeed} ${this.mz.score} / ${this.mz.level.winningScore}`
+            this.mz.score + ' / ' + this.mz.level.winningScore);
 
             // update player
             this.mz.objects.player.update();
@@ -987,6 +942,19 @@ var Game = function () {
             // update protesters
             this.mz.groups.protesters.forEachExists(function (sprite) {
                 sprite.mz.update();
+            });
+
+            // update journalists
+            this.mz.groups.press.forEachExists(function (journalistSprite) {
+                var journalist = journalistSprite.mz;
+                var newTarget = null;
+
+                if (journalist.FOV.exists && _this.mz.objects.player.showPoster && journalist.FOV.containsPoint(_this.mz.objects.player.sprite.body.center)) {
+                    newTarget = _this.mz.objects.player.sprite;
+                }
+
+                journalist.follow(newTarget);
+                journalist.update();
             });
 
             // update cops
@@ -1006,7 +974,7 @@ var Game = function () {
                         continue;
                     }
                     if ((protester.sprite === copSprite.mz.target || protester.showPoster) && copSprite.mz.FOV.containsPoint(protester.sprite.body.center)) {
-                        var distanceToProtester = _this.game.physics.arcade.distanceBetween(copSprite, protester.sprite);
+                        var distanceToProtester = Phaser.Point.distance(copSprite, protester.sprite);
                         if (distanceToProtester < distanceToTarget) {
                             newTarget = protester.sprite;
                             distanceToTarget = distanceToProtester;
@@ -1040,12 +1008,6 @@ var Game = function () {
 
                 return cop.target === playerSprite;
             });
-
-            // this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.protesters);
-            // this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.cops);
-            // this.game.physics.arcade.collide(this.mz.groups.cops, this.mz.groups.protesters);
-            // this.game.physics.arcade.collide(this.mz.groups.cops);
-            // this.game.physics.arcade.collide(this.mz.groups.protesters);
 
             this.checkWin();
         }
@@ -1091,6 +1053,9 @@ var Game = function () {
         key: 'endGame',
         value: function endGame() {
             this.mz.groups.cops.forEachExists(function (sprite) {
+                sprite.mz.kill();
+            });
+            this.mz.groups.press.forEachExists(function (sprite) {
                 sprite.mz.kill();
             });
             this.mz.groups.protesters.forEachExists(function (sprite) {
@@ -1146,7 +1111,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var DEFAULT_SCORE_GAIN_SPEED = 1;
+var DEFAULT_SCORE_GAIN_SPEED = 0.1;
 
 var Player = function (_Protester) {
     _inherits(Player, _Protester);
@@ -1155,7 +1120,9 @@ var Player = function (_Protester) {
         var game = _ref.game,
             x = _ref.x,
             y = _ref.y,
-            speed = _ref.speed;
+            speed = _ref.speed,
+            stamina = _ref.stamina,
+            staminaCooldown = _ref.staminaCooldown;
 
         _classCallCheck(this, Player);
 
@@ -1163,17 +1130,20 @@ var Player = function (_Protester) {
 
         _this.score = 0;
         _this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
-        _this.showedPosterAt = null;
-
-        _this.sprite.body.immovable = true;
+        _this.scoreGainStartTime = null;
 
         _this.moveTarget = null;
+        _this.stamina = stamina;
+        _this.maxStamina = stamina;
+        _this.cooldownTimer = _this.game.time.create(false);
+        _this.staminaCooldown = staminaCooldown * 1000;
+
+        _this.progressBar = _this.game.add.graphics();
+        _this.sprite.addChild(_this.progressBar);
 
         // events
         _this.sprite.events.onInputUp.add(_this.handleClick, _this);
         _this.sprite.input.priorityID = 2;
-
-        _this.sprite.body.onMoveComplete.add(_this.resetSpeed, _this);
 
         _this.game.onPause.add(_this.handleGamePause, _this);
         _this.game.onResume.add(_this.handleGameResume, _this);
@@ -1183,7 +1153,8 @@ var Player = function (_Protester) {
             down: _this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
             left: _this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
             right: _this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
-            space: _this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+            space: _this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR),
+            shift: _this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT)
         };
         return _this;
     }
@@ -1191,18 +1162,49 @@ var Player = function (_Protester) {
     _createClass(Player, [{
         key: 'update',
         value: function update() {
+            var _this2 = this;
+
+            this.speed.current = this.speed.value;
+
             _get(Player.prototype.__proto__ || Object.getPrototypeOf(Player.prototype), 'update', this).call(this);
 
-            if (this.showedPosterAt) {
+            if (this.scoreGainStartTime) {
                 this.flushScore();
-                this.showedPosterAt = Date.now();
+                this.scoreGainStartTime = Date.now();
             }
 
             this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
 
+            if (!this.cooldownTimer.running) {
+                if (this.keys.shift.isDown) {
+                    if (this.stamina > 0) {
+                        this.stamina -= 1;
+                        this.speed.current *= this.speed.running;
+                    } else {
+                        this.cooldownTimer.add(this.staminaCooldown, function () {
+                            _this2.cooldownTimer.stop(true);
+                        });
+                        this.cooldownTimer.start();
+                    }
+                } else if (this.stamina < this.maxStamina) {
+                    this.stamina += 1;
+                }
+            } else {
+                this.stamina = this.maxStamina * this.cooldownTimer.ms / this.staminaCooldown;
+            }
+
+            if (this.stamina < this.maxStamina) {
+                this.updateProgressBar(this.stamina / this.maxStamina, this.cooldownTimer.running ? 0xff0000 : 0x00ff00);
+            } else {
+                this.updateProgressBar(null);
+            }
+
+            if (this.showPoster) {
+                this.speed.current *= this.speed.withPoster;
+            }
+
             if (this.keys.up.isDown || this.keys.down.isDown || this.keys.left.isDown || this.keys.right.isDown) {
                 this.stopMoving();
-                this.togglePoster(false);
                 var inputSpeed = this.speed.current / 1000 * 16;
 
                 if (this.keys.up.isDown && this.keys.left.isDown || this.keys.up.isDown && this.keys.right.isDown || this.keys.down.isDown && this.keys.left.isDown || this.keys.down.isDown && this.keys.right.isDown) {
@@ -1221,6 +1223,7 @@ var Player = function (_Protester) {
                     this.sprite.x += inputSpeed;
                 }
             }
+
             if (this.keys.space.justDown) {
                 this.togglePoster();
             }
@@ -1228,7 +1231,7 @@ var Player = function (_Protester) {
     }, {
         key: 'handleGamePause',
         value: function handleGamePause() {
-            if (this.showedPosterAt) {
+            if (this.scoreGainStartTime) {
                 this.flushScore();
             }
         }
@@ -1236,7 +1239,7 @@ var Player = function (_Protester) {
         key: 'handleGameResume',
         value: function handleGameResume() {
             if (this.showPoster) {
-                this.showedPosterAt = Date.now();
+                this.scoreGainStartTime = Date.now();
             }
         }
     }, {
@@ -1259,7 +1262,7 @@ var Player = function (_Protester) {
 
             // count score
             if (on) {
-                this.showedPosterAt = Date.now();
+                this.scoreGainStartTime = Date.now();
             } else {
                 this.flushScore();
             }
@@ -1272,29 +1275,29 @@ var Player = function (_Protester) {
             var x = _ref2.x,
                 y = _ref2.y;
 
-            if (this.sprite.body.moves && this.moveTarget && Math.abs(this.moveTarget.x - x) < 30 && Math.abs(this.moveTarget.y - y) < 30) {
-                this.speed.current += 5;
-            } else {
-                this.resetSpeed();
-            }
+            // if (
+            //     this.sprite.body.moves &&
+            //     this.moveTarget &&
+            //     Math.abs(this.moveTarget.x - x) < 30 &&
+            //     Math.abs(this.moveTarget.y - y) < 30
+            // ) {
+            //     this.speed.current += 5;
+            // } else {
+            //     this.resetSpeed();
+            // }
             this.moveTarget = { x: x, y: y };
             _get(Player.prototype.__proto__ || Object.getPrototypeOf(Player.prototype), 'moveTo', this).call(this, { x: x, y: y });
         }
     }, {
         key: 'flushScore',
         value: function flushScore() {
-            this.score += this.scoreGainSpeed * (Date.now() - this.showedPosterAt);
-            this.showedPosterAt = null;
+            this.score += this.scoreGainSpeed * (Date.now() - this.scoreGainStartTime) / 1000;
+            this.scoreGainStartTime = null;
         }
     }, {
         key: 'stopMoving',
         value: function stopMoving() {
             this.sprite.body.stopMovement(true);
-        }
-    }, {
-        key: 'resetSpeed',
-        value: function resetSpeed() {
-            this.speed.current = this.speed.walking;
         }
     }]);
 
@@ -1309,7 +1312,8 @@ var Player = function (_Protester) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Character_js__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Follower_js__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(313);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -1322,100 +1326,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var Cop = function (_Character) {
-    _inherits(Cop, _Character);
+
+var Cop = function (_Follower) {
+    _inherits(Cop, _Follower);
 
     function Cop(_ref) {
         var game = _ref.game,
             x = _ref.x,
             y = _ref.y,
-            FOV = _ref.FOV,
+            fov = _ref.fov,
             speed = _ref.speed;
 
         _classCallCheck(this, Cop);
 
         var _this = _possibleConstructorReturn(this, (Cop.__proto__ || Object.getPrototypeOf(Cop)).call(this, { game: game, x: x, y: y, speed: speed, spriteKey: 'cop' }));
 
-        _this.FOV = FOV;
-
-        _this.stayingTimeout = null;
-        _this.target = null;
+        _this.FOV = new __WEBPACK_IMPORTED_MODULE_1__FOV_js__["a" /* default */]({
+            game: _this.game,
+            radius: fov.distance,
+            angle: fov.angle
+        });
+        fov.group.add(_this.FOV.graphics);
         return _this;
     }
 
     _createClass(Cop, [{
         key: 'update',
         value: function update() {
+            this.speed.current = this.speed.value;
             if (this.target) {
+                this.speed.current *= this.speed.running;
                 this.moveTo(this.target);
             }
 
-            this.FOV.update({
-                x: this.sprite.x,
-                y: this.sprite.y,
-                angle: this.sprite.body.angle,
-                mode: this.target ? 'active' : 'normal'
-            });
-        }
-    }, {
-        key: 'wander',
-        value: function wander() {
-            var _this2 = this;
-
-            this.sprite.body.onMoveComplete.removeAll();
-            var nextAction = this.game.rnd.between(0, 2);
-            if (nextAction === 0) {
-                clearTimeout(this.stayingTimeout);
-                this.stayingTimeout = setTimeout(function () {
-                    _this2.wander();
-                }, this.game.rnd.between(1000, 3000));
-            } else {
-                this.sprite.body.onMoveComplete.addOnce(this.wander, this);
-                this.moveTo(this.getNextCoords());
-            }
-        }
-    }, {
-        key: 'moveTo',
-        value: function moveTo(_ref2) {
-            var x = _ref2.x,
-                y = _ref2.y;
-
-            this.speed.current = this.target ? this.speed.running : this.speed.walking;
-            _get(Cop.prototype.__proto__ || Object.getPrototypeOf(Cop.prototype), 'moveTo', this).call(this, { x: x, y: y });
-        }
-    }, {
-        key: 'stopMoving',
-        value: function stopMoving() {
-            this.sprite.body.stopMovement(true);
-            clearTimeout(this.stayingTimeout);
-        }
-    }, {
-        key: 'follow',
-        value: function follow(target) {
-            if (target === this.target) {
-                return;
-            }
-
-            this.target = target;
-            // stop regular moving
-            this.stopMoving();
-
-            // if target is gone
-            if (!this.target) {
-                this.wander();
-            }
-        }
-    }, {
-        key: 'kill',
-        value: function kill() {
-            this.stopMoving();
-            this.sprite.body.onMoveComplete.removeAll();
-            this.sprite.kill();
+            _get(Cop.prototype.__proto__ || Object.getPrototypeOf(Cop.prototype), 'update', this).call(this);
         }
     }]);
 
     return Cop;
-}(__WEBPACK_IMPORTED_MODULE_0__Character_js__["a" /* default */]);
+}(__WEBPACK_IMPORTED_MODULE_0__Follower_js__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Cop);
 
@@ -1438,16 +1387,20 @@ var FOV = function () {
     function FOV(_ref) {
         var game = _ref.game,
             radius = _ref.radius,
-            angle = _ref.angle;
+            angle = _ref.angle,
+            _ref$colors = _ref.colors,
+            colors = _ref$colors === undefined ? COLORS : _ref$colors;
 
         _classCallCheck(this, FOV);
 
         this.game = game;
         this.radius = radius;
         this.halfViewAngle = this.game.math.degToRad(angle / 2);
+        this.colors = colors;
 
         this.graphics = this.game.add.graphics(0, 0);
         this.center = null;
+        this.exists = true;
     }
 
     _createClass(FOV, [{
@@ -1468,7 +1421,7 @@ var FOV = function () {
             var arcStart = [x + Math.cos(startAngle) * this.radius, y + Math.sin(startAngle) * this.radius];
 
             this.graphics.clear();
-            this.graphics.beginFill(COLORS[mode || 'normal'], 0.4);
+            this.graphics.beginFill(this.colors[mode || 'normal'], 0.4);
             this.graphics.moveTo(x, y);
             (_graphics = this.graphics).lineTo.apply(_graphics, arcStart);
             this.graphics.arc(x, y, this.radius, startAngle, endAngle, false, 10);
@@ -1484,11 +1437,11 @@ var FOV = function () {
             if (!this.center) {
                 return false;
             }
-            var distance = this.game.physics.arcade.distanceToXY(this.center, x, y);
+            var distance = Phaser.Point.distance(this.center, { x: x, y: y });
             if (distance > this.radius) {
                 return false;
             }
-            var angle = this.game.physics.arcade.angleToXY(this.center, x, y);
+            var angle = Phaser.Point.angle({ x: x, y: y }, this.center);
 
             var leftAngle = this.angle - this.halfViewAngle;
             var rightAngle = this.angle + this.halfViewAngle;
@@ -1501,12 +1454,362 @@ var FOV = function () {
 
             return leftAngle <= angle && angle <= rightAngle;
         }
+    }, {
+        key: 'kill',
+        value: function kill() {
+            this.graphics.destroy();
+            this.exists = false;
+        }
     }]);
 
     return FOV;
 }();
 
 /* harmony default export */ __webpack_exports__["a"] = (FOV);
+
+/***/ }),
+
+/***/ 314:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Prefab = function () {
+    function Prefab(_ref) {
+        var game = _ref.game,
+            x = _ref.x,
+            y = _ref.y,
+            speed = _ref.speed,
+            spriteKey = _ref.spriteKey;
+
+        _classCallCheck(this, Prefab);
+
+        this.game = game;
+
+        this.speed = _extends({
+            current: speed.value
+        }, speed);
+
+        this.sprite = this.game.add.sprite(x, y, spriteKey, 0);
+        this.sprite.mz = this;
+        this.sprite.anchor.set(0.5);
+        this.sprite.scale.set(0.5);
+
+        this.game.physics.arcade.enable(this.sprite);
+        this.sprite.body.collideWorldBounds = true;
+        // this.sprite.body.bounce.set(0);
+
+        this.attractionPoint = null;
+    }
+
+    _createClass(Prefab, [{
+        key: 'moveTo',
+        value: function moveTo(coords) {
+            var distance = Phaser.Point.distance(this.sprite, coords);
+            var duration = distance / this.speed.current * 1000; // ms
+            var angle = this.game.math.radToDeg(Phaser.Point.angle(coords, this.sprite));
+
+            this.sprite.body.moveTo(duration, distance, angle);
+        }
+    }, {
+        key: 'getNextCoords',
+        value: function getNextCoords() {
+            var directions = [];
+            if (this.attractionPoint && this.game.rnd.between(0, 1)) {
+                if (this.attractionPoint.x > this.sprite.x) {
+                    directions.push('right');
+                } else {
+                    directions.push('left');
+                }
+                if (this.attractionPoint.y > this.sprite.y) {
+                    directions.push('bottom');
+                } else {
+                    directions.push('top');
+                }
+            } else {
+                if (this.sprite.x > this.sprite.width) {
+                    directions.push('left');
+                }
+                if (this.sprite.x < this.game.world.width - this.sprite.width) {
+                    directions.push('right');
+                }
+                if (this.sprite.y > this.sprite.height) {
+                    directions.push('top');
+                }
+                if (this.sprite.y < this.game.world.height - this.sprite.height) {
+                    directions.push('bottom');
+                }
+            }
+
+            var direction = this.game.rnd.between(0, directions.length - 1);
+            var x = this.sprite.x;
+            var y = this.sprite.y;
+            switch (directions[direction]) {
+                case 'left':
+                    x = this.game.rnd.between(this.sprite.width, this.sprite.x - 1);
+                    break;
+                case 'right':
+                    x = this.game.rnd.between(this.sprite.x + 1, this.game.world.width - this.sprite.width);
+                    break;
+                case 'top':
+                    y = this.game.rnd.between(this.sprite.height, this.sprite.y - 1);
+                    break;
+                case 'bottom':
+                    y = this.game.rnd.between(this.sprite.y + 1, this.game.world.height - this.sprite.height);
+                    break;
+            }
+            return { x: Math.round(x), y: Math.round(y) };
+        }
+    }, {
+        key: 'updateProgressBar',
+        value: function updateProgressBar(percent) {
+            var color = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0x00ff00;
+
+            var y = -60;
+            var width = 50;
+            var height = 10;
+            this.progressBar.clear();
+            if (percent) {
+                if (percent > 1) {
+                    percent = 1;
+                }
+                this.progressBar.lineStyle(2, color, 1);
+                this.progressBar.drawRect(-width / 2, y - height / 2, width, height);
+                this.progressBar.lineStyle(height, color, 1);
+                this.progressBar.moveTo(-width / 2, y);
+                this.progressBar.lineTo(Math.round(width * (-0.5 + percent)), y);
+            }
+        }
+    }, {
+        key: 'kill',
+        value: function kill() {
+            this.sprite.kill();
+        }
+    }]);
+
+    return Prefab;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Prefab);
+
+/***/ }),
+
+/***/ 316:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Follower_js__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(313);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var Journalist = function (_Follower) {
+    _inherits(Journalist, _Follower);
+
+    function Journalist(_ref) {
+        var game = _ref.game,
+            x = _ref.x,
+            y = _ref.y,
+            fov = _ref.fov,
+            speed = _ref.speed,
+            duration = _ref.duration,
+            points = _ref.points;
+
+        _classCallCheck(this, Journalist);
+
+        var _this = _possibleConstructorReturn(this, (Journalist.__proto__ || Object.getPrototypeOf(Journalist)).call(this, { game: game, x: x, y: y, speed: speed, spriteKey: 'journalist' }));
+
+        _this.FOV = new __WEBPACK_IMPORTED_MODULE_1__FOV_js__["a" /* default */]({
+            game: _this.game,
+            radius: fov.distance,
+            angle: fov.angle,
+            colors: {
+                normal: 0xdddddd,
+                active: 0xffffff
+            }
+        });
+        fov.group.add(_this.FOV.graphics);
+
+        _this.progressBar = _this.game.add.graphics();
+        _this.sprite.addChild(_this.progressBar);
+
+        _this.shootingTimer = _this.game.time.create();
+        _this.duration = duration * 1000;
+        _this.points = points;
+        return _this;
+    }
+
+    _createClass(Journalist, [{
+        key: 'update',
+        value: function update() {
+            if (this.target) {
+                this.turnTo(this.target);
+                this.updateProgressBar(this.shootingTimer.ms / this.duration);
+            }
+
+            _get(Journalist.prototype.__proto__ || Object.getPrototypeOf(Journalist.prototype), 'update', this).call(this);
+        }
+    }, {
+        key: 'turnTo',
+        value: function turnTo(_ref2) {
+            var x = _ref2.x,
+                y = _ref2.y;
+
+            this.sprite.body.angle = Phaser.Point.angle({ x: x, y: y }, this.sprite);
+        }
+    }, {
+        key: 'follow',
+        value: function follow(target) {
+            if (target === this.target) {
+                return;
+            }
+
+            _get(Journalist.prototype.__proto__ || Object.getPrototypeOf(Journalist.prototype), 'follow', this).call(this, target);
+
+            if (this.target) {
+                this.shootingTimer.add(this.duration, this.finishShooting, this);
+                this.shootingTimer.start();
+            } else {
+                this.shootingTimer.stop(true);
+                this.updateProgressBar(null);
+            }
+        }
+    }, {
+        key: 'finishShooting',
+        value: function finishShooting() {
+            this.target.mz.score += this.points;
+            this.follow(null);
+            this.updateProgressBar(null);
+            this.FOV.kill();
+        }
+    }]);
+
+    return Journalist;
+}(__WEBPACK_IMPORTED_MODULE_0__Follower_js__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Journalist);
+
+/***/ }),
+
+/***/ 317:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/85912d63e15bd0a260defd481c4d917e.png";
+
+/***/ }),
+
+/***/ 318:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Prefab_js__ = __webpack_require__(314);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var Follower = function (_Prefab) {
+    _inherits(Follower, _Prefab);
+
+    function Follower(_ref) {
+        var game = _ref.game,
+            x = _ref.x,
+            y = _ref.y,
+            speed = _ref.speed,
+            spriteKey = _ref.spriteKey;
+
+        _classCallCheck(this, Follower);
+
+        var _this = _possibleConstructorReturn(this, (Follower.__proto__ || Object.getPrototypeOf(Follower)).call(this, { game: game, x: x, y: y, speed: speed, spriteKey: spriteKey }));
+
+        _this.stayingTimer = _this.game.time.create(false);
+        _this.target = null;
+        return _this;
+    }
+
+    _createClass(Follower, [{
+        key: 'update',
+        value: function update() {
+            this.FOV.update({
+                x: this.sprite.x,
+                y: this.sprite.y,
+                angle: this.sprite.body.angle,
+                mode: this.target ? 'active' : 'normal'
+            });
+        }
+    }, {
+        key: 'wander',
+        value: function wander() {
+            this.sprite.body.onMoveComplete.removeAll();
+            var nextAction = this.game.rnd.between(0, 2);
+            if (nextAction === 0) {
+                this.stayingTimer.stop(true);
+                this.stayingTimer.add(this.game.rnd.between(1000, 3000), this.wander, this);
+                this.stayingTimer.start();
+            } else {
+                this.sprite.body.onMoveComplete.addOnce(this.wander, this);
+                this.moveTo(this.getNextCoords());
+            }
+        }
+    }, {
+        key: 'stopMoving',
+        value: function stopMoving() {
+            this.sprite.body.onMoveComplete.removeAll(this);
+            this.sprite.body.stopMovement(true);
+            this.stayingTimer.stop(true);
+        }
+    }, {
+        key: 'follow',
+        value: function follow(target) {
+            if (target === this.target) {
+                return;
+            }
+
+            this.target = target;
+            // stop regular moving
+            this.stopMoving();
+
+            // if target is gone
+            if (!this.target) {
+                this.wander();
+            }
+        }
+    }, {
+        key: 'kill',
+        value: function kill() {
+            this.stopMoving();
+            this.sprite.body.onMoveComplete.removeAll();
+
+            _get(Follower.prototype.__proto__ || Object.getPrototypeOf(Follower.prototype), 'kill', this).call(this);
+        }
+    }]);
+
+    return Follower;
+}(__WEBPACK_IMPORTED_MODULE_0__Prefab_js__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Follower);
 
 /***/ })
 

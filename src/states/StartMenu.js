@@ -34,7 +34,8 @@ class StartMenu {
     handleClickPlay(level) {
         this.state.start('Loading', true, false, {
             assets: [
-                ['pack', level, null, JSON.stringify(pack)]
+                ['pack', level, null, JSON.stringify(pack)],
+                // ['tilemap', 'tilemap', null, JSON.stringify(levels[level].tilemap), Phaser.Tilemap.TILED_JSON]
             ],
             nextState: [
                 'Game', true, false, levels[level]

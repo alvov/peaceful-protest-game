@@ -1,9 +1,9 @@
-class Character {
+class Prefab {
     constructor({ game, x, y, speed, spriteKey }) {
         this.game = game;
 
         this.speed = {
-            current: speed.walking,
+            current: speed.value,
             ...speed
         };
 
@@ -19,10 +19,10 @@ class Character {
         this.attractionPoint = null;
     }
 
-    moveTo({ x, y }) {
-        const distance = this.game.physics.arcade.distanceToXY(this.sprite, x, y);
+    moveTo(coords) {
+        const distance = Phaser.Point.distance(this.sprite, coords);
         const duration = distance / this.speed.current * 1000; // ms
-        const angle = this.game.math.radToDeg(this.game.physics.arcade.angleToXY(this.sprite, x, y));
+        const angle = this.game.math.radToDeg(Phaser.Point.angle(coords, this.sprite));
 
         this.sprite.body.moveTo(duration, distance, angle);
     }
@@ -74,6 +74,27 @@ class Character {
         }
         return { x: Math.round(x), y: Math.round(y) };
     }
+
+    updateProgressBar(percent, color = 0x00ff00) {
+        const y = -60;
+        const width = 50;
+        const height = 10;
+        this.progressBar.clear();
+        if (percent) {
+            if (percent > 1) {
+                percent = 1;
+            }
+            this.progressBar.lineStyle(2, color, 1);
+            this.progressBar.drawRect(-width / 2, y - height / 2, width, height);
+            this.progressBar.lineStyle(height, color, 1);
+            this.progressBar.moveTo(-width / 2, y);
+            this.progressBar.lineTo(Math.round(width * (-0.5 + percent)), y);
+        }
+    }
+
+    kill() {
+        this.sprite.kill();
+    }
 }
 
-export default Character;
+export default Prefab;

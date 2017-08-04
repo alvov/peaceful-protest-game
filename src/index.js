@@ -10,7 +10,7 @@ const game = new Phaser.Game({
     width: containerNode.clientWidth,
     height: containerNode.clientHeight,
     parent: containerNode,
-    antialias: false
+    antialias: true
 });
 
 game.state.add('Boot', Boot);
