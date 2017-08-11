@@ -16,10 +16,17 @@ export default {
         },
         {
             type: 'spritesheet',
-            key: 'buttons',
-            url: require('./buttons.png'),
+            key: 'playButton',
+            url: require('./playButton.png'),
             frameWidth: 100,
             frameHeight: 100
+        },
+        {
+            type: 'spritesheet',
+            key: 'soundButtons',
+            url: require('./soundButtons.png'),
+            frameWidth: 50,
+            frameHeight: 50
         },
         {
             type: 'audio',

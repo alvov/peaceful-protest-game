@@ -61,8 +61,6 @@ class Player extends Protester {
             this.scoreGainStartTime = Date.now();
         }
 
-        this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
-
         const areMovingKeysDown = this.keys.up.isDown ||
             this.keys.down.isDown ||
             this.keys.left.isDown ||
@@ -121,6 +119,9 @@ class Player extends Protester {
                 this.speed.current,
                 this.sprite.body.velocity
             );
+
+            this.resetClickSpeedUp();
+
         } else if (
             this.keys.up.justUp ||
             this.keys.down.justUp ||
@@ -186,28 +187,18 @@ class Player extends Protester {
         super.togglePoster(on);
     }
 
-    // setMoveTarget({ x, y }) {
-        // if (
-        //     this.sprite.body.isMoving &&
-        //     this.moveTarget &&
-        //     this.game.math.fuzzyEqual(this.moveTarget.x, x, 5) &&
-        //     this.game.math.fuzzyEqual(this.moveTarget.y, y, 5)
-        // ) {
-        //     this.clickSpeedUp *= this.speed.clickSpeedUp;
-        // } else {
-        //     this.resetSpeed();
-        // }
-        // super.setMoveTarget();
-    // }
-
     flushScore() {
         this.score += this.scoreGainSpeed * (Date.now() - this.scoreGainStartTime) / 1000;
         this.scoreGainStartTime = null;
     }
 
-    // resetSpeed() {
-    //     this.clickSpeedUp = 1;
-    // }
+    resetScoreGainSpeed() {
+        this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
+    }
+
+    resetClickSpeedUp() {
+        this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
+    }
 }
 
 export default Player;

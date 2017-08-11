@@ -84,58 +84,64 @@
         frameHeight: 150
     }, {
         type: 'spritesheet',
-        key: 'buttons',
+        key: 'playButton',
         url: __webpack_require__(306),
         frameWidth: 100,
         frameHeight: 100
     }, {
-        type: 'audio',
-        key: 'punch01',
-        urls: __webpack_require__(307)
+        type: 'spritesheet',
+        key: 'soundButtons',
+        url: __webpack_require__(307),
+        frameWidth: 50,
+        frameHeight: 50
     }, {
         type: 'audio',
-        key: 'punch02',
+        key: 'punch01',
         urls: __webpack_require__(308)
     }, {
         type: 'audio',
-        key: 'constr01',
+        key: 'punch02',
         urls: __webpack_require__(309)
     }, {
         type: 'audio',
-        key: 'constr02',
+        key: 'constr01',
         urls: __webpack_require__(310)
     }, {
         type: 'audio',
-        key: 'applause',
+        key: 'constr02',
         urls: __webpack_require__(311)
     }, {
         type: 'audio',
-        key: 'boo',
+        key: 'applause',
         urls: __webpack_require__(312)
     }, {
         type: 'audio',
-        key: 'croud',
+        key: 'boo',
         urls: __webpack_require__(313)
     }, {
         type: 'audio',
-        key: 'cough01',
+        key: 'croud',
         urls: __webpack_require__(314)
     }, {
         type: 'audio',
-        key: 'cough02',
+        key: 'cough01',
         urls: __webpack_require__(315)
     }, {
         type: 'audio',
-        key: 'scream01',
+        key: 'cough02',
         urls: __webpack_require__(316)
     }, {
         type: 'audio',
-        key: 'scream02',
+        key: 'scream01',
         urls: __webpack_require__(317)
     }, {
         type: 'audio',
-        key: 'scream03',
+        key: 'scream02',
         urls: __webpack_require__(318)
+    }, {
+        type: 'audio',
+        key: 'scream03',
+        urls: __webpack_require__(319)
     }],
     level1: [{
         type: 'spritesheet',
@@ -152,7 +158,7 @@
     }, {
         type: 'spritesheet',
         key: 'cop',
-        url: __webpack_require__(319),
+        url: __webpack_require__(320),
         frameWidth: 60,
         frameHeight: 92
     }, {
@@ -200,7 +206,7 @@
     }, {
         type: 'image',
         key: 'ground',
-        url: __webpack_require__(320),
+        url: __webpack_require__(321),
         overwrite: false
     }],
     level2: [{
@@ -218,7 +224,7 @@
     }, {
         type: 'spritesheet',
         key: 'cop',
-        url: __webpack_require__(321),
+        url: __webpack_require__(322),
         frameWidth: 88,
         frameHeight: 98
     }, {
@@ -266,7 +272,7 @@
     }, {
         type: 'image',
         key: 'ground',
-        url: __webpack_require__(322),
+        url: __webpack_require__(323),
         overwrite: false
     }]
 });
@@ -290,7 +296,7 @@ module.exports = __webpack_require__.p + "assets/07cceb7a8ec87d8476bdf361029569d
 /***/ 118:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/40d6c7b277395126638f66d1cfa0ea70.png";
+module.exports = __webpack_require__.p + "assets/0aaced1e5ea46f7bc1184da27058f2cd.png";
 
 /***/ }),
 
@@ -597,10 +603,10 @@ var FOV = function () {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states_Boot_js__ = __webpack_require__(303);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_EndMenu_js__ = __webpack_require__(326);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__states_Game_js__ = __webpack_require__(327);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_EndMenu_js__ = __webpack_require__(327);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__states_Game_js__ = __webpack_require__(328);
 
 
 
@@ -694,116 +700,123 @@ module.exports = __webpack_require__.p + "assets/121104892eaea3f65969e7beb7d9f45
 /***/ 307:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/0cb89b881decdf87d1ccaba4ae7aaffb.mp3";
+module.exports = __webpack_require__.p + "assets/14ca0f6714021de1e9776c79ad48e916.png";
 
 /***/ }),
 
 /***/ 308:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/dca004f04dec60da50cca8fecc4161f2.mp3";
+module.exports = __webpack_require__.p + "assets/0cb89b881decdf87d1ccaba4ae7aaffb.mp3";
 
 /***/ }),
 
 /***/ 309:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/ea37474f79dcccbabbf0d580f2bb0546.mp3";
+module.exports = __webpack_require__.p + "assets/dca004f04dec60da50cca8fecc4161f2.mp3";
 
 /***/ }),
 
 /***/ 310:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/36edf0347bf9e00998b05194df1c9686.mp3";
+module.exports = __webpack_require__.p + "assets/ea37474f79dcccbabbf0d580f2bb0546.mp3";
 
 /***/ }),
 
 /***/ 311:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/3745bf01cd4446437f37de7991ad805b.mp3";
+module.exports = __webpack_require__.p + "assets/36edf0347bf9e00998b05194df1c9686.mp3";
 
 /***/ }),
 
 /***/ 312:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/52b53826ba253bf501d879893845b5f4.mp3";
+module.exports = __webpack_require__.p + "assets/3745bf01cd4446437f37de7991ad805b.mp3";
 
 /***/ }),
 
 /***/ 313:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/15a327358f08be2e673ef27c2e5dcaa1.mp3";
+module.exports = __webpack_require__.p + "assets/52b53826ba253bf501d879893845b5f4.mp3";
 
 /***/ }),
 
 /***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/6632e8a1ef01b6e295413e6fa1606858.mp3";
+module.exports = __webpack_require__.p + "assets/15a327358f08be2e673ef27c2e5dcaa1.mp3";
 
 /***/ }),
 
 /***/ 315:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/2db995ce7f0661c455b95602348d7c50.mp3";
+module.exports = __webpack_require__.p + "assets/6632e8a1ef01b6e295413e6fa1606858.mp3";
 
 /***/ }),
 
 /***/ 316:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/47a2e653592ce5afb0cf0081d002b9e0.mp3";
+module.exports = __webpack_require__.p + "assets/2db995ce7f0661c455b95602348d7c50.mp3";
 
 /***/ }),
 
 /***/ 317:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/7be6517708f7eb625f588cbf7f0a9344.mp3";
+module.exports = __webpack_require__.p + "assets/47a2e653592ce5afb0cf0081d002b9e0.mp3";
 
 /***/ }),
 
 /***/ 318:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/05b4ea2cf7bcddf26622cdaafb40b881.mp3";
+module.exports = __webpack_require__.p + "assets/7be6517708f7eb625f588cbf7f0a9344.mp3";
 
 /***/ }),
 
 /***/ 319:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/9684cf6695725e59bc1e0e397c19fac1.png";
+module.exports = __webpack_require__.p + "assets/05b4ea2cf7bcddf26622cdaafb40b881.mp3";
 
 /***/ }),
 
 /***/ 320:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/7780fada5b5def9a73f068e7dee87e98.jpg";
+module.exports = __webpack_require__.p + "assets/9684cf6695725e59bc1e0e397c19fac1.png";
 
 /***/ }),
 
 /***/ 321:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/b5628f192689135fb9661a6eb8c1977a.png";
+module.exports = __webpack_require__.p + "assets/7780fada5b5def9a73f068e7dee87e98.jpg";
 
 /***/ }),
 
 /***/ 322:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/a1a7aca8cdcabb0b6f29774a2b1eb971.jpg";
+module.exports = __webpack_require__.p + "assets/b5628f192689135fb9661a6eb8c1977a.png";
 
 /***/ }),
 
 /***/ 323:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/a1a7aca8cdcabb0b6f29774a2b1eb971.jpg";
+
+/***/ }),
+
+/***/ 324:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -892,11 +905,11 @@ var Loading = function () {
 
 /***/ }),
 
-/***/ 324:
+/***/ 325:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__levels_js__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__levels_js__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_pack_js__ = __webpack_require__(115);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -947,7 +960,7 @@ var StartMenu = function () {
 
 /***/ }),
 
-/***/ 325:
+/***/ 326:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1048,7 +1061,7 @@ var StartMenu = function () {
 
 /***/ }),
 
-/***/ 326:
+/***/ 327:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1084,7 +1097,7 @@ var EndMenu = function () {
             this.score = this.game.add.text(this.world.centerX, 2 / 3 * this.world.centerY + 31, '\u0412\u0430\u0448 \u0441\u0447\u0435\u0442: ' + this.mz.config.score);
             this.score.anchor.setTo(0.5);
 
-            this.replayButton = this.game.add.button(this.world.centerX, this.world.centerY, 'buttons', this.handleClickPlay, this);
+            this.replayButton = this.game.add.button(this.world.centerX, this.world.centerY, 'playButton', this.handleClickPlay, this);
             this.replayButton.anchor.setTo(0.5);
         }
     }, {
@@ -1104,14 +1117,14 @@ var EndMenu = function () {
 
 /***/ }),
 
-/***/ 327:
+/***/ 328:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(328);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(329);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_Protester_js__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(331);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__constants_js__ = __webpack_require__(44);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -1143,6 +1156,7 @@ var Game = function () {
                     player: null,
                     textScore: null,
                     bgTile: null,
+                    buttonSound: null,
                     audio: {}
                 },
                 groups: {
@@ -1286,12 +1300,13 @@ var Game = function () {
             this.mz.objects.textTimer.setShadow(2, 2, 'rgba(0, 0, 0, .5)', 0);
             this.mz.groups.menu.add(this.mz.objects.textTimer);
 
+            this.mz.objects.buttonSound = this.game.add.button(0, 0, 'soundButtons', this.handleClickSound, this, 1, 1, 1, 1, this.mz.groups.menu);
             // this.scale.setResizeCallback(this.handleResize, this);
 
             // click on field
-            this.mz.eventHandler = this.game.add.sprite(0, 0);
+            this.mz.eventHandler = this.game.add.sprite(0, 100);
             this.mz.eventHandler.fixedToCamera = true;
-            this.mz.eventHandler.scale.setTo(this.game.width, this.game.height);
+            this.mz.eventHandler.scale.setTo(this.game.width, this.game.height - 100);
             this.mz.eventHandler.inputEnabled = true;
             this.mz.eventHandler.input.priorityID = 1;
             this.mz.eventHandler.events.onInputUp.add(this.handleClick, this);
@@ -1301,24 +1316,25 @@ var Game = function () {
         value: function update() {
             var _this = this;
 
+            // update background
             this.mz.objects.bgTile.tilePosition.set(-this.game.camera.x, -this.game.camera.y);
 
             this.playRandomSound();
 
             // count score gaining speed
-            // this.mz.groups.cops.forEachExists(copSprite => {
-            //     if (Phaser.Point.distance(copSprite, this.mz.objects.player.sprite) < this.mz.level.cops.fov.distance) {
-            //         this.mz.objects.player.scoreGainSpeed += 1;
-            //     }
-            // });
+            this.mz.objects.player.resetScoreGainSpeed();
+            this.mz.groups.cops.forEachExists(function (copSprite) {
+                if (Phaser.Point.distance(copSprite, _this.mz.objects.player.sprite) < _this.mz.level.cops.fov.distance) {
+                    _this.mz.objects.player.scoreGainSpeed += 1;
+                }
+            });
 
-            // update score
+            // update menu
             this.mz.score = Math.floor(this.mz.objects.player.score);
-
             // draw score
-            this.mz.objects.textScore.setText(
-            // `x${this.mz.objects.player.scoreGainSpeed} ${this.mz.score} / ${this.mz.level.winningScore}`
-            this.mz.score + ' / ' + this.mz.level.winningScore);
+            this.mz.objects.textScore.setText('x' + Math.round(this.mz.objects.player.scoreGainSpeed) + ' ' + this.mz.score + ' / ' + this.mz.level.winningScore);
+
+            this.mz.objects.buttonSound.frame = this.game.sound.mute ? 1 : 0;
 
             // update player
             this.mz.objects.player.update();
@@ -1361,11 +1377,15 @@ var Game = function () {
                     var distanceToTarget = Infinity;
                     for (var i = 0; i <= _this.mz.groups.protesters.children.length; i++) {
                         var protester = i === _this.mz.groups.protesters.children.length ? _this.mz.objects.player : _this.mz.groups.protesters.getAt(i).mz;
-                        if (!protester.sprite.exists) {
+                        if (!protester.sprite.exists || !cop.FOV.containsPoint(protester.sprite.body.center)) {
                             continue;
                         }
-                        if ((protester.sprite === cop.target || protester.showPoster) && cop.FOV.containsPoint(protester.sprite.body.center)) {
+                        if (protester.sprite === cop.target || protester.showPoster) {
                             var distanceToProtester = Phaser.Point.distance(copSprite, protester.sprite);
+                            // give higher priority to current target
+                            if (protester.sprite === cop.target) {
+                                distanceToProtester *= 2 / 3;
+                            }
                             if (distanceToProtester < distanceToTarget) {
                                 newTarget = protester.sprite;
                                 distanceToTarget = distanceToProtester;
@@ -1435,10 +1455,18 @@ var Game = function () {
     }, {
         key: 'handleClick',
         value: function handleClick(sprite, pointer) {
-            this.mz.objects.player.setMoveTarget({
+            var coords = {
                 x: pointer.x + this.game.camera.x,
                 y: pointer.y + this.game.camera.y
-            });
+            };
+            var player = this.mz.objects.player;
+            if (player.sprite.body.isMoving && player.moveTarget && this.game.math.fuzzyEqual(player.moveTarget.x, coords.x, 5) && this.game.math.fuzzyEqual(player.moveTarget.y, coords.y, 5)) {
+                player.clickSpeedUp *= player.speed.clickSpeedUp;
+                this.mz.objects.player.setMoveTarget(player.moveTarget);
+            } else {
+                player.resetClickSpeedUp();
+                this.mz.objects.player.setMoveTarget(coords);
+            }
         }
     }, {
         key: 'handlePlayerKill',
@@ -1458,6 +1486,11 @@ var Game = function () {
         key: 'handleFinishShooting',
         value: function handleFinishShooting(points) {
             this.mz.objects.player.score += points;
+        }
+    }, {
+        key: 'handleClickSound',
+        value: function handleClickSound() {
+            this.game.sound.mute = !this.game.sound.mute;
         }
 
         // handleResize(scale, parentBounds) {
@@ -1552,7 +1585,7 @@ var Game = function () {
 
 /***/ }),
 
-/***/ 328:
+/***/ 329:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1645,8 +1678,6 @@ var Player = function (_Protester) {
                 this.scoreGainStartTime = Date.now();
             }
 
-            this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
-
             var areMovingKeysDown = this.keys.up.isDown || this.keys.down.isDown || this.keys.left.isDown || this.keys.right.isDown;
 
             if (!this.cooldownTimer.running) {
@@ -1700,6 +1731,8 @@ var Player = function (_Protester) {
                 this.game.physics.arcade.velocityFromAngle(angles.reduce(function (value, sum) {
                     return sum + value;
                 }, 0) / angles.length, this.speed.current, this.sprite.body.velocity);
+
+                this.resetClickSpeedUp();
             } else if (this.keys.up.justUp || this.keys.down.justUp || this.keys.left.justUp || this.keys.right.justUp) {
                 this.sprite.body.stop();
             }
@@ -1767,32 +1800,22 @@ var Player = function (_Protester) {
 
             _get(Player.prototype.__proto__ || Object.getPrototypeOf(Player.prototype), 'togglePoster', this).call(this, on);
         }
-
-        // setMoveTarget({ x, y }) {
-        // if (
-        //     this.sprite.body.isMoving &&
-        //     this.moveTarget &&
-        //     this.game.math.fuzzyEqual(this.moveTarget.x, x, 5) &&
-        //     this.game.math.fuzzyEqual(this.moveTarget.y, y, 5)
-        // ) {
-        //     this.clickSpeedUp *= this.speed.clickSpeedUp;
-        // } else {
-        //     this.resetSpeed();
-        // }
-        // super.setMoveTarget();
-        // }
-
     }, {
         key: 'flushScore',
         value: function flushScore() {
             this.score += this.scoreGainSpeed * (Date.now() - this.scoreGainStartTime) / 1000;
             this.scoreGainStartTime = null;
         }
-
-        // resetSpeed() {
-        //     this.clickSpeedUp = 1;
-        // }
-
+    }, {
+        key: 'resetScoreGainSpeed',
+        value: function resetScoreGainSpeed() {
+            this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
+        }
+    }, {
+        key: 'resetClickSpeedUp',
+        value: function resetClickSpeedUp() {
+            this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
+        }
     }]);
 
     return Player;
@@ -1802,7 +1825,7 @@ var Player = function (_Protester) {
 
 /***/ }),
 
-/***/ 329:
+/***/ 330:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1957,7 +1980,7 @@ var Cop = function (_Prefab) {
 
 /***/ }),
 
-/***/ 330:
+/***/ 331:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

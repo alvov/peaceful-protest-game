@@ -24,6 +24,7 @@ class Game {
                 player: null,
                 textScore: null,
                 bgTile: null,
+                buttonSound: null,
                 audio: {}
             },
             groups: {
@@ -185,37 +186,48 @@ class Game {
         this.mz.objects.textTimer.setShadow(2, 2, 'rgba(0, 0, 0, .5)', 0);
         this.mz.groups.menu.add(this.mz.objects.textTimer);
 
+        this.mz.objects.buttonSound = this.game.add.button(
+            0,
+            0,
+            'soundButtons',
+            this.handleClickSound,
+            this,
+            1, 1, 1, 1,
+            this.mz.groups.menu
+        );
         // this.scale.setResizeCallback(this.handleResize, this);
 
         // click on field
-        this.mz.eventHandler = this.game.add.sprite(0, 0);
+        this.mz.eventHandler = this.game.add.sprite(0, 100);
         this.mz.eventHandler.fixedToCamera = true;
-        this.mz.eventHandler.scale.setTo(this.game.width, this.game.height);
+        this.mz.eventHandler.scale.setTo(this.game.width, this.game.height - 100);
         this.mz.eventHandler.inputEnabled = true;
         this.mz.eventHandler.input.priorityID = 1;
         this.mz.eventHandler.events.onInputUp.add(this.handleClick, this);
     }
 
     update() {
+        // update background
         this.mz.objects.bgTile.tilePosition.set(-this.game.camera.x, -this.game.camera.y);
 
         this.playRandomSound();
 
         // count score gaining speed
-        // this.mz.groups.cops.forEachExists(copSprite => {
-        //     if (Phaser.Point.distance(copSprite, this.mz.objects.player.sprite) < this.mz.level.cops.fov.distance) {
-        //         this.mz.objects.player.scoreGainSpeed += 1;
-        //     }
-        // });
+        this.mz.objects.player.resetScoreGainSpeed();
+        this.mz.groups.cops.forEachExists(copSprite => {
+            if (Phaser.Point.distance(copSprite, this.mz.objects.player.sprite) < this.mz.level.cops.fov.distance) {
+                this.mz.objects.player.scoreGainSpeed += 1;
+            }
+        });
 
-        // update score
+        // update menu
         this.mz.score = Math.floor(this.mz.objects.player.score);
-
         // draw score
         this.mz.objects.textScore.setText(
-            // `x${this.mz.objects.player.scoreGainSpeed} ${this.mz.score} / ${this.mz.level.winningScore}`
-            `${this.mz.score} / ${this.mz.level.winningScore}`
+            `x${Math.round(this.mz.objects.player.scoreGainSpeed)} ${this.mz.score} / ${this.mz.level.winningScore}`
         );
+
+        this.mz.objects.buttonSound.frame = this.game.sound.mute ? 1 : 0;
 
         // update player
         this.mz.objects.player.update();
@@ -264,17 +276,18 @@ class Game {
                     const protester = i === this.mz.groups.protesters.children.length ?
                         this.mz.objects.player :
                         this.mz.groups.protesters.getAt(i).mz;
-                    if (!protester.sprite.exists) {
+                    if (!protester.sprite.exists || !cop.FOV.containsPoint(protester.sprite.body.center)) {
                         continue;
                     }
                     if (
-                        (
-                            protester.sprite === cop.target ||
-                            protester.showPoster
-                        ) &&
-                        cop.FOV.containsPoint(protester.sprite.body.center)
+                        protester.sprite === cop.target ||
+                        protester.showPoster
                     ) {
-                        const distanceToProtester = Phaser.Point.distance(copSprite, protester.sprite);
+                        let distanceToProtester = Phaser.Point.distance(copSprite, protester.sprite);
+                        // give higher priority to current target
+                        if (protester.sprite === cop.target) {
+                            distanceToProtester *= 2 / 3;
+                        }
                         if (distanceToProtester < distanceToTarget) {
                             newTarget = protester.sprite;
                             distanceToTarget = distanceToProtester;
@@ -358,10 +371,23 @@ class Game {
     }
 
     handleClick(sprite, pointer) {
-        this.mz.objects.player.setMoveTarget({
+        const coords = {
             x: pointer.x + this.game.camera.x,
             y: pointer.y + this.game.camera.y
-        });
+        };
+        const player = this.mz.objects.player;
+        if (
+            player.sprite.body.isMoving &&
+            player.moveTarget &&
+            this.game.math.fuzzyEqual(player.moveTarget.x, coords.x, 5) &&
+            this.game.math.fuzzyEqual(player.moveTarget.y, coords.y, 5)
+        ) {
+            player.clickSpeedUp *= player.speed.clickSpeedUp;
+            this.mz.objects.player.setMoveTarget(player.moveTarget);
+        } else {
+            player.resetClickSpeedUp();
+            this.mz.objects.player.setMoveTarget(coords);
+        }
     }
 
     handlePlayerKill() {
@@ -379,6 +405,10 @@ class Game {
 
     handleFinishShooting(points) {
         this.mz.objects.player.score += points;
+    }
+
+    handleClickSound() {
+        this.game.sound.mute = !this.game.sound.mute;
     }
 
     // handleResize(scale, parentBounds) {
