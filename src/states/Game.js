@@ -23,7 +23,8 @@ class Game {
             objects: {
                 player: null,
                 textScore: null,
-                bgTile: null
+                bgTile: null,
+                audio: {}
             },
             groups: {
                 cars: null,
@@ -44,6 +45,17 @@ class Game {
 
         this.mz.objects.bgTile = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'ground');
         this.mz.objects.bgTile.fixedToCamera = true;
+
+        this.mz.objects.audio.constr1 = this.game.add.audio('constr01');
+        this.mz.objects.audio.constr2 = this.game.add.audio('constr02');
+        this.mz.objects.audio.constr1.loopFull();
+        this.mz.objects.audio.constr2.loopFull(0.5);
+        this.mz.objects.audio.random = [
+            this.game.add.audio('boo'),
+            this.game.add.audio('croud'),
+            this.game.add.audio('cough01'),
+            this.game.add.audio('cough02')
+        ];
 
         // this.mz.map = this.game.add.tilemap('tilemap', 50, 50);
 
@@ -117,6 +129,7 @@ class Game {
                 ...this.getRandomCoordinates(),
                 speed: this.mz.level.protesters.speed,
                 spriteKey: `protester${this.game.rnd.between(1, 3)}`,
+                audioKey: `scream0${this.game.rnd.between(1, 2)}`,
                 activity: this.game.rnd.between(10, 20)
             });
             this.mz.groups.protesters.add(protester.sprite);
@@ -185,6 +198,8 @@ class Game {
 
     update() {
         this.mz.objects.bgTile.tilePosition.set(-this.game.camera.x, -this.game.camera.y);
+
+        this.playRandomSound();
 
         // count score gaining speed
         // this.mz.groups.cops.forEachExists(copSprite => {
@@ -382,6 +397,9 @@ class Game {
     }
 
     proceedToJail(protesterSprite, copSprite) {
+        // beat him up a little
+        protesterSprite.damage(0.8);
+
         let closestCarCoords = null;
         let minDistance = Infinity;
         this.mz.groups.cars.forEach(carSprite => {
@@ -412,10 +430,20 @@ class Game {
     }
 
     endGame(win) {
+        this.mz.objects.audio.constr1.stop();
+        this.mz.objects.audio.constr2.stop();
+
         this.state.start('EndMenu', true, false, {
             win,
             score: this.mz.score
         });
+    }
+
+    playRandomSound() {
+        if (this.game.rnd.between(0, 200) === 0) {
+            const randomNumber = this.game.rnd.between(0, this.mz.objects.audio.random.length - 1);
+            this.mz.objects.audio.random[randomNumber].play('', 0, 0.5);
+        }
     }
 
     getRandomCoordinates() {

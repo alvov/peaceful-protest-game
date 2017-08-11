@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 301);
+/******/ 	return __webpack_require__(__webpack_require__.s = 302);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -73,21 +73,69 @@
     initial: [{
         type: 'spritesheet',
         key: 'level01',
-        url: __webpack_require__(303),
-        frameWidth: 300,
-        frameHeight: 150
-    }, {
-        type: 'spritesheet',
-        key: 'level02',
         url: __webpack_require__(304),
         frameWidth: 300,
         frameHeight: 150
     }, {
         type: 'spritesheet',
-        key: 'buttons',
+        key: 'level02',
         url: __webpack_require__(305),
+        frameWidth: 300,
+        frameHeight: 150
+    }, {
+        type: 'spritesheet',
+        key: 'buttons',
+        url: __webpack_require__(306),
         frameWidth: 100,
         frameHeight: 100
+    }, {
+        type: 'audio',
+        key: 'punch01',
+        urls: __webpack_require__(307)
+    }, {
+        type: 'audio',
+        key: 'punch02',
+        urls: __webpack_require__(308)
+    }, {
+        type: 'audio',
+        key: 'constr01',
+        urls: __webpack_require__(309)
+    }, {
+        type: 'audio',
+        key: 'constr02',
+        urls: __webpack_require__(310)
+    }, {
+        type: 'audio',
+        key: 'applause',
+        urls: __webpack_require__(311)
+    }, {
+        type: 'audio',
+        key: 'boo',
+        urls: __webpack_require__(312)
+    }, {
+        type: 'audio',
+        key: 'croud',
+        urls: __webpack_require__(313)
+    }, {
+        type: 'audio',
+        key: 'cough01',
+        urls: __webpack_require__(314)
+    }, {
+        type: 'audio',
+        key: 'cough02',
+        urls: __webpack_require__(315)
+    }, {
+        type: 'audio',
+        key: 'scream01',
+        urls: __webpack_require__(316)
+    }, {
+        type: 'audio',
+        key: 'scream02',
+        urls: __webpack_require__(317)
+    }, {
+        type: 'audio',
+        key: 'scream03',
+        urls: __webpack_require__(318)
     }],
     level1: [{
         type: 'spritesheet',
@@ -104,14 +152,14 @@
     }, {
         type: 'spritesheet',
         key: 'cop',
-        url: __webpack_require__(306),
-        frameWidth: 62,
-        frameHeight: 94
+        url: __webpack_require__(319),
+        frameWidth: 60,
+        frameHeight: 92
     }, {
         type: 'spritesheet',
         key: 'journalist',
         url: __webpack_require__(118),
-        frameWidth: 72,
+        frameWidth: 64,
         frameHeight: 98
     }, {
         type: 'spritesheet',
@@ -123,30 +171,36 @@
         type: 'spritesheet',
         key: 'protester1',
         url: __webpack_require__(120),
-        frameWidth: 72,
-        frameHeight: 98
+        frameWidth: 64,
+        frameHeight: 96
     }, {
         type: 'spritesheet',
         key: 'protester2',
         url: __webpack_require__(121),
         frameWidth: 60,
-        frameHeight: 98
+        frameHeight: 92
     }, {
         type: 'spritesheet',
         key: 'protester3',
         url: __webpack_require__(122),
-        frameWidth: 72,
-        frameHeight: 98
+        frameWidth: 60,
+        frameHeight: 94
+    }, {
+        type: 'spritesheet',
+        key: 'injury',
+        url: __webpack_require__(123),
+        frameWidth: 60,
+        frameHeight: 62
     }, {
         type: 'spritesheet',
         key: 'poster',
-        url: __webpack_require__(123),
+        url: __webpack_require__(124),
         frameWidth: 120,
         frameHeight: 142
     }, {
         type: 'image',
         key: 'ground',
-        url: __webpack_require__(307),
+        url: __webpack_require__(320),
         overwrite: false
     }],
     level2: [{
@@ -164,14 +218,14 @@
     }, {
         type: 'spritesheet',
         key: 'cop',
-        url: __webpack_require__(308),
+        url: __webpack_require__(321),
         frameWidth: 88,
         frameHeight: 98
     }, {
         type: 'spritesheet',
         key: 'journalist',
         url: __webpack_require__(118),
-        frameWidth: 72,
+        frameWidth: 64,
         frameHeight: 98
     }, {
         type: 'spritesheet',
@@ -183,30 +237,36 @@
         type: 'spritesheet',
         key: 'protester1',
         url: __webpack_require__(120),
-        frameWidth: 72,
-        frameHeight: 98
+        frameWidth: 64,
+        frameHeight: 96
     }, {
         type: 'spritesheet',
         key: 'protester2',
         url: __webpack_require__(121),
         frameWidth: 60,
-        frameHeight: 98
+        frameHeight: 92
     }, {
         type: 'spritesheet',
         key: 'protester3',
         url: __webpack_require__(122),
-        frameWidth: 72,
-        frameHeight: 98
+        frameWidth: 60,
+        frameHeight: 94
+    }, {
+        type: 'spritesheet',
+        key: 'injury',
+        url: __webpack_require__(123),
+        frameWidth: 60,
+        frameHeight: 62
     }, {
         type: 'spritesheet',
         key: 'poster',
-        url: __webpack_require__(123),
+        url: __webpack_require__(124),
         frameWidth: 120,
         frameHeight: 142
     }, {
         type: 'image',
         key: 'ground',
-        url: __webpack_require__(309),
+        url: __webpack_require__(322),
         overwrite: false
     }]
 });
@@ -230,46 +290,53 @@ module.exports = __webpack_require__.p + "assets/07cceb7a8ec87d8476bdf361029569d
 /***/ 118:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/85912d63e15bd0a260defd481c4d917e.png";
+module.exports = __webpack_require__.p + "assets/40d6c7b277395126638f66d1cfa0ea70.png";
 
 /***/ }),
 
 /***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/5d93c76a90d1610418d01050cfd0eb4d.png";
+module.exports = __webpack_require__.p + "assets/604e3154773cfd38255a729725fe6a6a.png";
 
 /***/ }),
 
 /***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/33c5c53c054b4c33222f241dc2e47d50.png";
+module.exports = __webpack_require__.p + "assets/ad22f6fa2a2d464d1823a7051f687b00.png";
 
 /***/ }),
 
 /***/ 121:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/53a52f18f16a2791169f5f2b8fc2139d.png";
+module.exports = __webpack_require__.p + "assets/94e8053cfb7f27730be409cc9dfddded.png";
 
 /***/ }),
 
 /***/ 122:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/95ed17c814a40ec7eea84ee109fa6207.png";
+module.exports = __webpack_require__.p + "assets/dc666250acb77dfcd34bc8493085ecdd.png";
 
 /***/ }),
 
 /***/ 123:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/d24af22e7dae1337a8cc1ffe5e7b1aa4.png";
+module.exports = __webpack_require__.p + "assets/7424a1c3d3dbc4e4998ba7416d770482.png";
 
 /***/ }),
 
 /***/ 124:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/d24af22e7dae1337a8cc1ffe5e7b1aa4.png";
+
+/***/ }),
+
+/***/ 125:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -308,9 +375,15 @@ var Protester = function (_Prefab) {
         _this.sprite.inputEnabled = true;
         _this.sprite.input.priorityID = 1;
 
+        _this.injurySprite = _this.sprite.addChild(_this.game.make.sprite(-30, -_this.sprite.height / 2 / _this.sprite.scale.y - 2, 'injury'));
+        _this.injurySprite.bringToTop();
+        _this.injurySprite.exists = false;
+
         _this.posterSprite = _this.sprite.addChild(_this.game.make.sprite(-80, -120, 'poster', 0));
         _this.posterSprite.bringToTop();
         _this.posterSprite.exists = false;
+
+        _this.audioScream = _this.game.add.audio(_this.props.audioKey);
 
         _this.showPoster = false;
         return _this;
@@ -319,6 +392,7 @@ var Protester = function (_Prefab) {
     _createClass(Protester, [{
         key: 'update',
         value: function update() {
+            this.injurySprite.exists = this.sprite.health !== 1;
             this.posterSprite.exists = this.showPoster;
 
             _get(Protester.prototype.__proto__ || Object.getPrototypeOf(Protester.prototype), 'update', this).call(this);
@@ -368,7 +442,7 @@ var Protester = function (_Prefab) {
                 this.stayingTimer.add(this.game.rnd.between(3000, 6000), this.wander, this);
                 this.stayingTimer.start();
 
-                this.togglePoster(nextAction < activity / 2.5);
+                this.togglePoster(nextAction <= activity / 5);
             }
         }
     }, {
@@ -376,6 +450,9 @@ var Protester = function (_Prefab) {
         value: function togglePoster() {
             var on = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : !this.showPoster;
 
+            if (this.showPoster !== on && on) {
+                this.audioScream.play();
+            }
             this.showPoster = on;
         }
     }, {
@@ -394,7 +471,7 @@ var Protester = function (_Prefab) {
 
 /***/ }),
 
-/***/ 125:
+/***/ 126:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -514,16 +591,16 @@ var FOV = function () {
 
 /***/ }),
 
-/***/ 301:
+/***/ 302:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states_Boot_js__ = __webpack_require__(302);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__ = __webpack_require__(310);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__ = __webpack_require__(311);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_EndMenu_js__ = __webpack_require__(313);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__states_Game_js__ = __webpack_require__(314);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states_Boot_js__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__ = __webpack_require__(323);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_EndMenu_js__ = __webpack_require__(326);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__states_Game_js__ = __webpack_require__(327);
 
 
 
@@ -548,7 +625,7 @@ game.state.start('Boot');
 
 /***/ }),
 
-/***/ 302:
+/***/ 303:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -593,56 +670,140 @@ var Boot = function () {
 
 /***/ }),
 
-/***/ 303:
+/***/ 304:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/f92bc2f5d7aa8c5e8ccf000dd5f2268c.jpg";
 
 /***/ }),
 
-/***/ 304:
+/***/ 305:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/c7118db4b46452ebb66ca9f1f72e7d53.jpg";
 
 /***/ }),
 
-/***/ 305:
+/***/ 306:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/121104892eaea3f65969e7beb7d9f45f.png";
 
 /***/ }),
 
-/***/ 306:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "assets/f0898c0eb2cb50754fc66aa5edf79983.png";
-
-/***/ }),
-
 /***/ 307:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/7780fada5b5def9a73f068e7dee87e98.jpg";
+module.exports = __webpack_require__.p + "assets/0cb89b881decdf87d1ccaba4ae7aaffb.mp3";
 
 /***/ }),
 
 /***/ 308:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/b5628f192689135fb9661a6eb8c1977a.png";
+module.exports = __webpack_require__.p + "assets/dca004f04dec60da50cca8fecc4161f2.mp3";
 
 /***/ }),
 
 /***/ 309:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/a1a7aca8cdcabb0b6f29774a2b1eb971.jpg";
+module.exports = __webpack_require__.p + "assets/ea37474f79dcccbabbf0d580f2bb0546.mp3";
 
 /***/ }),
 
 /***/ 310:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/36edf0347bf9e00998b05194df1c9686.mp3";
+
+/***/ }),
+
+/***/ 311:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/3745bf01cd4446437f37de7991ad805b.mp3";
+
+/***/ }),
+
+/***/ 312:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/52b53826ba253bf501d879893845b5f4.mp3";
+
+/***/ }),
+
+/***/ 313:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/15a327358f08be2e673ef27c2e5dcaa1.mp3";
+
+/***/ }),
+
+/***/ 314:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/6632e8a1ef01b6e295413e6fa1606858.mp3";
+
+/***/ }),
+
+/***/ 315:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/2db995ce7f0661c455b95602348d7c50.mp3";
+
+/***/ }),
+
+/***/ 316:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/47a2e653592ce5afb0cf0081d002b9e0.mp3";
+
+/***/ }),
+
+/***/ 317:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/7be6517708f7eb625f588cbf7f0a9344.mp3";
+
+/***/ }),
+
+/***/ 318:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/05b4ea2cf7bcddf26622cdaafb40b881.mp3";
+
+/***/ }),
+
+/***/ 319:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/9684cf6695725e59bc1e0e397c19fac1.png";
+
+/***/ }),
+
+/***/ 320:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/7780fada5b5def9a73f068e7dee87e98.jpg";
+
+/***/ }),
+
+/***/ 321:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/b5628f192689135fb9661a6eb8c1977a.png";
+
+/***/ }),
+
+/***/ 322:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/a1a7aca8cdcabb0b6f29774a2b1eb971.jpg";
+
+/***/ }),
+
+/***/ 323:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -731,11 +892,11 @@ var Loading = function () {
 
 /***/ }),
 
-/***/ 311:
+/***/ 324:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__levels_js__ = __webpack_require__(312);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__levels_js__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_pack_js__ = __webpack_require__(115);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -786,7 +947,7 @@ var StartMenu = function () {
 
 /***/ }),
 
-/***/ 312:
+/***/ 325:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -798,7 +959,7 @@ var StartMenu = function () {
         duration: 2 * 60, // s
         winningScore: 60,
         cops: {
-            count: 3,
+            count: 5,
             speed: {
                 value: 50,
                 running: 1.7
@@ -844,7 +1005,7 @@ var StartMenu = function () {
         duration: 3 * 60, // s
         winningScore: 100,
         cops: {
-            count: 5,
+            count: 7,
             speed: {
                 value: 60,
                 running: 1.7
@@ -887,7 +1048,7 @@ var StartMenu = function () {
 
 /***/ }),
 
-/***/ 313:
+/***/ 326:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -943,14 +1104,14 @@ var EndMenu = function () {
 
 /***/ }),
 
-/***/ 314:
+/***/ 327:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(315);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_Protester_js__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(316);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(317);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(328);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_Protester_js__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(330);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__constants_js__ = __webpack_require__(44);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -981,7 +1142,8 @@ var Game = function () {
                 objects: {
                     player: null,
                     textScore: null,
-                    bgTile: null
+                    bgTile: null,
+                    audio: {}
                 },
                 groups: {
                     cars: null,
@@ -1003,6 +1165,12 @@ var Game = function () {
 
             this.mz.objects.bgTile = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'ground');
             this.mz.objects.bgTile.fixedToCamera = true;
+
+            this.mz.objects.audio.constr1 = this.game.add.audio('constr01');
+            this.mz.objects.audio.constr2 = this.game.add.audio('constr02');
+            this.mz.objects.audio.constr1.loopFull();
+            this.mz.objects.audio.constr2.loopFull(0.5);
+            this.mz.objects.audio.random = [this.game.add.audio('boo'), this.game.add.audio('croud'), this.game.add.audio('cough01'), this.game.add.audio('cough02')];
 
             // this.mz.map = this.game.add.tilemap('tilemap', 50, 50);
 
@@ -1073,6 +1241,7 @@ var Game = function () {
                 }, this.getRandomCoordinates(), {
                     speed: this.mz.level.protesters.speed,
                     spriteKey: 'protester' + this.game.rnd.between(1, 3),
+                    audioKey: 'scream0' + this.game.rnd.between(1, 2),
                     activity: this.game.rnd.between(10, 20)
                 }));
                 this.mz.groups.protesters.add(protester.sprite);
@@ -1133,6 +1302,8 @@ var Game = function () {
             var _this = this;
 
             this.mz.objects.bgTile.tilePosition.set(-this.game.camera.x, -this.game.camera.y);
+
+            this.playRandomSound();
 
             // count score gaining speed
             // this.mz.groups.cops.forEachExists(copSprite => {
@@ -1308,6 +1479,9 @@ var Game = function () {
     }, {
         key: 'proceedToJail',
         value: function proceedToJail(protesterSprite, copSprite) {
+            // beat him up a little
+            protesterSprite.damage(0.8);
+
             var closestCarCoords = null;
             var minDistance = Infinity;
             this.mz.groups.cars.forEach(function (carSprite) {
@@ -1337,10 +1511,21 @@ var Game = function () {
     }, {
         key: 'endGame',
         value: function endGame(win) {
+            this.mz.objects.audio.constr1.stop();
+            this.mz.objects.audio.constr2.stop();
+
             this.state.start('EndMenu', true, false, {
                 win: win,
                 score: this.mz.score
             });
+        }
+    }, {
+        key: 'playRandomSound',
+        value: function playRandomSound() {
+            if (this.game.rnd.between(0, 200) === 0) {
+                var randomNumber = this.game.rnd.between(0, this.mz.objects.audio.random.length - 1);
+                this.mz.objects.audio.random[randomNumber].play('', 0, 0.5);
+            }
         }
     }, {
         key: 'getRandomCoordinates',
@@ -1367,11 +1552,11 @@ var Game = function () {
 
 /***/ }),
 
-/***/ 315:
+/***/ 328:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Protester_js__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Protester_js__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(44);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1402,7 +1587,7 @@ var Player = function (_Protester) {
 
         _classCallCheck(this, Player);
 
-        var _this = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, { game: game, x: x, y: y, speed: speed, spriteKey: 'player' }));
+        var _this = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, { game: game, x: x, y: y, speed: speed, spriteKey: 'player', audioKey: 'scream03' }));
 
         _this.score = 0;
         _this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
@@ -1617,12 +1802,12 @@ var Player = function (_Protester) {
 
 /***/ }),
 
-/***/ 316:
+/***/ 329:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Prefab_js__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(44);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1658,6 +1843,8 @@ var Cop = function (_Prefab) {
             angle: fov.angle
         });
         fov.group.add(_this.FOV.graphics);
+
+        _this.audioPunches = [_this.game.add.audio('punch01'), _this.game.add.audio('punch02')];
 
         _this.target = null;
         _this.returnCoords = null;
@@ -1729,6 +1916,10 @@ var Cop = function (_Prefab) {
                         this.FOV.kill();
                         this.returnCoords = { x: this.sprite.x, y: this.sprite.y };
                         this.setMoveTarget(jailCoords);
+
+                        if (this.mode !== __WEBPACK_IMPORTED_MODULE_2__constants_js__["a" /* COP_MODE_CONVOY */]) {
+                            this.audioPunches[this.game.rnd.between(0, 1)].play();
+                        }
                         break;
                     }
             }
@@ -1766,12 +1957,12 @@ var Cop = function (_Prefab) {
 
 /***/ }),
 
-/***/ 317:
+/***/ 330:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Prefab_js__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(44);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1821,6 +2012,8 @@ var Journalist = function (_Prefab) {
 
         _this.shootingTimer = _this.game.time.create();
         _this.duration = _this.props.duration * 1000;
+
+        _this.audioFinishShooting = _this.game.add.audio('applause');
 
         _this.target = null;
         return _this;
@@ -1914,6 +2107,8 @@ var Journalist = function (_Prefab) {
             this.FOV.kill();
 
             this.setMode(__WEBPACK_IMPORTED_MODULE_2__constants_js__["g" /* JOURNALIST_MODE_WANDER */]);
+
+            this.audioFinishShooting.play();
         }
     }, {
         key: 'kill',

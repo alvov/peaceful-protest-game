@@ -28,6 +28,8 @@ class Journalist extends Prefab {
         this.shootingTimer = this.game.time.create();
         this.duration = this.props.duration * 1000;
 
+        this.audioFinishShooting = this.game.add.audio('applause');
+
         this.target = null;
     }
 
@@ -101,6 +103,8 @@ class Journalist extends Prefab {
         this.FOV.kill();
 
         this.setMode(JOURNALIST_MODE_WANDER);
+
+        this.audioFinishShooting.play();
     }
 
     kill() {

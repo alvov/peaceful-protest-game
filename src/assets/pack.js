@@ -20,7 +20,67 @@ export default {
             url: require('./buttons.png'),
             frameWidth: 100,
             frameHeight: 100
-        }
+        },
+        {
+            type: 'audio',
+            key: 'punch01',
+            urls: require('./audio/punch01.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'punch02',
+            urls: require('./audio/punch02.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'constr01',
+            urls: require('./audio/constr01.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'constr02',
+            urls: require('./audio/constr02.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'applause',
+            urls: require('./audio/applause.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'boo',
+            urls: require('./audio/boo.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'croud',
+            urls: require('./audio/croud.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'cough01',
+            urls: require('./audio/cough01.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'cough02',
+            urls: require('./audio/cough02.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'scream01',
+            urls: require('./audio/scream01.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'scream02',
+            urls: require('./audio/scream02.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'scream03',
+            urls: require('./audio/scream03.mp3')
+        },
     ],
     level1: [
         {
@@ -41,14 +101,14 @@ export default {
             type: 'spritesheet',
             key: 'cop',
             url: require('./cop02.png'),
-            frameWidth: 62,
-            frameHeight: 94
+            frameWidth: 60,
+            frameHeight: 92
         },
         {
             type: 'spritesheet',
             key: 'journalist',
             url: require('./journalist01.png'),
-            frameWidth: 72,
+            frameWidth: 64,
             frameHeight: 98
         },
         {
@@ -62,22 +122,29 @@ export default {
             type: 'spritesheet',
             key: 'protester1',
             url: require('./protester01.png'),
-            frameWidth: 72,
-            frameHeight: 98
+            frameWidth: 64,
+            frameHeight: 96
         },
         {
             type: 'spritesheet',
             key: 'protester2',
             url: require('./protester02.png'),
             frameWidth: 60,
-            frameHeight: 98
+            frameHeight: 92
         },
         {
             type: 'spritesheet',
             key: 'protester3',
             url: require('./protester03.png'),
-            frameWidth: 72,
-            frameHeight: 98
+            frameWidth: 60,
+            frameHeight: 94
+        },
+        {
+            type: 'spritesheet',
+            key: 'injury',
+            url: require('./injury.png'),
+            frameWidth: 60,
+            frameHeight: 62
         },
         {
             type: 'spritesheet',
@@ -119,7 +186,7 @@ export default {
             type: 'spritesheet',
             key: 'journalist',
             url: require('./journalist01.png'),
-            frameWidth: 72,
+            frameWidth: 64,
             frameHeight: 98
         },
         {
@@ -133,22 +200,29 @@ export default {
             type: 'spritesheet',
             key: 'protester1',
             url: require('./protester01.png'),
-            frameWidth: 72,
-            frameHeight: 98
+            frameWidth: 64,
+            frameHeight: 96
         },
         {
             type: 'spritesheet',
             key: 'protester2',
             url: require('./protester02.png'),
             frameWidth: 60,
-            frameHeight: 98
+            frameHeight: 92
         },
         {
             type: 'spritesheet',
             key: 'protester3',
             url: require('./protester03.png'),
-            frameWidth: 72,
-            frameHeight: 98
+            frameWidth: 60,
+            frameHeight: 94
+        },
+        {
+            type: 'spritesheet',
+            key: 'injury',
+            url: require('./injury.png'),
+            frameWidth: 60,
+            frameHeight: 62
         },
         {
             type: 'spritesheet',

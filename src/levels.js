@@ -6,7 +6,7 @@ export default {
         duration: 2 * 60, // s
         winningScore: 60,
         cops: {
-            count: 3,
+            count: 5,
             speed: {
                 value: 50,
                 running: 1.7
@@ -52,7 +52,7 @@ export default {
         duration: 3 * 60, // s
         winningScore: 100,
         cops: {
-            count: 5,
+            count: 7,
             speed: {
                 value: 60,
                 running: 1.7

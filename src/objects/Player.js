@@ -8,7 +8,7 @@ const DEFAULT_CLICK_SPEED_UP = 1;
 
 class Player extends Protester {
     constructor({ game, x, y, speed, stamina, staminaCooldown }) {
-        super({ game, x, y, speed, spriteKey: 'player' });
+        super({ game, x, y, speed, spriteKey: 'player', audioKey: 'scream03' });
 
         this.score = 0;
         this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;

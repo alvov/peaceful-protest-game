@@ -35,7 +35,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(jpg|png)$/,
+                test: /\.(jpg|png|mp3)$/,
                 loader: 'file-loader',
                 query: {
                     outputPath: 'assets/'

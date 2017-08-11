@@ -11,14 +11,27 @@ class Protester extends Prefab {
         this.sprite.inputEnabled = true;
         this.sprite.input.priorityID = 1;
 
+        this.injurySprite = this.sprite.addChild(
+            this.game.make.sprite(
+                -30,
+                -this.sprite.height / 2 / this.sprite.scale.y - 2,
+                'injury'
+            )
+        );
+        this.injurySprite.bringToTop();
+        this.injurySprite.exists = false;
+
         this.posterSprite = this.sprite.addChild(this.game.make.sprite(-80, -120, 'poster', 0));
         this.posterSprite.bringToTop();
         this.posterSprite.exists = false;
+
+        this.audioScream = this.game.add.audio(this.props.audioKey);
 
         this.showPoster = false;
     }
 
     update() {
+        this.injurySprite.exists = this.sprite.health !== 1;
         this.posterSprite.exists = this.showPoster;
 
         super.update();
@@ -59,11 +72,14 @@ class Protester extends Prefab {
             this.stayingTimer.add(this.game.rnd.between(3000, 6000), this.wander, this);
             this.stayingTimer.start();
 
-            this.togglePoster(nextAction < activity / 2.5);
+            this.togglePoster(nextAction <= activity / 5);
         }
     }
 
     togglePoster(on = !this.showPoster) {
+        if (this.showPoster !== on && on) {
+            this.audioScream.play();
+        }
         this.showPoster = on;
     }
 

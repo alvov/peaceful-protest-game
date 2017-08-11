@@ -19,6 +19,11 @@ class Cop extends Prefab {
         });
         fov.group.add(this.FOV.graphics);
 
+        this.audioPunches = [
+            this.game.add.audio('punch01'),
+            this.game.add.audio('punch02')
+        ];
+
         this.target = null;
         this.returnCoords = null;
     }
@@ -77,6 +82,10 @@ class Cop extends Prefab {
                 this.FOV.kill();
                 this.returnCoords = { x: this.sprite.x, y: this.sprite.y };
                 this.setMoveTarget(jailCoords);
+
+                if (this.mode !== COP_MODE_CONVOY) {
+                    this.audioPunches[this.game.rnd.between(0, 1)].play();
+                }
                 break;
             }
         }
