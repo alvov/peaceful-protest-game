@@ -1,8 +1,12 @@
 import Prefab from './Prefab.js';
+import {
+    PROTESTER_MODE_WANDER,
+    PROTESTER_MODE_ARRESTED
+} from '../constants.js';
 
 class Protester extends Prefab {
-    constructor({ game, x, y, speed, spriteKey, activity }) {
-        super({ game, x, y, speed, spriteKey });
+    constructor({ game, x, y, speed, spriteKey, ...props }) {
+        super({ game, x, y, speed, spriteKey, props });
 
         this.sprite.inputEnabled = true;
         this.sprite.input.priorityID = 1;
@@ -11,28 +15,51 @@ class Protester extends Prefab {
         this.posterSprite.bringToTop();
         this.posterSprite.exists = false;
 
-        this.activity = activity;
         this.showPoster = false;
-        this.stayingTimer = this.game.time.create(false);
     }
 
     update() {
         this.posterSprite.exists = this.showPoster;
+
+        super.update();
+    }
+
+    setMode(mode, props = {}) {
+        switch (mode) {
+            case PROTESTER_MODE_WANDER: {
+                this.wander();
+                break;
+            }
+            case PROTESTER_MODE_ARRESTED: {
+                const { jailCoords, speed } = props;
+                // clean up previous state
+                if (this.mode === PROTESTER_MODE_WANDER) {
+                    this.stopWandering();
+                }
+                this.togglePoster(false);
+                this.speed.current = speed;
+                this.setMoveTarget(jailCoords);
+                break;
+            }
+        }
+
+        super.setMode(mode);
     }
 
     wander() {
-        this.sprite.body.onMoveComplete.removeAll();
-        const nextAction = this.game.rnd.between(0, this.activity);
+        this.sprite.body.onMoveComplete.remove(this.wander, this);
+        const { activity } = this.props;
+        const nextAction = this.game.rnd.between(0, activity);
         if (nextAction === 0) {
-            this.sprite.body.onMoveComplete.addOnce(this.wander, this);
+            this.sprite.body.onMoveComplete.add(this.wander, this);
             this.togglePoster(false);
-            this.moveTo(this.getNextCoords());
+            this.setMoveTarget(this.getNextCoords());
         } else {
             this.stayingTimer.stop(true);
             this.stayingTimer.add(this.game.rnd.between(3000, 6000), this.wander, this);
             this.stayingTimer.start();
 
-            this.togglePoster(nextAction < 4);
+            this.togglePoster(nextAction < activity / 2.5);
         }
     }
 
@@ -41,8 +68,7 @@ class Protester extends Prefab {
     }
 
     kill() {
-        this.stayingTimer.stop(true);
-        this.sprite.body.onMoveComplete.removeAll();
+        this.stopWandering();
 
         super.kill();
     }

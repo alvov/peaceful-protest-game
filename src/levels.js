@@ -9,7 +9,7 @@ export default {
             count: 3,
             speed: {
                 value: 50,
-                running: 1.2
+                running: 1.7
             },
             fov: {
                 distance: 150,
@@ -38,6 +38,7 @@ export default {
             speed: {
                 value: 100,
                 withPoster: 0.6,
+                clickSpeedUp: 1.05,
                 running: 1.5
             },
             stamina: 100,
@@ -54,7 +55,7 @@ export default {
             count: 5,
             speed: {
                 value: 60,
-                running: 1.2
+                running: 1.7
             },
             fov: {
                 distance: 200,
@@ -83,6 +84,7 @@ export default {
             speed: {
                 value: 100,
                 withPoster: 0.6,
+                clickSpeedUp: 1.05,
                 running: 1.5
             },
             stamina: 200,

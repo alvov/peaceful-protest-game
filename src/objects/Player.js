@@ -1,6 +1,10 @@
 import Protester from './Protester.js';
+import {
+    PROTESTER_MODE_ARRESTED
+} from '../constants.js';
 
 const DEFAULT_SCORE_GAIN_SPEED = 0.1;
+const DEFAULT_CLICK_SPEED_UP = 1;
 
 class Player extends Protester {
     constructor({ game, x, y, speed, stamina, staminaCooldown }) {
@@ -16,8 +20,12 @@ class Player extends Protester {
         this.cooldownTimer = this.game.time.create(false);
         this.staminaCooldown = staminaCooldown * 1000;
 
+        this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
+
         this.progressBar = this.game.add.graphics();
         this.sprite.addChild(this.progressBar);
+
+        this.showPoster = false;
 
         // events
         this.sprite.events.onInputUp.add(this.handleClick, this);
@@ -37,9 +45,16 @@ class Player extends Protester {
     }
 
     update() {
-        this.speed.current = this.speed.value;
+        if (this.mode !== PROTESTER_MODE_ARRESTED) {
+            this.speed.current = this.speed.value;
+            this.speed.current *= this.clickSpeedUp;
+        }
 
         super.update();
+
+        if (this.mode === PROTESTER_MODE_ARRESTED) {
+            return;
+        }
 
         if (this.scoreGainStartTime) {
             this.flushScore();
@@ -48,8 +63,13 @@ class Player extends Protester {
 
         this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
 
+        const areMovingKeysDown = this.keys.up.isDown ||
+            this.keys.down.isDown ||
+            this.keys.left.isDown ||
+            this.keys.right.isDown;
+
         if (!this.cooldownTimer.running) {
-            if (this.keys.shift.isDown) {
+            if (areMovingKeysDown && this.keys.shift.isDown) {
                 if (this.stamina > 0) {
                     this.stamina -= 1;
                     this.speed.current *= this.speed.running;
@@ -69,42 +89,45 @@ class Player extends Protester {
         if (this.stamina < this.maxStamina) {
             this.updateProgressBar(this.stamina / this.maxStamina, this.cooldownTimer.running ? 0xff0000 : 0x00ff00);
         } else {
-            this.updateProgressBar(null);
+            this.updateProgressBar(0);
         }
 
         if (this.showPoster) {
             this.speed.current *= this.speed.withPoster;
         }
 
-        if (
-            this.keys.up.isDown ||
-            this.keys.down.isDown ||
-            this.keys.left.isDown ||
-            this.keys.right.isDown
-        ) {
-            this.stopMoving();
-            let inputSpeed = this.speed.current / 1000 * 16;
+        if (areMovingKeysDown) {
+            this.stopMovement();
+            const angles = [];
 
-            if (
-                this.keys.up.isDown && this.keys.left.isDown ||
-                this.keys.up.isDown && this.keys.right.isDown ||
-                this.keys.down.isDown && this.keys.left.isDown ||
-                this.keys.down.isDown && this.keys.right.isDown
-            ) {
-                inputSpeed *= 0.7;
-            }
             if (this.keys.up.isDown) {
-                this.sprite.y -= inputSpeed;
+                angles.push(-90);
             }
             if (this.keys.down.isDown) {
-                this.sprite.y += inputSpeed;
+                angles.push(90);
             }
             if (this.keys.left.isDown) {
-                this.sprite.x -= inputSpeed;
+                if (this.keys.up.isDown) {
+                    angles.push(-180);
+                } else {
+                    angles.push(180);
+                }
             }
             if (this.keys.right.isDown) {
-                this.sprite.x += inputSpeed;
+                angles.push(0);
             }
+            this.game.physics.arcade.velocityFromAngle(
+                angles.reduce((value, sum) => sum + value, 0) / angles.length,
+                this.speed.current,
+                this.sprite.body.velocity
+            );
+        } else if (
+            this.keys.up.justUp ||
+            this.keys.down.justUp ||
+            this.keys.left.justUp ||
+            this.keys.right.justUp
+        ) {
+            this.sprite.body.stop();
         }
 
         if (this.keys.space.justDown) {
@@ -126,10 +149,26 @@ class Player extends Protester {
 
     handleClick() {
         if (this.sprite.body.isMoving) {
-            this.stopMoving();
+            this.stopMovement();
         } else {
             this.togglePoster();
         }
+    }
+
+    setMode(mode, props) {
+        switch (mode) {
+            case PROTESTER_MODE_ARRESTED: {
+                this.sprite.events.onInputUp.removeAll();
+                this.game.onPause.remove(this.handleGamePause, this);
+                this.game.onResume.remove(this.handleGameResume, this);
+
+                this.cooldownTimer.stop(true);
+                this.stamina = this.maxStamina;
+                break;
+            }
+        }
+
+        super.setMode(mode, props);
     }
 
     togglePoster(on = !this.showPoster) {
@@ -147,29 +186,28 @@ class Player extends Protester {
         super.togglePoster(on);
     }
 
-    moveTo({ x, y }) {
+    // setMoveTarget({ x, y }) {
         // if (
-        //     this.sprite.body.moves &&
+        //     this.sprite.body.isMoving &&
         //     this.moveTarget &&
-        //     Math.abs(this.moveTarget.x - x) < 30 &&
-        //     Math.abs(this.moveTarget.y - y) < 30
+        //     this.game.math.fuzzyEqual(this.moveTarget.x, x, 5) &&
+        //     this.game.math.fuzzyEqual(this.moveTarget.y, y, 5)
         // ) {
-        //     this.speed.current += 5;
+        //     this.clickSpeedUp *= this.speed.clickSpeedUp;
         // } else {
         //     this.resetSpeed();
         // }
-        this.moveTarget = { x, y };
-        super.moveTo({ x, y });
-    }
+        // super.setMoveTarget();
+    // }
 
     flushScore() {
         this.score += this.scoreGainSpeed * (Date.now() - this.scoreGainStartTime) / 1000;
         this.scoreGainStartTime = null;
     }
 
-    stopMoving() {
-        this.sprite.body.stopMovement(true);
-    }
+    // resetSpeed() {
+    //     this.clickSpeedUp = 1;
+    // }
 }
 
 export default Player;

@@ -32,6 +32,13 @@ export default {
         },
         {
             type: 'spritesheet',
+            key: 'auto',
+            url: require('./auto.png'),
+            frameWidth: 400,
+            frameHeight: 187
+        },
+        {
+            type: 'spritesheet',
             key: 'cop',
             url: require('./cop02.png'),
             frameWidth: 62,
@@ -93,6 +100,13 @@ export default {
             url: require('./border.png'),
             frameWidth: 400,
             frameHeight: 200
+        },
+        {
+            type: 'spritesheet',
+            key: 'auto',
+            url: require('./auto.png'),
+            frameWidth: 400,
+            frameHeight: 187
         },
         {
             type: 'spritesheet',
