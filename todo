@@ -5,7 +5,7 @@ MVP
 - obstacles (pathfinding)
 + loading screen
 + start screen
-- pause screen
++ pause screen
 + end screen
 + protesters & cops
 + protesters: move, show/hide poster
@@ -21,35 +21,35 @@ TechDebt
 + babel
 + images as assets
 - menu via html
-- game config
+? game config
 + cops FOV shape
-- menu screen
++ menu screen
 + win screen
-- score as progress bar
+? score as progress bar
 + level timer (score gain speed, running speed, cops interest)
-- loading screen
++ loading screen
 + sprite borders
 - extend sprite object
 + bundle phaser
 + speed up everything
-- phaser custom build
+? phaser custom build
 + score gaining speed
 + speed up on fast click
 
 Cpx Prf Feature
-?   ?   passersby
-?   ?   cops in disguise
+1   1   passersby
+2   2   cops in disguise
++   +   protesters: reappear
 ?   ?   protesters: shout
 ?   ?   protesters: distract
 ?   ?   protesters: disguise
 +   +   cops FOV: cone
-?   ?   points for passersby
+2   2   cops: swat
+1   1   points for passersby
 +   +   extra points for photographers
-?   ?   extra points for position
-?   ?   rpg-like upgrades for points/shares
++   +   extra points for position
+2   0   rpg-like upgrades for points/shares
 +   +   kill: prison bus
-?   ?   play for cops
-?   ?   sounds
-?   ?   music
-?   ?   level description
-?   ?   high score
+2   2   play for cops
++   +   sounds
+2   0   music

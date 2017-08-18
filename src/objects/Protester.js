@@ -5,8 +5,8 @@ import {
 } from '../constants.js';
 
 class Protester extends Prefab {
-    constructor({ game, x, y, speed, spriteKey, ...props }) {
-        super({ game, x, y, speed, spriteKey, props });
+    constructor({ game, x, y, speed, spriteKey, spriteName, ...props }) {
+        super({ game, x, y, speed, spriteKey, spriteName, props });
 
         this.sprite.inputEnabled = true;
         this.sprite.input.priorityID = 1;
@@ -25,7 +25,10 @@ class Protester extends Prefab {
         this.posterSprite.bringToTop();
         this.posterSprite.exists = false;
 
-        this.audioScream = this.game.add.audio(this.props.audioKey);
+        this.audioScream = null;
+        if (this.props.audioKey) {
+            this.audioScream = this.game.add.audio(this.props.audioKey);
+        }
 
         this.showPoster = false;
     }
@@ -40,7 +43,13 @@ class Protester extends Prefab {
     setMode(mode, props = {}) {
         switch (mode) {
             case PROTESTER_MODE_WANDER: {
-                this.wander();
+                const { coords } = props;
+                if (coords) {
+                    this.sprite.body.onMoveComplete.add(this.wander, this);
+                    this.setMoveTarget(coords);
+                } else {
+                    this.wander();
+                }
                 break;
             }
             case PROTESTER_MODE_ARRESTED: {
@@ -77,10 +86,20 @@ class Protester extends Prefab {
     }
 
     togglePoster(on = !this.showPoster) {
-        if (this.showPoster !== on && on) {
+        if (this.showPoster !== on && on && this.audioScream) {
             this.audioScream.play();
         }
         this.showPoster = on;
+    }
+
+    revive({ x, y, nextCoords }) {
+        this.sprite.body.reset(x, y);
+        this.sprite.x = x;
+        this.sprite.y = y;
+
+        super.revive();
+
+        this.setMode(PROTESTER_MODE_WANDER, { coords: nextCoords });
     }
 
     kill() {

@@ -25,8 +25,11 @@ class Journalist extends Prefab {
         this.progressBar = this.game.add.graphics();
         this.sprite.addChild(this.progressBar);
 
-        this.shootingTimer = this.game.time.create();
-        this.duration = this.props.duration * 1000;
+        this.shootingTimer = this.game.time.create(false);
+        this.shootingDuration = this.props.shootingDuration * 1000;
+
+        this.cooldownTimer = this.game.time.create(false);
+        this.cooldownDuration = this.props.cooldownDuration * 1000;
 
         this.audioFinishShooting = this.game.add.audio('applause');
 
@@ -37,7 +40,13 @@ class Journalist extends Prefab {
         if (this.mode === JOURNALIST_MODE_SHOOTING) {
             this.turnTo(this.target);
         }
-        this.updateProgressBar(this.shootingTimer.running ? this.shootingTimer.ms / this.duration : 0);
+        if (this.shootingTimer.running) {
+            this.updateProgressBar(this.shootingTimer.ms / this.shootingDuration);
+        } else if (this.cooldownTimer.running) {
+            this.updateProgressBar(this.cooldownTimer.ms / this.cooldownDuration, 0xff0000);
+        } else {
+            this.updateProgressBar(0);
+        }
 
         this.FOV.update({
             x: this.sprite.x,
@@ -69,7 +78,7 @@ class Journalist extends Prefab {
                 }
                 this.target = target;
 
-                this.shootingTimer.add(this.duration, this.finishShooting, this);
+                this.shootingTimer.add(this.shootingDuration, this.finishShooting, this);
                 this.shootingTimer.start();
 
                 break;
@@ -97,17 +106,28 @@ class Journalist extends Prefab {
     }
 
     finishShooting() {
-        const { onFinishShooting, callbackContext, points } = this.props;
-        onFinishShooting.call(callbackContext, points);
+        const { onFinishShooting, callbackContext } = this.props;
+        onFinishShooting.call(callbackContext);
 
         this.FOV.kill();
 
         this.setMode(JOURNALIST_MODE_WANDER);
 
+        this.shootingTimer.stop(true);
+        this.cooldownTimer.add(this.cooldownDuration, this.reviveFOV, this);
+        this.cooldownTimer.start();
+
         this.audioFinishShooting.play();
     }
 
+    reviveFOV() {
+        this.FOV.revive();
+        this.cooldownTimer.stop(true);
+    }
+
     kill() {
+        this.cooldownTimer.stop(true);
+        this.shootingTimer.stop(true);
         this.stopWandering();
         this.FOV.kill();
 

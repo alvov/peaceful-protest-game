@@ -75,16 +75,6 @@ export default {
         },
         {
             type: 'audio',
-            key: 'scream01',
-            urls: require('./audio/scream01.mp3')
-        },
-        {
-            type: 'audio',
-            key: 'scream02',
-            urls: require('./audio/scream02.mp3')
-        },
-        {
-            type: 'audio',
             key: 'scream03',
             urls: require('./audio/scream03.mp3')
         },

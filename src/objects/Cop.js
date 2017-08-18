@@ -9,8 +9,8 @@ import {
 } from '../constants.js';
 
 class Cop extends Prefab {
-    constructor({ game, x, y, fov, speed }) {
-        super({ game, x, y, speed, spriteKey: 'cop' });
+    constructor({ game, x, y, fov, speed, spriteName }) {
+        super({ game, x, y, speed, spriteKey: 'cop', spriteName });
 
         this.FOV = new FOV({
             game: this.game,
@@ -25,6 +25,8 @@ class Cop extends Prefab {
         ];
 
         this.target = null;
+        this.attractionPoint = null;
+        this.attractionStrength = 0;
         this.returnCoords = null;
     }
 
@@ -37,14 +39,14 @@ class Cop extends Prefab {
             this.setMode(COP_MODE_WANDER, { coords: this.returnCoords });
         }
 
+        super.update();
+
         this.FOV.update({
             x: this.sprite.x,
             y: this.sprite.y,
             angle: this.sprite.body.angle,
             mode: this.mode === COP_MODE_PURSUE ? FOV_MODE_CAPTURE : FOV_MODE_NORMAL
         });
-
-        super.update();
     }
 
     setMode(mode, props = {}) {
@@ -95,7 +97,7 @@ class Cop extends Prefab {
 
     wander() {
         this.sprite.body.onMoveComplete.remove(this.wander, this);
-        const nextAction = this.game.rnd.between(0, 2);
+        const nextAction = this.attractionStrength > 0 ? 1 : this.game.rnd.between(0, 2);
         if (nextAction !== 0) {
             this.sprite.body.onMoveComplete.add(this.wander, this);
             this.setMoveTarget(this.getNextCoords());
@@ -104,6 +106,23 @@ class Cop extends Prefab {
             this.stayingTimer.add(this.game.rnd.between(1000, 3000), this.wander, this);
             this.stayingTimer.start();
         }
+    }
+
+    getNextCoords() {
+        let bounds;
+        const rnd = this.game.rnd.frac();
+        if (
+            this.attractionStrength === 1 ||
+            this.attractionStrength > 0 && rnd <= this.attractionStrength
+        ) {
+            bounds = {
+                top: Math.min(this.sprite.y, this.attractionPoint.y),
+                right: Math.max(this.sprite.x, this.attractionPoint.x),
+                bottom: Math.max(this.sprite.y, this.attractionPoint.y),
+                left: Math.min(this.sprite.x, this.attractionPoint.x)
+            };
+        }
+        return super.getNextCoords(bounds);
     }
 
     kill() {

@@ -2,6 +2,8 @@ import Player from './../objects/Player.js';
 import Protester from './../objects/Protester.js';
 import Cop from './../objects/Cop.js';
 import Journalist from './../objects/Journalist.js';
+import PauseMenu from './../objects/PauseMenu.js';
+
 import {
     COP_MODE_WANDER,
     COP_MODE_PURSUE,
@@ -12,20 +14,26 @@ import {
     JOURNALIST_MODE_WANDER
 } from '../constants.js';
 
+const GLOBAL_OFFSET = 100;
+
 class Game {
     init(level) {
         this.mz = {
             level,
             score: 0,
             timePassed: 0, // s
-            eventHandler: null,
             map: null,
+            events: {
+                keys: {},
+                fieldClickHandler: null,
+            },
             objects: {
                 player: null,
                 textScore: null,
                 bgTile: null,
                 buttonSound: null,
-                audio: {}
+                audio: {},
+                pauseMenu: null
             },
             groups: {
                 cars: null,
@@ -98,7 +106,8 @@ class Game {
                     distance: this.mz.level.cops.fov.distance,
                     angle: this.mz.level.cops.fov.angle
                 },
-                speed: this.mz.level.cops.speed
+                speed: this.mz.level.cops.speed,
+                spriteName: `cop${i}`
             });
             this.mz.groups.cops.add(cop.sprite);
             cop.setMode(COP_MODE_WANDER);
@@ -114,10 +123,11 @@ class Game {
                     angle: this.mz.level.press.fov.angle
                 },
                 speed: this.mz.level.press.speed,
-                duration: this.mz.level.press.duration,
-                points: this.mz.level.press.points,
+                shootingDuration: this.mz.level.press.duration,
+                cooldownDuration: this.mz.level.press.duration * this.mz.level.press.count * 2,
                 onFinishShooting: this.handleFinishShooting,
-                callbackContext: this
+                callbackContext: this,
+                spriteName: `journalist${i}`
             });
             this.mz.groups.press.add(journalist.sprite);
             journalist.setMode(JOURNALIST_MODE_WANDER);
@@ -130,8 +140,8 @@ class Game {
                 ...this.getRandomCoordinates(),
                 speed: this.mz.level.protesters.speed,
                 spriteKey: `protester${this.game.rnd.between(1, 3)}`,
-                audioKey: `scream0${this.game.rnd.between(1, 2)}`,
-                activity: this.game.rnd.between(10, 20)
+                activity: this.game.rnd.between(10, 20),
+                spriteName: `protester${i}`
             });
             this.mz.groups.protesters.add(protester.sprite);
             protester.setMode(PROTESTER_MODE_WANDER);
@@ -198,12 +208,23 @@ class Game {
         // this.scale.setResizeCallback(this.handleResize, this);
 
         // click on field
-        this.mz.eventHandler = this.game.add.sprite(0, 100);
-        this.mz.eventHandler.fixedToCamera = true;
-        this.mz.eventHandler.scale.setTo(this.game.width, this.game.height - 100);
-        this.mz.eventHandler.inputEnabled = true;
-        this.mz.eventHandler.input.priorityID = 1;
-        this.mz.eventHandler.events.onInputUp.add(this.handleClick, this);
+        const fieldClickHandler = this.game.add.sprite(0, 100);
+        fieldClickHandler.fixedToCamera = true;
+        fieldClickHandler.scale.setTo(this.game.width, this.game.height - 100);
+        fieldClickHandler.inputEnabled = true;
+        fieldClickHandler.input.priorityID = 1;
+        fieldClickHandler.events.onInputUp.add(this.handleClick, this);
+        this.mz.events.fieldClickHandler = fieldClickHandler;
+
+        // pause
+        this.game.onPause.add(this.handlePause, this);
+        this.game.onResume.add(this.handlePause, this);
+        this.game.input.onDown.add(this.handleUnpause, this);
+
+        this.mz.events.keys.esc = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+
+        // pause menu
+        this.mz.objects.pauseMenu = new PauseMenu({ game: this.game });
     }
 
     update() {
@@ -233,7 +254,7 @@ class Game {
         this.mz.objects.player.update();
 
         // update protesters
-        this.mz.groups.protesters.forEachExists(sprite => {
+        this.mz.groups.protesters.forEachAlive(sprite => {
             sprite.mz.update();
         });
 
@@ -260,13 +281,21 @@ class Game {
         });
 
         // update cops
-        this.mz.groups.cops.forEachExists(copSprite => {
+        this.mz.groups.cops.forEachAlive(copSprite => {
             const cop = copSprite.mz;
+
+            // set attraction point and strength
+            cop.attractionPoint = { ...this.mz.objects.player.sprite.body.center };
+            let attractionStrength = 0;
             if (this.mz.objects.player.showPoster) {
-                cop.attractionPoint = { ...this.mz.objects.player.sprite.body.center };
-            } else {
-                cop.attractionPoint = null;
+                attractionStrength += 0.2;
+                this.mz.groups.press.forEachAlive(journalistSprite => {
+                    if (journalistSprite.mz.mode === JOURNALIST_MODE_SHOOTING) {
+                        attractionStrength += 0.4;
+                    }
+                });
             }
+            cop.attractionStrength = Math.min(1, attractionStrength);
 
             if (cop.mode !== COP_MODE_CONVOY) {
                 // find target for a cop
@@ -276,7 +305,11 @@ class Game {
                     const protester = i === this.mz.groups.protesters.children.length ?
                         this.mz.objects.player :
                         this.mz.groups.protesters.getAt(i).mz;
-                    if (!protester.sprite.exists || !cop.FOV.containsPoint(protester.sprite.body.center)) {
+                    if (
+                        !protester.sprite.exists ||
+                        protester.mode === PROTESTER_MODE_ARRESTED ||
+                        !cop.FOV.containsPoint(protester.sprite.body.center)
+                    ) {
                         continue;
                     }
                     if (
@@ -286,7 +319,7 @@ class Game {
                         let distanceToProtester = Phaser.Point.distance(copSprite, protester.sprite);
                         // give higher priority to current target
                         if (protester.sprite === cop.target) {
-                            distanceToProtester *= 2 / 3;
+                            distanceToProtester *= 3 / 4;
                         }
                         if (distanceToProtester < distanceToTarget) {
                             newTarget = protester.sprite;
@@ -304,6 +337,19 @@ class Game {
             }
 
             cop.update();
+        });
+
+        // add protesters
+        this.mz.groups.protesters.forEachDead(sprite => {
+            const y = this.getRandomCoordinateY();
+            sprite.mz.revive({
+                x: this.game.rnd.between(0, 1) === 0 ? -100 : this.game.world.width + 100,
+                y,
+                nextCoords: {
+                    x: this.getRandomCoordinateX(),
+                    y
+                }
+            });
         });
 
         // cops vs protesters collision
@@ -331,7 +377,7 @@ class Game {
             this.mz.objects.player.sprite,
             this.mz.groups.cops,
             (playerSprite, copSprite) => {
-                this.mz.eventHandler.events.onInputUp.remove(this.handleClick, this);
+                this.mz.events.fieldClickHandler.events.onInputUp.remove(this.handleClick, this);
                 this.proceedToJail(playerSprite, copSprite);
             },
             (playerSprite, copSprite) =>
@@ -350,6 +396,11 @@ class Game {
         );
 
         this.checkWin();
+
+        // events
+        if (this.mz.events.keys.esc.justUp) {
+            this.game.paused = !this.game.paused;
+        }
     }
 
     render() {
@@ -403,12 +454,28 @@ class Game {
         this.endGame(false);
     }
 
-    handleFinishShooting(points) {
-        this.mz.objects.player.score += points;
+    handleFinishShooting() {
+        this.mz.objects.player.score += this.mz.level.press.points;
     }
 
     handleClickSound() {
         this.game.sound.mute = !this.game.sound.mute;
+    }
+
+    handlePause() {
+        if (this.game.paused) {
+            this.mz.objects.pauseMenu.revive();
+        } else {
+            this.mz.objects.pauseMenu.kill();
+        }
+    }
+
+    handleUnpause() {
+        if (this.game.paused) {
+            if (this.mz.objects.pauseMenu.replayButton.getBounds().contains(this.game.input.x, this.game.input.y)) {
+                this.game.paused = false;
+            }
+        }
     }
 
     // handleResize(scale, parentBounds) {
@@ -434,8 +501,8 @@ class Game {
         let minDistance = Infinity;
         this.mz.groups.cars.forEach(carSprite => {
             const carCoords = {
-                x: (carSprite.right - carSprite.left) / 2,
-                y: (carSprite.bottom - carSprite.top) / 2
+                x: (carSprite.right + carSprite.left) / 2,
+                y: (carSprite.bottom + carSprite.top) / 2
             };
             const distanceToCar = Phaser.Point.distance(copSprite, carCoords);
             if (distanceToCar < minDistance) {
@@ -452,10 +519,10 @@ class Game {
 
     checkWin() {
         if (
-            this.mz.score >= this.mz.level.winningScore ||
+            // this.mz.score >= this.mz.level.winningScore ||
             this.mz.timePassed > this.mz.level.duration
         ) {
-            this.endGame(true);
+            this.endGame(this.mz.score >= this.mz.level.winningScore);
         }
     }
 
@@ -477,11 +544,18 @@ class Game {
     }
 
     getRandomCoordinates() {
-        const globalOffset = 100;
         return {
-            x: Math.max(globalOffset, Math.min(this.game.world.width - globalOffset, this.game.world.randomX)),
-            y: Math.max(globalOffset, Math.min(this.game.world.height - globalOffset, this.game.world.randomY))
+            x: this.getRandomCoordinateX(),
+            y: this.getRandomCoordinateY()
         };
+    }
+
+    getRandomCoordinateX() {
+        return Math.max(GLOBAL_OFFSET, Math.min(this.game.world.width - GLOBAL_OFFSET, this.game.world.randomX));
+    }
+
+    getRandomCoordinateY() {
+        return Math.max(GLOBAL_OFFSET, Math.min(this.game.world.height - GLOBAL_OFFSET, this.game.world.randomY));
     }
 
     getFormattedTime(secondsPassed) {

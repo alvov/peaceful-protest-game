@@ -6,7 +6,7 @@ export default {
         duration: 2 * 60, // s
         winningScore: 60,
         cops: {
-            count: 5,
+            count: 1,
             speed: {
                 value: 50,
                 running: 1.7
@@ -17,19 +17,19 @@ export default {
             }
         },
         press: {
-            count: 3,
+            count: 1,
             speed: {
                 value: 50
             },
             fov: {
-                distance: 200,
-                angle: 150
+                distance: 150,
+                angle: 100
             },
             duration: 5, // s
-            points: 20
+            points: 10
         },
         protesters: {
-            count: 30,
+            count: 10,
             speed: {
                 value: 60
             }
@@ -72,7 +72,7 @@ export default {
                 angle: 100
             },
             duration: 7, //
-            points: 20
+            points: 10
         },
         protesters: {
             count: 30,
