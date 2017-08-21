@@ -2,12 +2,15 @@ import Player from './../objects/Player.js';
 import Protester from './../objects/Protester.js';
 import Cop from './../objects/Cop.js';
 import Journalist from './../objects/Journalist.js';
+import SWATSquad from '../objects/SWATSquad.js';
 import PauseMenu from './../objects/PauseMenu.js';
 
 import {
     COP_MODE_WANDER,
     COP_MODE_PURSUE,
     COP_MODE_CONVOY,
+    SWAT_MODE_HIDE,
+    SWAT_MODE_HUNT,
     PROTESTER_MODE_WANDER,
     PROTESTER_MODE_ARRESTED,
     JOURNALIST_MODE_SHOOTING,
@@ -29,18 +32,22 @@ class Game {
             },
             objects: {
                 player: null,
+                swat: null,
                 textScore: null,
                 bgTile: null,
                 buttonSound: null,
                 audio: {},
                 pauseMenu: null
             },
+            arrays: {
+                protesters: [],
+                cops: [],
+                press: [],
+            },
             groups: {
+                actors: null,
                 cars: null,
-                protesters: null,
-                cops: null,
                 copsFOV: null,
-                press: null,
                 pressFOV: null,
                 menu: null
             }
@@ -55,12 +62,17 @@ class Game {
         this.mz.objects.bgTile = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'ground');
         this.mz.objects.bgTile.fixedToCamera = true;
 
-        this.mz.objects.audio.constr1 = this.game.add.audio('constr01');
-        this.mz.objects.audio.constr2 = this.game.add.audio('constr02');
-        this.mz.objects.audio.constr1.loopFull();
-        this.mz.objects.audio.constr2.loopFull(0.5);
+        this.mz.objects.audio.constr = [
+            this.game.add.audio('constr01'),
+            this.game.add.audio('constr02')
+        ];
+        this.mz.objects.audio.audioPunch = [
+            this.game.add.audio('punch01'),
+            this.game.add.audio('punch02')
+        ];
+        this.mz.objects.audio.constr[0].loopFull();
+        this.mz.objects.audio.constr[1].loopFull(0.5);
         this.mz.objects.audio.random = [
-            this.game.add.audio('boo'),
             this.game.add.audio('croud'),
             this.game.add.audio('cough01'),
             this.game.add.audio('cough02')
@@ -93,8 +105,7 @@ class Game {
             borderSprite.scale.set(0.25);
         }
 
-        this.mz.groups.press = this.game.add.group();
-        this.mz.groups.cops = this.game.add.group();
+        this.mz.groups.actors = this.game.add.group();
         this.mz.groups.obstacles = this.game.add.group();
 
         for (let i = 0; i < this.mz.level.cops.count; i++) {
@@ -109,8 +120,18 @@ class Game {
                 speed: this.mz.level.cops.speed,
                 spriteName: `cop${i}`
             });
-            this.mz.groups.cops.add(cop.sprite);
+            this.mz.arrays.cops.push(cop.sprite);
+            this.mz.groups.actors.add(cop.sprite);
             cop.setMode(COP_MODE_WANDER);
+        }
+
+        if (this.mz.level.swat) {
+            this.mz.objects.swat = new SWATSquad({
+                game: this.game,
+                ...this.mz.level.swat,
+                group: this.mz.groups.actors
+            });
+            this.swatTimer = this.game.time.create(false);
         }
 
         for (let i = 0; i < this.mz.level.press.count; i++) {
@@ -129,11 +150,11 @@ class Game {
                 callbackContext: this,
                 spriteName: `journalist${i}`
             });
-            this.mz.groups.press.add(journalist.sprite);
+            this.mz.arrays.press.push(journalist.sprite);
+            this.mz.groups.actors.add(journalist.sprite);
             journalist.setMode(JOURNALIST_MODE_WANDER);
         }
 
-        this.mz.groups.protesters = this.game.add.group();
         for (let i = 0; i < this.mz.level.protesters.count; i++) {
             const protester = new Protester({
                 game: this.game,
@@ -143,7 +164,8 @@ class Game {
                 activity: this.game.rnd.between(10, 20),
                 spriteName: `protester${i}`
             });
-            this.mz.groups.protesters.add(protester.sprite);
+            this.mz.arrays.protesters.push(protester.sprite);
+            this.mz.groups.actors.add(protester.sprite);
             protester.setMode(PROTESTER_MODE_WANDER);
         }
 
@@ -154,6 +176,7 @@ class Game {
             ...this.mz.level.player
         });
         this.game.camera.follow(this.mz.objects.player.sprite);
+        this.mz.groups.actors.add(this.mz.objects.player.sprite);
         this.mz.objects.player.sprite.events.onKilled.addOnce(this.handlePlayerKill, this);
 
         // bottom borders
@@ -235,8 +258,11 @@ class Game {
 
         // count score gaining speed
         this.mz.objects.player.resetScoreGainSpeed();
-        this.mz.groups.cops.forEachExists(copSprite => {
-            if (Phaser.Point.distance(copSprite, this.mz.objects.player.sprite) < this.mz.level.cops.fov.distance) {
+        this.mz.arrays.cops.forEach(copSprite => {
+            if (
+                copSprite.alive &&
+                Phaser.Point.distance(copSprite, this.mz.objects.player.sprite) < this.mz.level.cops.fov.distance
+            ) {
                 this.mz.objects.player.scoreGainSpeed += 1;
             }
         });
@@ -254,12 +280,14 @@ class Game {
         this.mz.objects.player.update();
 
         // update protesters
-        this.mz.groups.protesters.forEachAlive(sprite => {
-            sprite.mz.update();
+        this.mz.arrays.protesters.forEach(sprite => {
+            if (sprite.alive) {
+                sprite.mz.update();
+            }
         });
 
         // update journalists
-        this.mz.groups.press.forEachExists(journalistSprite => {
+        this.mz.arrays.press.forEach(journalistSprite => {
             const journalist = journalistSprite.mz;
             let newTarget = null;
 
@@ -280,8 +308,17 @@ class Game {
             journalist.update();
         });
 
+        // update swat
+        if (this.mz.objects.swat) {
+            if (this.mz.objects.swat.mode === SWAT_MODE_HIDE && !this.swatTimer.running) {
+                this.swatTimer.add(this.mz.level.swat.frequency, this.launchSWAT, this);
+                this.swatTimer.start();
+            }
+            this.mz.objects.swat.update();
+        }
+
         // update cops
-        this.mz.groups.cops.forEachAlive(copSprite => {
+        this.mz.arrays.cops.forEach(copSprite => {
             const cop = copSprite.mz;
 
             // set attraction point and strength
@@ -289,7 +326,7 @@ class Game {
             let attractionStrength = 0;
             if (this.mz.objects.player.showPoster) {
                 attractionStrength += 0.2;
-                this.mz.groups.press.forEachAlive(journalistSprite => {
+                this.mz.arrays.press.forEach(journalistSprite => {
                     if (journalistSprite.mz.mode === JOURNALIST_MODE_SHOOTING) {
                         attractionStrength += 0.4;
                     }
@@ -301,10 +338,10 @@ class Game {
                 // find target for a cop
                 let newTarget = null;
                 let distanceToTarget = Infinity;
-                for (let i = 0; i <= this.mz.groups.protesters.children.length; i++) {
-                    const protester = i === this.mz.groups.protesters.children.length ?
+                for (let i = 0; i <= this.mz.arrays.protesters.length; i++) {
+                    const protester = i === this.mz.arrays.protesters.length ?
                         this.mz.objects.player :
-                        this.mz.groups.protesters.getAt(i).mz;
+                        this.mz.arrays.protesters[i].mz;
                     if (
                         !protester.sprite.exists ||
                         protester.mode === PROTESTER_MODE_ARRESTED ||
@@ -340,31 +377,48 @@ class Game {
         });
 
         // add protesters
-        this.mz.groups.protesters.forEachDead(sprite => {
-            const y = this.getRandomCoordinateY();
-            sprite.mz.revive({
-                x: this.game.rnd.between(0, 1) === 0 ? -100 : this.game.world.width + 100,
-                y,
-                nextCoords: {
-                    x: this.getRandomCoordinateX(),
-                    y
-                }
-            });
+        this.mz.arrays.protesters.forEach(sprite => {
+            if (!sprite.alive) {
+                const y = this.getRandomCoordinateY();
+                this.mz.groups.actors.add(sprite);
+                sprite.mz.revive({
+                    x: this.game.rnd.between(0, 1) === 0 ? -100 : this.game.world.width + 100,
+                    y,
+                    nextCoords: {
+                        x: this.getRandomCoordinateX(),
+                        y
+                    }
+                });
+            }
         });
 
         // cops vs protesters collision
         this.game.physics.arcade.overlap(
-            this.mz.groups.protesters,
-            this.mz.groups.cops,
+            this.mz.arrays.protesters,
+            this.mz.arrays.cops,
             this.proceedToJail,
             (protesterSprite, copSprite) =>
                 copSprite.mz.target === protesterSprite && protesterSprite.mz.mode !== PROTESTER_MODE_ARRESTED,
             this
         );
 
+        // swat vs protesters collision
+        if (this.mz.objects.swat) {
+            this.game.physics.arcade.overlap(
+                this.mz.objects.swat.sprites,
+                this.mz.arrays.protesters,
+                (swatSprite, protesterSprite) => {
+                    this.arrest(protesterSprite, swatSprite);
+                },
+                (swatSprite, protesterSprite) =>
+                    swatSprite.children.length === 0 &&
+                    protesterSprite.mz.mode !== PROTESTER_MODE_ARRESTED
+            );
+        }
+
         // cars vs protesters collision
         this.game.physics.arcade.overlap(
-            this.mz.groups.protesters,
+            this.mz.arrays.protesters,
             this.mz.groups.cars,
             protesterSprite => {
                 protesterSprite.mz.kill();
@@ -372,10 +426,21 @@ class Game {
             protesterSprite => protesterSprite.mz.mode === PROTESTER_MODE_ARRESTED
         );
 
+        // swat vs player collision
+        if (this.mz.objects.swat) {
+            this.game.physics.arcade.overlap(
+                this.mz.objects.player.sprite,
+                this.mz.objects.swat.sprites,
+                this.arrest,
+                playerSprite => playerSprite.mz.mode !== PROTESTER_MODE_ARRESTED,
+                this
+            );
+        }
+
         // cops vs player collision
         this.game.physics.arcade.overlap(
             this.mz.objects.player.sprite,
-            this.mz.groups.cops,
+            this.mz.arrays.cops,
             (playerSprite, copSprite) => {
                 this.mz.events.fieldClickHandler.events.onInputUp.remove(this.handleClick, this);
                 this.proceedToJail(playerSprite, copSprite);
@@ -395,6 +460,8 @@ class Game {
             }
         );
 
+        this.mz.groups.actors.sort('y', Phaser.Group.SORT_ASCENDING);
+
         this.checkWin();
 
         // events
@@ -410,13 +477,13 @@ class Game {
         // this.mz.groups.cars.forEachExists(sprite => {
         //     this.game.debug.body(sprite);
         // });
-        // this.mz.groups.cops.forEachExists(sprite => {
+        // this.mz.arrays.cops.forEach(sprite => {
         //     this.game.debug.body(sprite);
         // });
-        // this.mz.groups.protesters.forEachExists(sprite => {
+        // this.mz.arrays.protesters.forEach(sprite => {
         //     this.game.debug.body(sprite);
         // });
-        // this.mz.groups.press.forEachExists(sprite => {
+        // this.mz.arrays.press.forEachExists(sprite => {
         //     this.game.debug.body(sprite);
         // });
     }
@@ -442,15 +509,6 @@ class Game {
     }
 
     handlePlayerKill() {
-        this.mz.groups.cops.forEachExists(sprite => {
-            sprite.mz.kill();
-        });
-        this.mz.groups.press.forEachExists(sprite => {
-            sprite.mz.kill();
-        });
-        this.mz.groups.protesters.forEachExists(sprite => {
-            sprite.mz.kill();
-        });
         this.endGame(false);
     }
 
@@ -494,9 +552,6 @@ class Game {
     }
 
     proceedToJail(protesterSprite, copSprite) {
-        // beat him up a little
-        protesterSprite.damage(0.8);
-
         let closestCarCoords = null;
         let minDistance = Infinity;
         this.mz.groups.cars.forEach(carSprite => {
@@ -510,11 +565,43 @@ class Game {
                 minDistance = distanceToCar;
             }
         });
-        protesterSprite.mz.setMode(PROTESTER_MODE_ARRESTED, {
-            jailCoords: closestCarCoords,
-            speed: copSprite.mz.speed.value
-        });
+
         copSprite.mz.setMode(COP_MODE_CONVOY, { jailCoords: closestCarCoords });
+
+        this.arrest(protesterSprite, copSprite);
+    }
+
+    arrest(protesterSprite, copSprite) {
+        // beat him up a little
+        protesterSprite.damage(0.8);
+        this.playRandomPunch();
+
+        copSprite.addChild(protesterSprite);
+        if (protesterSprite.name === 'player') {
+            this.game.camera.follow(copSprite);
+        }
+
+        protesterSprite.mz.setMode(PROTESTER_MODE_ARRESTED, {
+            x: -Math.sign(copSprite.body.velocity.x) * protesterSprite.body.halfWidth,
+            y: protesterSprite.body.halfHeight
+        });
+    }
+
+    launchSWAT() {
+        this.swatTimer.stop(true);
+        const direction = this.game.rnd.between(0, 1) === 0 ? 'ltor' : 'rtol';
+        this.mz.objects.swat.setMode(SWAT_MODE_HUNT, {
+            x: direction === 'ltor' ?
+                -GLOBAL_OFFSET :
+                this.game.world.width + GLOBAL_OFFSET,
+            y: this.getRandomCoordinateY(),
+            target: {
+                x: direction === 'ltor' ?
+                    this.game.world.width + GLOBAL_OFFSET:
+                    -GLOBAL_OFFSET,
+                y: this.getRandomCoordinateY()
+            }
+        });
     }
 
     checkWin() {
@@ -527,8 +614,8 @@ class Game {
     }
 
     endGame(win) {
-        this.mz.objects.audio.constr1.stop();
-        this.mz.objects.audio.constr2.stop();
+        this.mz.objects.audio.constr[0].stop();
+        this.mz.objects.audio.constr[1].stop();
 
         this.state.start('EndMenu', true, false, {
             win,
@@ -538,9 +625,12 @@ class Game {
 
     playRandomSound() {
         if (this.game.rnd.between(0, 200) === 0) {
-            const randomNumber = this.game.rnd.between(0, this.mz.objects.audio.random.length - 1);
-            this.mz.objects.audio.random[randomNumber].play('', 0, 0.5);
+            this.game.rnd.pick(this.mz.objects.audio.random).play('', 0, 0.5);
         }
+    }
+
+    playRandomPunch() {
+        this.game.rnd.pick(this.mz.objects.audio.audioPunch).play();
     }
 
     getRandomCoordinates() {
@@ -551,11 +641,11 @@ class Game {
     }
 
     getRandomCoordinateX() {
-        return Math.max(GLOBAL_OFFSET, Math.min(this.game.world.width - GLOBAL_OFFSET, this.game.world.randomX));
+        return this.game.math.clamp(this.game.world.randomX, GLOBAL_OFFSET, this.game.world.width - GLOBAL_OFFSET);
     }
 
     getRandomCoordinateY() {
-        return Math.max(GLOBAL_OFFSET, Math.min(this.game.world.height - GLOBAL_OFFSET, this.game.world.randomY));
+        return this.game.math.clamp(this.game.world.randomY, GLOBAL_OFFSET, this.game.world.height - GLOBAL_OFFSET);
     }
 
     getFormattedTime(secondsPassed) {

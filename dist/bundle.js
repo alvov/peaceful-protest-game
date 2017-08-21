@@ -133,7 +133,7 @@
     }, {
         type: 'audio',
         key: 'scream03',
-        urls: __webpack_require__(319)
+        urls: __webpack_require__(317)
     }],
     level1: [{
         type: 'spritesheet',
@@ -150,55 +150,55 @@
     }, {
         type: 'spritesheet',
         key: 'cop',
-        url: __webpack_require__(320),
-        frameWidth: 60,
-        frameHeight: 92
+        url: __webpack_require__(318),
+        frameWidth: 44,
+        frameHeight: 49
     }, {
         type: 'spritesheet',
         key: 'journalist',
         url: __webpack_require__(118),
-        frameWidth: 64,
-        frameHeight: 98
+        frameWidth: 32,
+        frameHeight: 49
     }, {
         type: 'spritesheet',
         key: 'player',
         url: __webpack_require__(119),
-        frameWidth: 60,
-        frameHeight: 92
+        frameWidth: 30,
+        frameHeight: 46
     }, {
         type: 'spritesheet',
         key: 'protester1',
         url: __webpack_require__(120),
-        frameWidth: 64,
-        frameHeight: 96
+        frameWidth: 32,
+        frameHeight: 48
     }, {
         type: 'spritesheet',
         key: 'protester2',
         url: __webpack_require__(121),
-        frameWidth: 60,
-        frameHeight: 92
+        frameWidth: 30,
+        frameHeight: 46
     }, {
         type: 'spritesheet',
         key: 'protester3',
         url: __webpack_require__(122),
-        frameWidth: 60,
-        frameHeight: 94
+        frameWidth: 30,
+        frameHeight: 47
     }, {
         type: 'spritesheet',
         key: 'injury',
         url: __webpack_require__(123),
-        frameWidth: 60,
-        frameHeight: 62
+        frameWidth: 30,
+        frameHeight: 31
     }, {
         type: 'spritesheet',
         key: 'poster',
         url: __webpack_require__(124),
-        frameWidth: 120,
-        frameHeight: 142
+        frameWidth: 60,
+        frameHeight: 71
     }, {
         type: 'image',
         key: 'ground',
-        url: __webpack_require__(321),
+        url: __webpack_require__(319),
         overwrite: false
     }],
     level2: [{
@@ -216,55 +216,61 @@
     }, {
         type: 'spritesheet',
         key: 'cop',
-        url: __webpack_require__(322),
-        frameWidth: 88,
-        frameHeight: 98
+        url: __webpack_require__(320),
+        frameWidth: 46,
+        frameHeight: 54
+    }, {
+        type: 'spritesheet',
+        key: 'swat',
+        url: __webpack_require__(321),
+        frameWidth: 30,
+        frameHeight: 46
     }, {
         type: 'spritesheet',
         key: 'journalist',
         url: __webpack_require__(118),
-        frameWidth: 64,
-        frameHeight: 98
+        frameWidth: 32,
+        frameHeight: 49
     }, {
         type: 'spritesheet',
         key: 'player',
         url: __webpack_require__(119),
-        frameWidth: 60,
-        frameHeight: 92
+        frameWidth: 30,
+        frameHeight: 46
     }, {
         type: 'spritesheet',
         key: 'protester1',
         url: __webpack_require__(120),
-        frameWidth: 64,
-        frameHeight: 96
+        frameWidth: 32,
+        frameHeight: 48
     }, {
         type: 'spritesheet',
         key: 'protester2',
         url: __webpack_require__(121),
-        frameWidth: 60,
-        frameHeight: 92
+        frameWidth: 30,
+        frameHeight: 46
     }, {
         type: 'spritesheet',
         key: 'protester3',
         url: __webpack_require__(122),
-        frameWidth: 60,
-        frameHeight: 94
+        frameWidth: 30,
+        frameHeight: 47
     }, {
         type: 'spritesheet',
         key: 'injury',
         url: __webpack_require__(123),
-        frameWidth: 60,
-        frameHeight: 62
+        frameWidth: 30,
+        frameHeight: 31
     }, {
         type: 'spritesheet',
         key: 'poster',
         url: __webpack_require__(124),
-        frameWidth: 120,
-        frameHeight: 142
+        frameWidth: 60,
+        frameHeight: 71
     }, {
         type: 'image',
         key: 'ground',
-        url: __webpack_require__(323),
+        url: __webpack_require__(322),
         overwrite: false
     }]
 });
@@ -288,49 +294,49 @@ module.exports = __webpack_require__.p + "assets/07cceb7a8ec87d8476bdf361029569d
 /***/ 118:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/0aaced1e5ea46f7bc1184da27058f2cd.png";
+module.exports = __webpack_require__.p + "assets/0db8c7aedd9b6876feb9ee4371b27d14.png";
 
 /***/ }),
 
 /***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/604e3154773cfd38255a729725fe6a6a.png";
+module.exports = __webpack_require__.p + "assets/c73e25fb0b044d025cd031db52c0704b.png";
 
 /***/ }),
 
 /***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/ad22f6fa2a2d464d1823a7051f687b00.png";
+module.exports = __webpack_require__.p + "assets/c319d1c800f4e0f8c49b21f55ef1ee16.png";
 
 /***/ }),
 
 /***/ 121:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/94e8053cfb7f27730be409cc9dfddded.png";
+module.exports = __webpack_require__.p + "assets/51eaa920cd842f906dbb0ab9dafb2046.png";
 
 /***/ }),
 
 /***/ 122:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/dc666250acb77dfcd34bc8493085ecdd.png";
+module.exports = __webpack_require__.p + "assets/373325f07721a6c1f012d59948a7b889.png";
 
 /***/ }),
 
 /***/ 123:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/7424a1c3d3dbc4e4998ba7416d770482.png";
+module.exports = __webpack_require__.p + "assets/d4bedbdde1c2adef9d869553fe67a350.png";
 
 /***/ }),
 
 /***/ 124:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/d24af22e7dae1337a8cc1ffe5e7b1aa4.png";
+module.exports = __webpack_require__.p + "assets/28dbeb6c57f67cd17abbd912371bac9c.png";
 
 /***/ }),
 
@@ -339,7 +345,7 @@ module.exports = __webpack_require__.p + "assets/d24af22e7dae1337a8cc1ffe5e7b1aa
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Prefab_js__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(40);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -374,11 +380,13 @@ var Protester = function (_Prefab) {
         _this.sprite.inputEnabled = true;
         _this.sprite.input.priorityID = 1;
 
-        _this.injurySprite = _this.sprite.addChild(_this.game.make.sprite(-30, -_this.sprite.height / 2 / _this.sprite.scale.y - 2, 'injury'));
+        _this.sprite.checkWorldBounds = true;
+
+        _this.injurySprite = _this.sprite.addChild(_this.game.make.sprite(-15, -_this.sprite.height / 2 - 2, 'injury'));
         _this.injurySprite.bringToTop();
         _this.injurySprite.exists = false;
 
-        _this.posterSprite = _this.sprite.addChild(_this.game.make.sprite(-80, -120, 'poster', 0));
+        _this.posterSprite = _this.sprite.addChild(_this.game.make.sprite(-40, -60, 'poster', 0));
         _this.posterSprite.bringToTop();
         _this.posterSprite.exists = false;
 
@@ -388,6 +396,9 @@ var Protester = function (_Prefab) {
         }
 
         _this.showPoster = false;
+
+        // events
+        _this.sprite.events.onOutOfBounds.add(_this.kill, _this);
         return _this;
     }
 
@@ -419,16 +430,18 @@ var Protester = function (_Prefab) {
                     }
                 case __WEBPACK_IMPORTED_MODULE_1__constants_js__["h" /* PROTESTER_MODE_ARRESTED */]:
                     {
-                        var jailCoords = props.jailCoords,
-                            speed = props.speed;
-                        // clean up previous state
+                        var x = props.x,
+                            y = props.y;
 
+                        this.sprite.x = x;
+                        this.sprite.y = y;
+
+                        // clean up previous state
                         if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["i" /* PROTESTER_MODE_WANDER */]) {
                             this.stopWandering();
                         }
                         this.togglePoster(false);
-                        this.speed.current = speed;
-                        this.setMoveTarget(jailCoords);
+                        this.stopMovement();
                         break;
                     }
             }
@@ -499,7 +512,7 @@ var Protester = function (_Prefab) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_js__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_js__ = __webpack_require__(40);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _DEFAULT_COLORS;
@@ -621,10 +634,10 @@ var FOV = function () {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states_Boot_js__ = __webpack_require__(303);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__ = __webpack_require__(325);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_EndMenu_js__ = __webpack_require__(327);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__states_Game_js__ = __webpack_require__(328);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__ = __webpack_require__(323);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_EndMenu_js__ = __webpack_require__(326);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__states_Game_js__ = __webpack_require__(327);
 
 
 
@@ -785,42 +798,49 @@ module.exports = __webpack_require__.p + "assets/2db995ce7f0661c455b95602348d7c5
 
 /***/ }),
 
-/***/ 319:
+/***/ 317:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/05b4ea2cf7bcddf26622cdaafb40b881.mp3";
 
 /***/ }),
 
-/***/ 320:
+/***/ 318:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/9684cf6695725e59bc1e0e397c19fac1.png";
+module.exports = __webpack_require__.p + "assets/d98ae72532ed2e0fe2b7596a57c1cbac.png";
 
 /***/ }),
 
-/***/ 321:
+/***/ 319:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/7780fada5b5def9a73f068e7dee87e98.jpg";
 
 /***/ }),
 
-/***/ 322:
+/***/ 320:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/b5628f192689135fb9661a6eb8c1977a.png";
+module.exports = __webpack_require__.p + "assets/733d7ab8b793f60f4c77b9d837fa3693.png";
 
 /***/ }),
 
-/***/ 323:
+/***/ 321:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/d0797776e88d180a0467e06d6899a8ae.png";
+
+/***/ }),
+
+/***/ 322:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/a1a7aca8cdcabb0b6f29774a2b1eb971.jpg";
 
 /***/ }),
 
-/***/ 324:
+/***/ 323:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -909,11 +929,11 @@ var Loading = function () {
 
 /***/ }),
 
-/***/ 325:
+/***/ 324:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__levels_js__ = __webpack_require__(326);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__levels_js__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_pack_js__ = __webpack_require__(115);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -964,7 +984,7 @@ var StartMenu = function () {
 
 /***/ }),
 
-/***/ 326:
+/***/ 325:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1032,6 +1052,13 @@ var StartMenu = function () {
                 angle: 120
             }
         },
+        swat: {
+            count: 5,
+            speed: {
+                value: 200
+            },
+            frequency: 2000
+        },
         press: {
             count: 5,
             speed: {
@@ -1065,7 +1092,7 @@ var StartMenu = function () {
 
 /***/ }),
 
-/***/ 327:
+/***/ 326:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1121,21 +1148,23 @@ var EndMenu = function () {
 
 /***/ }),
 
-/***/ 328:
+/***/ 327:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(328);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_Protester_js__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(331);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__objects_PauseMenu_js__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__constants_js__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__objects_SWATSquad_js__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__objects_PauseMenu_js__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__constants_js__ = __webpack_require__(40);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 
 
 
@@ -1166,18 +1195,22 @@ var Game = function () {
                 },
                 objects: {
                     player: null,
+                    swat: null,
                     textScore: null,
                     bgTile: null,
                     buttonSound: null,
                     audio: {},
                     pauseMenu: null
                 },
+                arrays: {
+                    protesters: [],
+                    cops: [],
+                    press: []
+                },
                 groups: {
+                    actors: null,
                     cars: null,
-                    protesters: null,
-                    cops: null,
                     copsFOV: null,
-                    press: null,
                     pressFOV: null,
                     menu: null
                 }
@@ -1193,11 +1226,11 @@ var Game = function () {
             this.mz.objects.bgTile = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'ground');
             this.mz.objects.bgTile.fixedToCamera = true;
 
-            this.mz.objects.audio.constr1 = this.game.add.audio('constr01');
-            this.mz.objects.audio.constr2 = this.game.add.audio('constr02');
-            this.mz.objects.audio.constr1.loopFull();
-            this.mz.objects.audio.constr2.loopFull(0.5);
-            this.mz.objects.audio.random = [this.game.add.audio('boo'), this.game.add.audio('croud'), this.game.add.audio('cough01'), this.game.add.audio('cough02')];
+            this.mz.objects.audio.constr = [this.game.add.audio('constr01'), this.game.add.audio('constr02')];
+            this.mz.objects.audio.audioPunch = [this.game.add.audio('punch01'), this.game.add.audio('punch02')];
+            this.mz.objects.audio.constr[0].loopFull();
+            this.mz.objects.audio.constr[1].loopFull(0.5);
+            this.mz.objects.audio.random = [this.game.add.audio('croud'), this.game.add.audio('cough01'), this.game.add.audio('cough02')];
 
             // this.mz.map = this.game.add.tilemap('tilemap', 50, 50);
 
@@ -1223,8 +1256,7 @@ var Game = function () {
                 borderSprite.scale.set(0.25);
             }
 
-            this.mz.groups.press = this.game.add.group();
-            this.mz.groups.cops = this.game.add.group();
+            this.mz.groups.actors = this.game.add.group();
             this.mz.groups.obstacles = this.game.add.group();
 
             for (var _i2 = 0; _i2 < this.mz.level.cops.count; _i2++) {
@@ -1239,8 +1271,18 @@ var Game = function () {
                     speed: this.mz.level.cops.speed,
                     spriteName: 'cop' + _i2
                 }));
-                this.mz.groups.cops.add(cop.sprite);
-                cop.setMode(__WEBPACK_IMPORTED_MODULE_5__constants_js__["c" /* COP_MODE_WANDER */]);
+                this.mz.arrays.cops.push(cop.sprite);
+                this.mz.groups.actors.add(cop.sprite);
+                cop.setMode(__WEBPACK_IMPORTED_MODULE_6__constants_js__["c" /* COP_MODE_WANDER */]);
+            }
+
+            if (this.mz.level.swat) {
+                this.mz.objects.swat = new __WEBPACK_IMPORTED_MODULE_4__objects_SWATSquad_js__["a" /* default */](_extends({
+                    game: this.game
+                }, this.mz.level.swat, {
+                    group: this.mz.groups.actors
+                }));
+                this.swatTimer = this.game.time.create(false);
             }
 
             for (var _i3 = 0; _i3 < this.mz.level.press.count; _i3++) {
@@ -1259,11 +1301,11 @@ var Game = function () {
                     callbackContext: this,
                     spriteName: 'journalist' + _i3
                 }));
-                this.mz.groups.press.add(journalist.sprite);
-                journalist.setMode(__WEBPACK_IMPORTED_MODULE_5__constants_js__["g" /* JOURNALIST_MODE_WANDER */]);
+                this.mz.arrays.press.push(journalist.sprite);
+                this.mz.groups.actors.add(journalist.sprite);
+                journalist.setMode(__WEBPACK_IMPORTED_MODULE_6__constants_js__["g" /* JOURNALIST_MODE_WANDER */]);
             }
 
-            this.mz.groups.protesters = this.game.add.group();
             for (var _i4 = 0; _i4 < this.mz.level.protesters.count; _i4++) {
                 var protester = new __WEBPACK_IMPORTED_MODULE_1__objects_Protester_js__["a" /* default */](_extends({
                     game: this.game
@@ -1273,8 +1315,9 @@ var Game = function () {
                     activity: this.game.rnd.between(10, 20),
                     spriteName: 'protester' + _i4
                 }));
-                this.mz.groups.protesters.add(protester.sprite);
-                protester.setMode(__WEBPACK_IMPORTED_MODULE_5__constants_js__["i" /* PROTESTER_MODE_WANDER */]);
+                this.mz.arrays.protesters.push(protester.sprite);
+                this.mz.groups.actors.add(protester.sprite);
+                protester.setMode(__WEBPACK_IMPORTED_MODULE_6__constants_js__["i" /* PROTESTER_MODE_WANDER */]);
             }
 
             this.mz.objects.player = new __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__["a" /* default */](_extends({
@@ -1283,6 +1326,7 @@ var Game = function () {
                 y: this.game.world.centerY
             }, this.mz.level.player));
             this.game.camera.follow(this.mz.objects.player.sprite);
+            this.mz.groups.actors.add(this.mz.objects.player.sprite);
             this.mz.objects.player.sprite.events.onKilled.addOnce(this.handlePlayerKill, this);
 
             // bottom borders
@@ -1335,7 +1379,7 @@ var Game = function () {
             this.mz.events.keys.esc = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
             // pause menu
-            this.mz.objects.pauseMenu = new __WEBPACK_IMPORTED_MODULE_4__objects_PauseMenu_js__["a" /* default */]({ game: this.game });
+            this.mz.objects.pauseMenu = new __WEBPACK_IMPORTED_MODULE_5__objects_PauseMenu_js__["a" /* default */]({ game: this.game });
         }
     }, {
         key: 'update',
@@ -1349,8 +1393,8 @@ var Game = function () {
 
             // count score gaining speed
             this.mz.objects.player.resetScoreGainSpeed();
-            this.mz.groups.cops.forEachExists(function (copSprite) {
-                if (Phaser.Point.distance(copSprite, _this.mz.objects.player.sprite) < _this.mz.level.cops.fov.distance) {
+            this.mz.arrays.cops.forEach(function (copSprite) {
+                if (copSprite.alive && Phaser.Point.distance(copSprite, _this.mz.objects.player.sprite) < _this.mz.level.cops.fov.distance) {
                     _this.mz.objects.player.scoreGainSpeed += 1;
                 }
             });
@@ -1366,12 +1410,14 @@ var Game = function () {
             this.mz.objects.player.update();
 
             // update protesters
-            this.mz.groups.protesters.forEachAlive(function (sprite) {
-                sprite.mz.update();
+            this.mz.arrays.protesters.forEach(function (sprite) {
+                if (sprite.alive) {
+                    sprite.mz.update();
+                }
             });
 
             // update journalists
-            this.mz.groups.press.forEachExists(function (journalistSprite) {
+            this.mz.arrays.press.forEach(function (journalistSprite) {
                 var journalist = journalistSprite.mz;
                 var newTarget = null;
 
@@ -1380,16 +1426,25 @@ var Game = function () {
                 }
 
                 if (newTarget) {
-                    journalist.setMode(__WEBPACK_IMPORTED_MODULE_5__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */], { target: newTarget });
-                } else if (journalist.mode !== __WEBPACK_IMPORTED_MODULE_5__constants_js__["g" /* JOURNALIST_MODE_WANDER */]) {
-                    journalist.setMode(__WEBPACK_IMPORTED_MODULE_5__constants_js__["g" /* JOURNALIST_MODE_WANDER */]);
+                    journalist.setMode(__WEBPACK_IMPORTED_MODULE_6__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */], { target: newTarget });
+                } else if (journalist.mode !== __WEBPACK_IMPORTED_MODULE_6__constants_js__["g" /* JOURNALIST_MODE_WANDER */]) {
+                    journalist.setMode(__WEBPACK_IMPORTED_MODULE_6__constants_js__["g" /* JOURNALIST_MODE_WANDER */]);
                 }
 
                 journalist.update();
             });
 
+            // update swat
+            if (this.mz.objects.swat) {
+                if (this.mz.objects.swat.mode === __WEBPACK_IMPORTED_MODULE_6__constants_js__["j" /* SWAT_MODE_HIDE */] && !this.swatTimer.running) {
+                    this.swatTimer.add(this.mz.level.swat.frequency, this.launchSWAT, this);
+                    this.swatTimer.start();
+                }
+                this.mz.objects.swat.update();
+            }
+
             // update cops
-            this.mz.groups.cops.forEachAlive(function (copSprite) {
+            this.mz.arrays.cops.forEach(function (copSprite) {
                 var cop = copSprite.mz;
 
                 // set attraction point and strength
@@ -1397,21 +1452,21 @@ var Game = function () {
                 var attractionStrength = 0;
                 if (_this.mz.objects.player.showPoster) {
                     attractionStrength += 0.2;
-                    _this.mz.groups.press.forEachAlive(function (journalistSprite) {
-                        if (journalistSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_5__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */]) {
+                    _this.mz.arrays.press.forEach(function (journalistSprite) {
+                        if (journalistSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_6__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */]) {
                             attractionStrength += 0.4;
                         }
                     });
                 }
                 cop.attractionStrength = Math.min(1, attractionStrength);
 
-                if (cop.mode !== __WEBPACK_IMPORTED_MODULE_5__constants_js__["a" /* COP_MODE_CONVOY */]) {
+                if (cop.mode !== __WEBPACK_IMPORTED_MODULE_6__constants_js__["a" /* COP_MODE_CONVOY */]) {
                     // find target for a cop
                     var newTarget = null;
                     var distanceToTarget = Infinity;
-                    for (var i = 0; i <= _this.mz.groups.protesters.children.length; i++) {
-                        var protester = i === _this.mz.groups.protesters.children.length ? _this.mz.objects.player : _this.mz.groups.protesters.getAt(i).mz;
-                        if (!protester.sprite.exists || protester.mode === __WEBPACK_IMPORTED_MODULE_5__constants_js__["h" /* PROTESTER_MODE_ARRESTED */] || !cop.FOV.containsPoint(protester.sprite.body.center)) {
+                    for (var i = 0; i <= _this.mz.arrays.protesters.length; i++) {
+                        var protester = i === _this.mz.arrays.protesters.length ? _this.mz.objects.player : _this.mz.arrays.protesters[i].mz;
+                        if (!protester.sprite.exists || protester.mode === __WEBPACK_IMPORTED_MODULE_6__constants_js__["h" /* PROTESTER_MODE_ARRESTED */] || !cop.FOV.containsPoint(protester.sprite.body.center)) {
                             continue;
                         }
                         if (protester.sprite === cop.target || protester.showPoster) {
@@ -1428,10 +1483,10 @@ var Game = function () {
                     }
                     if (newTarget) {
                         // if theres a target in a view, pursue him
-                        cop.setMode(__WEBPACK_IMPORTED_MODULE_5__constants_js__["b" /* COP_MODE_PURSUE */], { target: newTarget });
-                    } else if (cop.mode !== __WEBPACK_IMPORTED_MODULE_5__constants_js__["c" /* COP_MODE_WANDER */]) {
+                        cop.setMode(__WEBPACK_IMPORTED_MODULE_6__constants_js__["b" /* COP_MODE_PURSUE */], { target: newTarget });
+                    } else if (cop.mode !== __WEBPACK_IMPORTED_MODULE_6__constants_js__["c" /* COP_MODE_WANDER */]) {
                         // else wander around, if not yet
-                        cop.setMode(__WEBPACK_IMPORTED_MODULE_5__constants_js__["c" /* COP_MODE_WANDER */]);
+                        cop.setMode(__WEBPACK_IMPORTED_MODULE_6__constants_js__["c" /* COP_MODE_WANDER */]);
                     }
                 }
 
@@ -1439,44 +1494,65 @@ var Game = function () {
             });
 
             // add protesters
-            this.mz.groups.protesters.forEachDead(function (sprite) {
-                var y = _this.getRandomCoordinateY();
-                sprite.mz.revive({
-                    x: _this.game.rnd.between(0, 1) === 0 ? -100 : _this.game.world.width + 100,
-                    y: y,
-                    nextCoords: {
-                        x: _this.getRandomCoordinateX(),
-                        y: y
-                    }
-                });
+            this.mz.arrays.protesters.forEach(function (sprite) {
+                if (!sprite.alive) {
+                    var y = _this.getRandomCoordinateY();
+                    _this.mz.groups.actors.add(sprite);
+                    sprite.mz.revive({
+                        x: _this.game.rnd.between(0, 1) === 0 ? -100 : _this.game.world.width + 100,
+                        y: y,
+                        nextCoords: {
+                            x: _this.getRandomCoordinateX(),
+                            y: y
+                        }
+                    });
+                }
             });
 
             // cops vs protesters collision
-            this.game.physics.arcade.overlap(this.mz.groups.protesters, this.mz.groups.cops, this.proceedToJail, function (protesterSprite, copSprite) {
-                return copSprite.mz.target === protesterSprite && protesterSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_5__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
+            this.game.physics.arcade.overlap(this.mz.arrays.protesters, this.mz.arrays.cops, this.proceedToJail, function (protesterSprite, copSprite) {
+                return copSprite.mz.target === protesterSprite && protesterSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_6__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
             }, this);
 
+            // swat vs protesters collision
+            if (this.mz.objects.swat) {
+                this.game.physics.arcade.overlap(this.mz.objects.swat.sprites, this.mz.arrays.protesters, function (swatSprite, protesterSprite) {
+                    _this.arrest(protesterSprite, swatSprite);
+                }, function (swatSprite, protesterSprite) {
+                    return swatSprite.children.length === 0 && protesterSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_6__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
+                });
+            }
+
             // cars vs protesters collision
-            this.game.physics.arcade.overlap(this.mz.groups.protesters, this.mz.groups.cars, function (protesterSprite) {
+            this.game.physics.arcade.overlap(this.mz.arrays.protesters, this.mz.groups.cars, function (protesterSprite) {
                 protesterSprite.mz.kill();
             }, function (protesterSprite) {
-                return protesterSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_5__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
+                return protesterSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_6__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
             });
 
+            // swat vs player collision
+            if (this.mz.objects.swat) {
+                this.game.physics.arcade.overlap(this.mz.objects.player.sprite, this.mz.objects.swat.sprites, this.arrest, function (playerSprite) {
+                    return playerSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_6__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
+                }, this);
+            }
+
             // cops vs player collision
-            this.game.physics.arcade.overlap(this.mz.objects.player.sprite, this.mz.groups.cops, function (playerSprite, copSprite) {
+            this.game.physics.arcade.overlap(this.mz.objects.player.sprite, this.mz.arrays.cops, function (playerSprite, copSprite) {
                 _this.mz.events.fieldClickHandler.events.onInputUp.remove(_this.handleClick, _this);
                 _this.proceedToJail(playerSprite, copSprite);
             }, function (playerSprite, copSprite) {
-                return copSprite.mz.target === playerSprite && playerSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_5__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
+                return copSprite.mz.target === playerSprite && playerSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_6__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
             });
 
             // player vs cars collision
             this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.cars, function (playerSprite) {
-                if (playerSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_5__constants_js__["h" /* PROTESTER_MODE_ARRESTED */]) {
+                if (playerSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_6__constants_js__["h" /* PROTESTER_MODE_ARRESTED */]) {
                     playerSprite.mz.kill();
                 }
             });
+
+            this.mz.groups.actors.sort('y', Phaser.Group.SORT_ASCENDING);
 
             this.checkWin();
 
@@ -1494,13 +1570,13 @@ var Game = function () {
             // this.mz.groups.cars.forEachExists(sprite => {
             //     this.game.debug.body(sprite);
             // });
-            // this.mz.groups.cops.forEachExists(sprite => {
+            // this.mz.arrays.cops.forEach(sprite => {
             //     this.game.debug.body(sprite);
             // });
-            // this.mz.groups.protesters.forEachExists(sprite => {
+            // this.mz.arrays.protesters.forEach(sprite => {
             //     this.game.debug.body(sprite);
             // });
-            // this.mz.groups.press.forEachExists(sprite => {
+            // this.mz.arrays.press.forEachExists(sprite => {
             //     this.game.debug.body(sprite);
             // });
         }
@@ -1523,15 +1599,6 @@ var Game = function () {
     }, {
         key: 'handlePlayerKill',
         value: function handlePlayerKill() {
-            this.mz.groups.cops.forEachExists(function (sprite) {
-                sprite.mz.kill();
-            });
-            this.mz.groups.press.forEachExists(function (sprite) {
-                sprite.mz.kill();
-            });
-            this.mz.groups.protesters.forEachExists(function (sprite) {
-                sprite.mz.kill();
-            });
             this.endGame(false);
         }
     }, {
@@ -1582,9 +1649,6 @@ var Game = function () {
     }, {
         key: 'proceedToJail',
         value: function proceedToJail(protesterSprite, copSprite) {
-            // beat him up a little
-            protesterSprite.damage(0.8);
-
             var closestCarCoords = null;
             var minDistance = Infinity;
             this.mz.groups.cars.forEach(function (carSprite) {
@@ -1598,11 +1662,41 @@ var Game = function () {
                     minDistance = distanceToCar;
                 }
             });
-            protesterSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_5__constants_js__["h" /* PROTESTER_MODE_ARRESTED */], {
-                jailCoords: closestCarCoords,
-                speed: copSprite.mz.speed.value
+
+            copSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_6__constants_js__["a" /* COP_MODE_CONVOY */], { jailCoords: closestCarCoords });
+
+            this.arrest(protesterSprite, copSprite);
+        }
+    }, {
+        key: 'arrest',
+        value: function arrest(protesterSprite, copSprite) {
+            // beat him up a little
+            protesterSprite.damage(0.8);
+            this.playRandomPunch();
+
+            copSprite.addChild(protesterSprite);
+            if (protesterSprite.name === 'player') {
+                this.game.camera.follow(copSprite);
+            }
+
+            protesterSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_6__constants_js__["h" /* PROTESTER_MODE_ARRESTED */], {
+                x: -Math.sign(copSprite.body.velocity.x) * protesterSprite.body.halfWidth,
+                y: protesterSprite.body.halfHeight
             });
-            copSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_5__constants_js__["a" /* COP_MODE_CONVOY */], { jailCoords: closestCarCoords });
+        }
+    }, {
+        key: 'launchSWAT',
+        value: function launchSWAT() {
+            this.swatTimer.stop(true);
+            var direction = this.game.rnd.between(0, 1) === 0 ? 'ltor' : 'rtol';
+            this.mz.objects.swat.setMode(__WEBPACK_IMPORTED_MODULE_6__constants_js__["k" /* SWAT_MODE_HUNT */], {
+                x: direction === 'ltor' ? -GLOBAL_OFFSET : this.game.world.width + GLOBAL_OFFSET,
+                y: this.getRandomCoordinateY(),
+                target: {
+                    x: direction === 'ltor' ? this.game.world.width + GLOBAL_OFFSET : -GLOBAL_OFFSET,
+                    y: this.getRandomCoordinateY()
+                }
+            });
         }
     }, {
         key: 'checkWin',
@@ -1616,8 +1710,8 @@ var Game = function () {
     }, {
         key: 'endGame',
         value: function endGame(win) {
-            this.mz.objects.audio.constr1.stop();
-            this.mz.objects.audio.constr2.stop();
+            this.mz.objects.audio.constr[0].stop();
+            this.mz.objects.audio.constr[1].stop();
 
             this.state.start('EndMenu', true, false, {
                 win: win,
@@ -1628,9 +1722,13 @@ var Game = function () {
         key: 'playRandomSound',
         value: function playRandomSound() {
             if (this.game.rnd.between(0, 200) === 0) {
-                var randomNumber = this.game.rnd.between(0, this.mz.objects.audio.random.length - 1);
-                this.mz.objects.audio.random[randomNumber].play('', 0, 0.5);
+                this.game.rnd.pick(this.mz.objects.audio.random).play('', 0, 0.5);
             }
+        }
+    }, {
+        key: 'playRandomPunch',
+        value: function playRandomPunch() {
+            this.game.rnd.pick(this.mz.objects.audio.audioPunch).play();
         }
     }, {
         key: 'getRandomCoordinates',
@@ -1643,12 +1741,12 @@ var Game = function () {
     }, {
         key: 'getRandomCoordinateX',
         value: function getRandomCoordinateX() {
-            return Math.max(GLOBAL_OFFSET, Math.min(this.game.world.width - GLOBAL_OFFSET, this.game.world.randomX));
+            return this.game.math.clamp(this.game.world.randomX, GLOBAL_OFFSET, this.game.world.width - GLOBAL_OFFSET);
         }
     }, {
         key: 'getRandomCoordinateY',
         value: function getRandomCoordinateY() {
-            return Math.max(GLOBAL_OFFSET, Math.min(this.game.world.height - GLOBAL_OFFSET, this.game.world.randomY));
+            return this.game.math.clamp(this.game.world.randomY, GLOBAL_OFFSET, this.game.world.height - GLOBAL_OFFSET);
         }
     }, {
         key: 'getFormattedTime',
@@ -1666,12 +1764,12 @@ var Game = function () {
 
 /***/ }),
 
-/***/ 329:
+/***/ 328:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Protester_js__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(40);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -1761,6 +1859,7 @@ var Player = function (_Protester) {
             _get(Player.prototype.__proto__ || Object.getPrototypeOf(Player.prototype), 'update', this).call(this);
 
             if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["h" /* PROTESTER_MODE_ARRESTED */]) {
+                this.updateProgressBar(0);
                 return;
             }
 
@@ -1825,7 +1924,7 @@ var Player = function (_Protester) {
 
                 this.resetClickSpeedUp();
             } else if (this.keys.up.justUp || this.keys.down.justUp || this.keys.left.justUp || this.keys.right.justUp) {
-                this.sprite.body.stop();
+                this.stopMovement();
             }
 
             if (this.keys.space.justDown) {
@@ -1845,6 +1944,7 @@ var Player = function (_Protester) {
             if (this.showPoster) {
                 this.scoreGainStartTime = Date.now();
             }
+            this.stopMovement();
         }
     }, {
         key: 'handleClick',
@@ -1857,16 +1957,18 @@ var Player = function (_Protester) {
         }
     }, {
         key: 'setMode',
-        value: function setMode(mode, props) {
+        value: function setMode(mode) {
+            var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
             switch (mode) {
                 case __WEBPACK_IMPORTED_MODULE_1__constants_js__["h" /* PROTESTER_MODE_ARRESTED */]:
                     {
+                        this.sprite.body.collideWorldBounds = false;
+
                         this.sprite.events.onInputUp.removeAll();
                         this.game.onPause.remove(this.handleGamePause, this);
                         this.game.onResume.remove(this.handleGameResume, this);
-
                         this.cooldownTimer.stop(true);
-                        this.stamina = this.maxStamina;
                         break;
                     }
             }
@@ -1907,6 +2009,13 @@ var Player = function (_Protester) {
         value: function resetClickSpeedUp() {
             this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
         }
+    }, {
+        key: 'stopMovement',
+        value: function stopMovement() {
+            this.sprite.body.stop();
+
+            _get(Player.prototype.__proto__ || Object.getPrototypeOf(Player.prototype), 'stopMovement', this).call(this);
+        }
     }]);
 
     return Player;
@@ -1916,13 +2025,13 @@ var Player = function (_Protester) {
 
 /***/ }),
 
-/***/ 330:
+/***/ 329:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Prefab_js__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(40);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -1958,8 +2067,6 @@ var Cop = function (_Prefab) {
             angle: fov.angle
         });
         fov.group.add(_this.FOV.graphics);
-
-        _this.audioPunches = [_this.game.add.audio('punch01'), _this.game.add.audio('punch02')];
 
         _this.target = null;
         _this.attractionPoint = null;
@@ -2033,10 +2140,6 @@ var Cop = function (_Prefab) {
                         this.FOV.kill();
                         this.returnCoords = { x: this.sprite.x, y: this.sprite.y };
                         this.setMoveTarget(jailCoords);
-
-                        if (this.mode !== __WEBPACK_IMPORTED_MODULE_2__constants_js__["a" /* COP_MODE_CONVOY */]) {
-                            this.audioPunches[this.game.rnd.between(0, 1)].play();
-                        }
                         break;
                     }
             }
@@ -2089,13 +2192,13 @@ var Cop = function (_Prefab) {
 
 /***/ }),
 
-/***/ 331:
+/***/ 330:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Prefab_js__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(40);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -2279,7 +2382,7 @@ var Journalist = function (_Prefab) {
 
 /***/ }),
 
-/***/ 332:
+/***/ 331:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2300,18 +2403,19 @@ var PauseMenu = function () {
 
         this.overlay = this.game.add.graphics(0, 0);
         this.overlay.beginFill(0xffffff, 0.7);
-        this.overlay.drawRect(0, 0, this.game.world.width, this.game.world.height);
+        this.overlay.drawRect(0, 0, this.game.width, this.game.height);
         this.overlay.endFill();
 
-        this.title = this.game.add.text(this.game.world.centerX, 2 / 3 * this.game.world.centerY, 'Пауза');
+        this.title = this.game.add.text(this.game.width / 2, 2 / 3 * this.game.height / 2, 'Пауза');
         this.title.anchor.setTo(0.5);
 
-        this.replayButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'playButton');
+        this.replayButton = this.game.add.sprite(this.game.width / 2, this.game.height / 2, 'playButton');
         this.replayButton.anchor.setTo(0.5);
 
         this.sprite.addChild(this.overlay);
         this.sprite.addChild(this.title);
         this.sprite.addChild(this.replayButton);
+        this.sprite.fixedToCamera = true;
     }
 
     _createClass(PauseMenu, [{
@@ -2333,13 +2437,147 @@ var PauseMenu = function () {
 
 /***/ }),
 
-/***/ 44:
+/***/ 332:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_js__ = __webpack_require__(40);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+var SQUAD_DENSITY = 40;
+var SQUAD_DISCIPLINE = 0.4;
+var TURN_FREQUENCY = 30;
+
+var SWATSquad = function () {
+    function SWATSquad(_ref) {
+        var game = _ref.game,
+            count = _ref.count,
+            speed = _ref.speed,
+            group = _ref.group;
+
+        _classCallCheck(this, SWATSquad);
+
+        this.game = game;
+
+        this.speed = _extends({
+            current: speed.value
+        }, speed);
+
+        this.mode = __WEBPACK_IMPORTED_MODULE_0__constants_js__["j" /* SWAT_MODE_HIDE */];
+        this.moveTarget = null;
+        this.updateIndex = 0;
+        this.audioAppear = this.game.add.audio('boo');
+
+        this.sprites = [];
+        for (var i = 0; i < count; i++) {
+            var swatSprite = this.game.add.sprite(0, 0, 'swat', 0);
+            swatSprite.anchor.set(0.5);
+            swatSprite.visible = false;
+
+            this.game.physics.arcade.enable(swatSprite);
+
+            this.sprites.push(swatSprite);
+            group.add(swatSprite);
+        }
+    }
+
+    _createClass(SWATSquad, [{
+        key: 'update',
+        value: function update() {
+            if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["k" /* SWAT_MODE_HUNT */]) {
+                var firstSprite = this.sprites[0];
+
+                if (this.game.math.fuzzyEqual(this.game.math.distanceSq(firstSprite.x, firstSprite.y, this.moveTarget.x, this.moveTarget.y), 0, 20)) {
+                    // todo better endpoint check
+                    this.setMode(__WEBPACK_IMPORTED_MODULE_0__constants_js__["j" /* SWAT_MODE_HIDE */]);
+                } else {
+                    // change direction once in a while
+                    if (this.updateIndex % TURN_FREQUENCY === 0) {
+                        var angle = this.game.math.angleBetweenPoints(firstSprite, this.moveTarget) + (this.updateIndex === 0 ? 1 : -1) * this.game.rnd.realInRange(0, SQUAD_DISCIPLINE);
+                        this.game.physics.arcade.velocityFromRotation(angle, this.speed.current, firstSprite.body.velocity);
+                    }
+
+                    for (var i = 1; i < this.sprites.length; i++) {
+                        var swatSprite = this.sprites[i];
+                        var angleToTarget = this.game.math.angleBetweenPoints(swatSprite, this.sprites[i - 1]);
+                        this.game.physics.arcade.velocityFromRotation(angleToTarget, this.speed.current, swatSprite.body.velocity);
+                    }
+
+                    if (this.updateIndex === 2 * TURN_FREQUENCY - 1) {
+                        this.updateIndex = 0;
+                    } else {
+                        this.updateIndex++;
+                    }
+                }
+            }
+        }
+    }, {
+        key: 'setMode',
+        value: function setMode(mode) {
+            var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            switch (mode) {
+                case __WEBPACK_IMPORTED_MODULE_0__constants_js__["j" /* SWAT_MODE_HIDE */]:
+                    {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["k" /* SWAT_MODE_HUNT */]) {
+                            for (var i = 0; i < this.sprites.length; i++) {
+                                this.sprites[i].visible = false;
+                                this.sprites[i].body.stopMovement(true);
+                            }
+                            this.updateIndex = 0;
+                            this.moveTarget = null;
+                        }
+                        break;
+                    }
+                case __WEBPACK_IMPORTED_MODULE_0__constants_js__["k" /* SWAT_MODE_HUNT */]:
+                    {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["j" /* SWAT_MODE_HIDE */]) {
+                            var x = props.x,
+                                y = props.y,
+                                target = props.target;
+
+                            this.moveTarget = target;
+
+                            var directionSign = this.moveTarget.x > x ? -1 : 1;
+                            for (var _i = 0; _i < this.sprites.length; _i++) {
+                                var swatSprite = this.sprites[_i];
+                                swatSprite.x = x + _i * directionSign * SQUAD_DENSITY;
+                                swatSprite.y = y;
+                                swatSprite.visible = true;
+                            }
+
+                            this.audioAppear.play();
+                        }
+                        break;
+                    }
+            }
+
+            this.mode = mode;
+        }
+    }]);
+
+    return SWATSquad;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (SWATSquad);
+
+/***/ }),
+
+/***/ 40:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return COP_MODE_WANDER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return COP_MODE_PURSUE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return COP_MODE_CONVOY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return SWAT_MODE_HIDE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return SWAT_MODE_HUNT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return FOV_MODE_NORMAL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return FOV_MODE_CAPTURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return PROTESTER_MODE_WANDER; });
@@ -2349,6 +2587,9 @@ var PauseMenu = function () {
 var COP_MODE_WANDER = 'wander';
 var COP_MODE_PURSUE = 'pursue';
 var COP_MODE_CONVOY = 'convoy';
+
+var SWAT_MODE_HIDE = 'hide';
+var SWAT_MODE_HUNT = 'hunt';
 
 var FOV_MODE_NORMAL = 'normal';
 var FOV_MODE_CAPTURE = 'capture';
@@ -2396,7 +2637,6 @@ var Prefab = function () {
         this.sprite.mz = this;
         this.sprite.name = spriteName;
         this.sprite.anchor.set(0.5);
-        this.sprite.scale.set(0.5);
 
         this.game.physics.arcade.enable(this.sprite);
 
@@ -2485,15 +2725,15 @@ var Prefab = function () {
         value: function updateProgressBar(percent) {
             var color = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0x00ff00;
 
-            var y = -60;
-            var width = 50;
-            var height = 10;
+            var y = -30;
+            var width = 25;
+            var height = 5;
             this.progressBar.clear();
             if (percent !== 0) {
                 if (percent > 1) {
                     percent = 1;
                 }
-                this.progressBar.lineStyle(2, color, 1);
+                this.progressBar.lineStyle(1, color, 1);
                 this.progressBar.drawRect(-width / 2, y - height / 2, width, height);
                 this.progressBar.lineStyle(height, color, 1);
                 this.progressBar.moveTo(-width / 2, y);

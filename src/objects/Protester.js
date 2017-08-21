@@ -11,17 +11,19 @@ class Protester extends Prefab {
         this.sprite.inputEnabled = true;
         this.sprite.input.priorityID = 1;
 
+        this.sprite.checkWorldBounds = true;
+
         this.injurySprite = this.sprite.addChild(
             this.game.make.sprite(
-                -30,
-                -this.sprite.height / 2 / this.sprite.scale.y - 2,
+                -15,
+                -this.sprite.height / 2 - 2,
                 'injury'
             )
         );
         this.injurySprite.bringToTop();
         this.injurySprite.exists = false;
 
-        this.posterSprite = this.sprite.addChild(this.game.make.sprite(-80, -120, 'poster', 0));
+        this.posterSprite = this.sprite.addChild(this.game.make.sprite(-40, -60, 'poster', 0));
         this.posterSprite.bringToTop();
         this.posterSprite.exists = false;
 
@@ -31,6 +33,9 @@ class Protester extends Prefab {
         }
 
         this.showPoster = false;
+
+        // events
+        this.sprite.events.onOutOfBounds.add(this.kill, this);
     }
 
     update() {
@@ -53,14 +58,16 @@ class Protester extends Prefab {
                 break;
             }
             case PROTESTER_MODE_ARRESTED: {
-                const { jailCoords, speed } = props;
+                const { x, y } = props;
+                this.sprite.x = x;
+                this.sprite.y = y;
+
                 // clean up previous state
                 if (this.mode === PROTESTER_MODE_WANDER) {
                     this.stopWandering();
                 }
                 this.togglePoster(false);
-                this.speed.current = speed;
-                this.setMoveTarget(jailCoords);
+                this.stopMovement();
                 break;
             }
         }

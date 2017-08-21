@@ -97,58 +97,58 @@ export default {
         {
             type: 'spritesheet',
             key: 'cop',
-            url: require('./cop02.png'),
-            frameWidth: 60,
-            frameHeight: 92
+            url: require('./cop01.png'),
+            frameWidth: 44,
+            frameHeight: 49
         },
         {
             type: 'spritesheet',
             key: 'journalist',
             url: require('./journalist01.png'),
-            frameWidth: 64,
-            frameHeight: 98
+            frameWidth: 32,
+            frameHeight: 49
         },
         {
             type: 'spritesheet',
             key: 'player',
             url: require('./player.png'),
-            frameWidth: 60,
-            frameHeight: 92
+            frameWidth: 30,
+            frameHeight: 46
         },
         {
             type: 'spritesheet',
             key: 'protester1',
             url: require('./protester01.png'),
-            frameWidth: 64,
-            frameHeight: 96
+            frameWidth: 32,
+            frameHeight: 48
         },
         {
             type: 'spritesheet',
             key: 'protester2',
             url: require('./protester02.png'),
-            frameWidth: 60,
-            frameHeight: 92
+            frameWidth: 30,
+            frameHeight: 46
         },
         {
             type: 'spritesheet',
             key: 'protester3',
             url: require('./protester03.png'),
-            frameWidth: 60,
-            frameHeight: 94
+            frameWidth: 30,
+            frameHeight: 47
         },
         {
             type: 'spritesheet',
             key: 'injury',
             url: require('./injury.png'),
-            frameWidth: 60,
-            frameHeight: 62
+            frameWidth: 30,
+            frameHeight: 31
         },
         {
             type: 'spritesheet',
             key: 'poster',
             url: require('./poster.png'),
-            frameWidth: 120,
-            frameHeight: 142
+            frameWidth: 60,
+            frameHeight: 71
         },
         {
             type: 'image',
@@ -175,58 +175,65 @@ export default {
         {
             type: 'spritesheet',
             key: 'cop',
-            url: require('./cop01.png'),
-            frameWidth: 88,
-            frameHeight: 98
+            url: require('./cop02.png'),
+            frameWidth: 46,
+            frameHeight: 54
+        },
+        {
+            type: 'spritesheet',
+            key: 'swat',
+            url: require('./swat.png'),
+            frameWidth: 30,
+            frameHeight: 46
         },
         {
             type: 'spritesheet',
             key: 'journalist',
             url: require('./journalist01.png'),
-            frameWidth: 64,
-            frameHeight: 98
+            frameWidth: 32,
+            frameHeight: 49
         },
         {
             type: 'spritesheet',
             key: 'player',
             url: require('./player.png'),
-            frameWidth: 60,
-            frameHeight: 92
+            frameWidth: 30,
+            frameHeight: 46
         },
         {
             type: 'spritesheet',
             key: 'protester1',
             url: require('./protester01.png'),
-            frameWidth: 64,
-            frameHeight: 96
+            frameWidth: 32,
+            frameHeight: 48
         },
         {
             type: 'spritesheet',
             key: 'protester2',
             url: require('./protester02.png'),
-            frameWidth: 60,
-            frameHeight: 92
+            frameWidth: 30,
+            frameHeight: 46
         },
         {
             type: 'spritesheet',
             key: 'protester3',
             url: require('./protester03.png'),
-            frameWidth: 60,
-            frameHeight: 94
+            frameWidth: 30,
+            frameHeight: 47
         },
         {
             type: 'spritesheet',
             key: 'injury',
             url: require('./injury.png'),
-            frameWidth: 60,
-            frameHeight: 62
+            frameWidth: 30,
+            frameHeight: 31
         },
         {
             type: 'spritesheet',
             key: 'poster',
             url: require('./poster.png'),
-            frameWidth: 120,
-            frameHeight: 142
+            frameWidth: 60,
+            frameHeight: 71
         },
         {
             type: 'image',

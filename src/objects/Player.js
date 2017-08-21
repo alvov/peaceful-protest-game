@@ -63,6 +63,7 @@ class Player extends Protester {
         super.update();
 
         if (this.mode === PROTESTER_MODE_ARRESTED) {
+            this.updateProgressBar(0);
             return;
         }
 
@@ -138,7 +139,7 @@ class Player extends Protester {
             this.keys.left.justUp ||
             this.keys.right.justUp
         ) {
-            this.sprite.body.stop();
+            this.stopMovement();
         }
 
         if (this.keys.space.justDown) {
@@ -156,6 +157,7 @@ class Player extends Protester {
         if (this.showPoster) {
             this.scoreGainStartTime = Date.now();
         }
+        this.stopMovement();
     }
 
     handleClick() {
@@ -166,15 +168,15 @@ class Player extends Protester {
         }
     }
 
-    setMode(mode, props) {
+    setMode(mode, props = {}) {
         switch (mode) {
             case PROTESTER_MODE_ARRESTED: {
+                this.sprite.body.collideWorldBounds = false;
+
                 this.sprite.events.onInputUp.removeAll();
                 this.game.onPause.remove(this.handleGamePause, this);
                 this.game.onResume.remove(this.handleGameResume, this);
-
                 this.cooldownTimer.stop(true);
-                this.stamina = this.maxStamina;
                 break;
             }
         }
@@ -208,6 +210,12 @@ class Player extends Protester {
 
     resetClickSpeedUp() {
         this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
+    }
+
+    stopMovement() {
+        this.sprite.body.stop();
+
+        super.stopMovement();
     }
 }
 

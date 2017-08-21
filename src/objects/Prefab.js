@@ -12,7 +12,6 @@ class Prefab {
         this.sprite.mz = this;
         this.sprite.name = spriteName;
         this.sprite.anchor.set(0.5);
-        this.sprite.scale.set(0.5);
 
         this.game.physics.arcade.enable(this.sprite);
 
@@ -93,15 +92,15 @@ class Prefab {
     }
 
     updateProgressBar(percent, color = 0x00ff00) {
-        const y = -60;
-        const width = 50;
-        const height = 10;
+        const y = -30;
+        const width = 25;
+        const height = 5;
         this.progressBar.clear();
         if (percent !== 0) {
             if (percent > 1) {
                 percent = 1;
             }
-            this.progressBar.lineStyle(2, color, 1);
+            this.progressBar.lineStyle(1, color, 1);
             this.progressBar.drawRect(-width / 2, y - height / 2, width, height);
             this.progressBar.lineStyle(height, color, 1);
             this.progressBar.moveTo(-width / 2, y);

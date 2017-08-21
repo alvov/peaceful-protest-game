@@ -62,6 +62,13 @@ export default {
                 angle: 120
             }
         },
+        swat: {
+            count: 5,
+            speed: {
+                value: 200
+            },
+            frequency: 2000
+        },
         press: {
             count: 5,
             speed: {

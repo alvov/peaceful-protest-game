@@ -18,23 +18,16 @@ MVP
 - graphics
 
 TechDebt
-+ babel
-+ images as assets
-- menu via html
 ? game config
-+ cops FOV shape
-+ menu screen
-+ win screen
 ? score as progress bar
-+ level timer (score gain speed, running speed, cops interest)
-+ loading screen
-+ sprite borders
-- extend sprite object
-+ bundle phaser
-+ speed up everything
 ? phaser custom build
-+ score gaining speed
-+ speed up on fast click
+? remove moveTo
+? replace Point static methods with math
+? swat child bug
+? swat end point check
+- fix pause menu on large map
+- menu via html
+- extend sprite object
 
 Cpx Prf Feature
 1   1   passersby
@@ -44,7 +37,7 @@ Cpx Prf Feature
 ?   ?   protesters: distract
 ?   ?   protesters: disguise
 +   +   cops FOV: cone
-2   2   cops: swat
++   +   cops: swat
 1   1   points for passersby
 +   +   extra points for photographers
 +   +   extra points for position
