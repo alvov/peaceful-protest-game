@@ -9,6 +9,7 @@ class FOV {
     constructor({ game, radius, angle, colors = DEFAULT_COLORS }) {
         this.game = game;
         this.radius = radius;
+        this.radiusSq = this.radius ** 2;
         this.halfViewAngle = this.game.math.degToRad(angle / 2);
         this.colors = colors;
 
@@ -54,11 +55,11 @@ class FOV {
         if (!this.center) {
             return false;
         }
-        const distance = Phaser.Point.distance(this.center, { x, y });
-        if (distance > this.radius) {
+        const distanceSq = this.game.math.distanceSq(this.center.x, this.center.y, x, y);
+        if (distanceSq > this.radiusSq) {
             return false;
         }
-        let angle = Phaser.Point.angle({ x, y }, this.center);
+        let angle = this.game.math.angleBetweenPoints(this.center, { x, y });
 
         const leftAngle = this.angle - this.halfViewAngle;
         const rightAngle = this.angle + this.halfViewAngle;

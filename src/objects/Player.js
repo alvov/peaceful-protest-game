@@ -3,26 +3,26 @@ import {
     PROTESTER_MODE_ARRESTED
 } from '../constants.js';
 
-const DEFAULT_SCORE_GAIN_SPEED = 0.1;
 const DEFAULT_CLICK_SPEED_UP = 1;
 
 class Player extends Protester {
-    constructor({ game, x, y, speed, stamina, staminaCooldown }) {
+    constructor({ game, x, y, speed, fovGroup, radius, cheering, stamina, staminaCooldown }) {
         super({
             game,
             x,
             y,
             speed,
             spriteKey: 'player',
-            spriteName: 'player',
-            audioKey: 'scream03'
+            spriteName: 'player'
         });
+
+        this.sprite.inputEnabled = true;
+        this.sprite.input.priorityID = 1;
 
         this.sprite.body.collideWorldBounds = true;
 
-        this.score = 0;
-        this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
-        this.scoreGainStartTime = null;
+        this.radius = radius;
+        this.cheering = cheering;
 
         this.moveTarget = null;
         this.stamina = stamina;
@@ -35,13 +35,19 @@ class Player extends Protester {
         this.progressBar = this.game.add.graphics();
         this.sprite.addChild(this.progressBar);
 
+        this.audioScream = this.game.add.audio('scream03');
+
         this.showPoster = false;
+
+        this.circleGraphics = this.game.add.graphics(0, 0);
+        this.circleGraphics.lineStyle(1, 0x33ff33, 1);
+        this.circleGraphics.drawCircle(0, 0, this.radius * 2);
+        fovGroup.add(this.circleGraphics);
 
         // events
         this.sprite.events.onInputUp.add(this.handleClick, this);
         this.sprite.input.priorityID = 2;
 
-        this.game.onPause.add(this.handleGamePause, this);
         this.game.onResume.add(this.handleGameResume, this);
 
         this.keys = {
@@ -62,14 +68,15 @@ class Player extends Protester {
 
         super.update();
 
+        this.circleGraphics.visible = this.showPoster;
+        if (this.showPoster) {
+            this.circleGraphics.x = this.sprite.x;
+            this.circleGraphics.y = this.sprite.y;
+        }
+
         if (this.mode === PROTESTER_MODE_ARRESTED) {
             this.updateProgressBar(0);
             return;
-        }
-
-        if (this.scoreGainStartTime) {
-            this.flushScore();
-            this.scoreGainStartTime = Date.now();
         }
 
         const areMovingKeysDown = this.keys.up.isDown ||
@@ -147,16 +154,7 @@ class Player extends Protester {
         }
     }
 
-    handleGamePause() {
-        if (this.scoreGainStartTime) {
-            this.flushScore();
-        }
-    }
-
     handleGameResume() {
-        if (this.showPoster) {
-            this.scoreGainStartTime = Date.now();
-        }
         this.stopMovement();
     }
 
@@ -171,11 +169,15 @@ class Player extends Protester {
     setMode(mode, props = {}) {
         switch (mode) {
             case PROTESTER_MODE_ARRESTED: {
+                const { x, y } = props;
+                this.sprite.x = x;
+                this.sprite.y = y;
+                this.stopMovement();
+                this.togglePoster(false);
+
                 this.sprite.body.collideWorldBounds = false;
 
                 this.sprite.events.onInputUp.removeAll();
-                this.game.onPause.remove(this.handleGamePause, this);
-                this.game.onResume.remove(this.handleGameResume, this);
                 this.cooldownTimer.stop(true);
                 break;
             }
@@ -189,23 +191,12 @@ class Player extends Protester {
             return;
         }
 
-        // count score
+        // play sound
         if (on) {
-            this.scoreGainStartTime = Date.now();
-        } else {
-            this.flushScore();
+            this.audioScream.play('', 0, 0.25);
         }
 
-        super.togglePoster(on);
-    }
-
-    flushScore() {
-        this.score += this.scoreGainSpeed * (Date.now() - this.scoreGainStartTime) / 1000;
-        this.scoreGainStartTime = null;
-    }
-
-    resetScoreGainSpeed() {
-        this.scoreGainSpeed = DEFAULT_SCORE_GAIN_SPEED;
+        this.showPoster = on;
     }
 
     resetClickSpeedUp() {
@@ -216,6 +207,12 @@ class Player extends Protester {
         this.sprite.body.stop();
 
         super.stopMovement();
+    }
+
+    kill() {
+        this.game.onResume.removeAll();
+
+        super.kill();
     }
 }
 

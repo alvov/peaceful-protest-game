@@ -36,20 +36,20 @@ class SWATSquad {
 
     update() {
         if (this.mode === SWAT_MODE_HUNT) {
-            const firstSprite = this.sprites[0];
+            const lastSprite = this.sprites[this.sprites.length - 1];
 
             if (
                 this.game.math.fuzzyEqual(
-                    this.game.math.distanceSq(firstSprite.x, firstSprite.y, this.moveTarget.x, this.moveTarget.y),
+                    this.game.math.distanceSq(lastSprite.x, lastSprite.y, this.moveTarget.x, this.moveTarget.y),
                     0,
-                    20
+                    lastSprite.width
                 )
             ) {
-                // todo better endpoint check
                 this.setMode(SWAT_MODE_HIDE);
             } else {
                 // change direction once in a while
                 if (this.updateIndex % TURN_FREQUENCY === 0) {
+                    const firstSprite = this.sprites[0];
                     const angle = this.game.math.angleBetweenPoints(firstSprite, this.moveTarget) +
                         (this.updateIndex === 0 ? 1 : -1) * this.game.rnd.realInRange(0, SQUAD_DISCIPLINE);
                     this.game.physics.arcade.velocityFromRotation(angle, this.speed.current, firstSprite.body.velocity);
@@ -75,6 +75,9 @@ class SWATSquad {
             case SWAT_MODE_HIDE: {
                 if (this.mode === SWAT_MODE_HUNT) {
                     for (let i = 0; i < this.sprites.length; i++) {
+                        for (let j = 0; j < this.sprites[i].children.length; j++) {
+                            this.sprites[i].getChildAt(j).mz.kill();
+                        }
                         this.sprites[i].visible = false;
                         this.sprites[i].body.stopMovement(true);
                     }

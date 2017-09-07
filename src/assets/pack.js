@@ -30,6 +30,11 @@ export default {
         },
         {
             type: 'audio',
+            key: 'theme',
+            urls: require('./audio/theme.mp3')
+        },
+        {
+            type: 'audio',
             key: 'punch01',
             urls: require('./audio/punch01.mp3')
         },
@@ -37,16 +42,6 @@ export default {
             type: 'audio',
             key: 'punch02',
             urls: require('./audio/punch02.mp3')
-        },
-        {
-            type: 'audio',
-            key: 'constr01',
-            urls: require('./audio/constr01.mp3')
-        },
-        {
-            type: 'audio',
-            key: 'constr02',
-            urls: require('./audio/constr02.mp3')
         },
         {
             type: 'audio',

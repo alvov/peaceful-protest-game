@@ -3,8 +3,8 @@ export default {
         id: 'level1',
         worldWidth: 600,
         worldHeight: 600,
-        duration: 2 * 60, // s
-        winningScore: 60,
+        duration: 5 * 60, // s
+        winningScore: 75,
         cops: {
             count: 1,
             speed: {
@@ -25,14 +25,20 @@ export default {
                 distance: 150,
                 angle: 100
             },
-            duration: 5, // s
-            points: 10
+            duration: 5 // s
         },
         protesters: {
-            count: 10,
+            count: {
+                start: 10,
+                max: 30,
+                add: 8
+            },
             speed: {
                 value: 60
-            }
+            },
+            mood: 30,
+            moodDown: 0.01,
+            cheeringDuration: 5
         },
         player: {
             speed: {
@@ -41,6 +47,8 @@ export default {
                 clickSpeedUp: 1.05,
                 running: 1.5
             },
+            radius: 150,
+            cheering: 0.5,
             stamina: 100,
             staminaCooldown: 5 // s
         }
@@ -49,16 +57,16 @@ export default {
         id: 'level2',
         worldWidth: 800,
         worldHeight: 800,
-        duration: 3 * 60, // s
-        winningScore: 100,
+        duration: 5 * 60, // s
+        winningScore: 75,
         cops: {
-            count: 7,
+            count: 5,
             speed: {
                 value: 60,
                 running: 1.7
             },
             fov: {
-                distance: 200,
+                distance: 150,
                 angle: 120
             }
         },
@@ -67,7 +75,7 @@ export default {
             speed: {
                 value: 200
             },
-            frequency: 2000
+            frequency: 25000
         },
         press: {
             count: 5,
@@ -78,14 +86,21 @@ export default {
                 distance: 100,
                 angle: 100
             },
-            duration: 7, //
-            points: 10
+            duration: 5
         },
         protesters: {
-            count: 30,
+            count: {
+                start: 30,
+                max: 60,
+                add: 12
+            },
+            max: 60,
             speed: {
                 value: 60
-            }
+            },
+            mood: 30,
+            moodDown: 0.01,
+            cheeringDuration: 3
         },
         player: {
             speed: {
@@ -94,6 +109,8 @@ export default {
                 clickSpeedUp: 1.05,
                 running: 1.5
             },
+            radius: 120,
+            cheering: 0.5,
             stamina: 200,
             staminaCooldown: 5 // s
         }

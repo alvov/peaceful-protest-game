@@ -15,16 +15,18 @@ class EndMenu {
         this.title = this.game.add.text(
             this.world.centerX,
             2 / 3 * this.world.centerY,
-            this.mz.config.win ? 'Вы победили!' : 'Вас посадили :('
+            this.mz.config.win ? 'Протест удался!' : 'Вы слили протест :('
         );
         this.title.anchor.setTo(0.5);
 
-        this.score = this.game.add.text(
+        const timeString = String(Math.floor(this.mz.config.time / 60)).padStart(2, '0') + ':' +
+            String(this.mz.config.time % 60).padStart(2, '0');
+        this.time = this.game.add.text(
             this.world.centerX,
             2 / 3 * this.world.centerY + 31,
-            `Ваш счет: ${this.mz.config.score}`
+            `Ваше время: ${timeString}`
         );
-        this.score.anchor.setTo(0.5);
+        this.time.anchor.setTo(0.5);
 
         this.replayButton = this.game.add.button(
             this.world.centerX,

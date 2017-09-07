@@ -10,6 +10,7 @@ export const FOV_MODE_CAPTURE = 'capture';
 
 export const PROTESTER_MODE_WANDER = 'wander';
 export const PROTESTER_MODE_ARRESTED = 'arrested';
+export const PROTESTER_MODE_LEAVE = 'leave';
 
 export const JOURNALIST_MODE_WANDER = 'wander';
 export const JOURNALIST_MODE_SHOOTING = 'shooting';

@@ -37,9 +37,9 @@ class Prefab {
     }
 
     moveTo(coords) {
-        const distance = Phaser.Point.distance(this.sprite, coords);
+        const distance = this.game.math.distance(this.sprite.x, this.sprite.y, coords.x, coords.y);
         const duration = distance / this.speed.current * 1000; // ms
-        const angle = Phaser.Point.angle(coords, this.sprite);
+        const angle = this.game.math.angleBetweenPoints(this.sprite, coords);
         const angleDeg = this.game.math.radToDeg(angle);
         this.sprite.body.angle = angle;
 
@@ -96,10 +96,8 @@ class Prefab {
         const width = 25;
         const height = 5;
         this.progressBar.clear();
+        percent = this.game.math.clamp(percent, 0, 1);
         if (percent !== 0) {
-            if (percent > 1) {
-                percent = 1;
-            }
             this.progressBar.lineStyle(1, color, 1);
             this.progressBar.drawRect(-width / 2, y - height / 2, width, height);
             this.progressBar.lineStyle(height, color, 1);

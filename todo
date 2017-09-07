@@ -19,13 +19,16 @@ MVP
 
 TechDebt
 ? game config
-? score as progress bar
 ? phaser custom build
 ? remove moveTo
-? replace Point static methods with math
-? swat child bug
-? swat end point check
-- fix pause menu on large map
+? continual mood gain
+? no progress bars for full mood
+? refactor update loops
+? remove tilemap/resize attempts
+? drop posters when arrested
+? pick up posters for upgrade
+? lighter 2nd level background
+? number of arrested/left/newcommers on end screen
 - menu via html
 - extend sprite object
 
@@ -45,4 +48,4 @@ Cpx Prf Feature
 +   +   kill: prison bus
 2   2   play for cops
 +   +   sounds
-2   0   music
++   +   music
