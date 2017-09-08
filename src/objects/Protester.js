@@ -1,7 +1,10 @@
 import Prefab from './Prefab.js';
+import {
+    PROTESTER_MODE_ARRESTED
+} from '../constants.js';
 
 class Protester extends Prefab {
-    constructor({ game, x, y, speed, spriteKey, spriteName }) {
+    constructor({ game, x, y, speed, spriteKey, spriteName, onDropPoster }) {
         super({ game, x, y, speed, spriteKey, spriteName });
 
         this.injurySprite = this.sprite.addChild(
@@ -12,20 +15,45 @@ class Protester extends Prefab {
             )
         );
         this.injurySprite.bringToTop();
-        this.injurySprite.exists = false;
+        this.injurySprite.visible = false;
 
-        this.posterSprite = this.sprite.addChild(this.game.make.sprite(-40, -60, 'poster', 0));
+        this.posterSprite = this.sprite.addChild(this.game.make.sprite(-10, 11, 'poster', 0));
         this.posterSprite.bringToTop();
-        this.posterSprite.exists = false;
+        this.posterSprite.anchor.set(0.5, 1);
+        this.posterSprite.visible = false;
 
         this.showPoster = false;
+        this.dropPoster = 1;
+
+        this.onDropPoster = onDropPoster;
     }
 
     update() {
-        this.injurySprite.exists = this.sprite.health !== 1;
-        this.posterSprite.exists = this.showPoster;
+        this.injurySprite.visible = this.sprite.health !== 1;
+        this.posterSprite.visible = this.posterSprite.alive && this.showPoster;
 
         super.update();
+    }
+
+    setMode(mode, props = {}) {
+        switch (mode) {
+            case PROTESTER_MODE_ARRESTED: {
+                if (this.game.rnd.frac() < this.dropPoster) {
+                    this.posterSprite.kill();
+                    this.onDropPoster({ x: this.sprite.x, y: this.sprite.y });
+                }
+
+                this.stopMovement();
+
+                const { x, y } = props;
+                this.sprite.x = x;
+                this.sprite.y = y;
+
+                break;
+            }
+        }
+
+        super.setMode(mode, props);
     }
 }
 

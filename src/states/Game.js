@@ -65,11 +65,12 @@ class Game {
             arrays: {
                 protesters: [],
                 cops: [],
-                press: [],
+                press: []
             },
             groups: {
                 actors: null,
                 cars: null,
+                droppedPosters: null,
                 copsFOV: null,
                 pressFOV: null,
                 playerFOV: null,
@@ -99,11 +100,14 @@ class Game {
         ];
         this.mz.objects.audio.applause = this.game.add.audio('applause');
         this.mz.objects.audio.boo = this.game.add.audio('boo');
+        this.mz.objects.audio.pick = this.game.add.audio('pick');
 
         // FOVs should always be below everything
         this.mz.groups.playerFOV = this.game.add.group();
         this.mz.groups.pressFOV = this.game.add.group();
         this.mz.groups.copsFOV = this.game.add.group();
+
+        this.mz.groups.droppedPosters = this.game.add.group();
 
         this.mz.groups.cars = this.game.add.group();
         // cars
@@ -166,6 +170,7 @@ class Game {
         });
 
         // press
+        const onFinishShooting = this.handleFinishShooting.bind(this);
         for (let i = 0; i < this.mz.level.press.count; i++) {
             const journalist = new Journalist({
                 game: this.game,
@@ -178,8 +183,7 @@ class Game {
                 speed: this.mz.level.press.speed,
                 shootingDuration: this.mz.level.press.duration,
                 cooldownDuration: this.mz.level.press.duration * this.mz.level.press.count * 2,
-                onFinishShooting: this.handleFinishShooting,
-                callbackContext: this,
+                onFinishShooting,
                 spriteName: `journalist${i}`
             });
             this.mz.arrays.press.push(journalist.sprite);
@@ -196,7 +200,8 @@ class Game {
             x: this.game.world.centerX,
             y: this.game.world.centerY,
             fovGroup: this.mz.groups.playerFOV,
-            ...this.mz.level.player
+            ...this.mz.level.player,
+            onDropPoster: this.handleDropPoster.bind(this)
         });
         this.game.camera.follow(this.mz.objects.player.sprite);
         this.mz.groups.actors.add(this.mz.objects.player.sprite);
@@ -318,7 +323,7 @@ class Game {
                 sprite.mz.toggleCheering(
                     !this.mz.gameEnded &&
                     this.mz.objects.player.showPoster &&
-                    this.getDistanceSq(sprite, this.mz.objects.player.sprite) <= this.mz.objects.player.radiusSq
+                    this.getDistanceSq(sprite, this.mz.objects.player.sprite) <= this.mz.objects.player.radius.actualSq
                 );
 
                 this.mz.protesters.alive++;
@@ -400,7 +405,7 @@ class Game {
                     }
                 });
             }
-            cop.attractionStrength = Math.min(1, attractionStrength);
+            cop.attractionStrength = Math.min(1, attractionStrength * this.mz.objects.player.power);
 
             if (cop.mode !== COP_MODE_CONVOY) {
                 // find target for a cop
@@ -478,30 +483,41 @@ class Game {
             protesterSprite => protesterSprite.mz.mode === PROTESTER_MODE_ARRESTED
         );
 
-        // swat vs player collision
-        if (this.mz.objects.swat) {
+        // player collisions
+        if (this.mz.objects.player.mode !== PROTESTER_MODE_ARRESTED) {
+            // vs posters
+            this.mz.groups.droppedPosters.forEachAlive(posterSprite => {
+                if (Phaser.Rectangle.intersects(posterSprite.getBounds(), this.mz.objects.player.sprite.getBounds())) {
+                    this.mz.objects.audio.pick.play('', 0, 0.25);
+                    this.mz.objects.player.powerUp();
+                    posterSprite.kill();
+                }
+            });
+
+            // vs swat
+            if (this.mz.objects.swat) {
+                this.game.physics.arcade.overlap(
+                    this.mz.objects.player.sprite,
+                    this.mz.objects.swat.sprites,
+                    this.arrest,
+                    (playerSprite, swatSprite) => swatSprite.children.length === 0,
+                    this
+                );
+            }
+
+            // vs cops
             this.game.physics.arcade.overlap(
                 this.mz.objects.player.sprite,
-                this.mz.objects.swat.sprites,
-                this.arrest,
-                (playerSprite, swatSprite) =>
-                    swatSprite.children.length === 0 &&
-                    playerSprite.mz.mode !== PROTESTER_MODE_ARRESTED,
-                this
+                this.mz.arrays.cops,
+                (playerSprite, copSprite) => {
+                    this.mz.events.fieldClickHandler.events.onInputUp.remove(this.handleClick, this);
+                    this.proceedToJail(playerSprite, copSprite);
+                },
+                (playerSprite, copSprite) =>
+                    copSprite.mz.target === playerSprite
             );
-        }
 
-        // cops vs player collision
-        this.game.physics.arcade.overlap(
-            this.mz.objects.player.sprite,
-            this.mz.arrays.cops,
-            (playerSprite, copSprite) => {
-                this.mz.events.fieldClickHandler.events.onInputUp.remove(this.handleClick, this);
-                this.proceedToJail(playerSprite, copSprite);
-            },
-            (playerSprite, copSprite) =>
-                copSprite.mz.target === playerSprite && playerSprite.mz.mode !== PROTESTER_MODE_ARRESTED
-        );
+        }
 
         // player vs cars collision
         this.game.physics.arcade.collide(
@@ -518,7 +534,7 @@ class Game {
         this.game.physics.arcade.collide(
             this.mz.objects.player.sprite,
             this.mz.objects.shield.sprite,
-            (playerSprite) => {
+            playerSprite => {
                 playerSprite.body.collideWorldBounds = false;
                 if (playerSprite.health === 1) {
                     this.beatUpProtester(playerSprite);
@@ -586,6 +602,10 @@ class Game {
         this.mz.protesters.left++;
     }
 
+    handleDropPoster(coords) {
+        this.createPoster(coords);
+    }
+
     handleFinishShooting() {
         this.mz.protesters.toRevive += this.mz.level.protesters.count.add;
     }
@@ -616,6 +636,8 @@ class Game {
     }
 
     createProtesters(count) {
+        const onDropPoster = this.handleDropPoster.bind(this);
+        const onLeft = this.handleProtesterLeft.bind(this);
         for (let i = 0; i < count; i++) {
             const protester = new NPCProtester({
                 game: this.game,
@@ -627,8 +649,9 @@ class Game {
                 mood: this.mz.level.protesters.mood,
                 moodUp: this.mz.level.protesters.moodUp,
                 moodDown: this.mz.level.protesters.moodDown,
-                onLeft: this.handleProtesterLeft,
-                callbackContext: this
+                dropPoster: this.mz.level.protesters.dropPoster,
+                onLeft,
+                onDropPoster
             });
             this.mz.arrays.protesters.push(protester.sprite);
         }
@@ -652,6 +675,12 @@ class Game {
     beatUpProtester(sprite) {
         sprite.damage(0.1);
         this.playRandomPunch();
+    }
+
+    createPoster(coords) {
+        const posterSprite = this.mz.groups.droppedPosters.getFirstDead(true, coords.x, coords.y, 'poster');
+        posterSprite.anchor.set(0.5);
+        posterSprite.rotation = this.game.rnd.sign() * Math.PI / 3;
     }
 
     proceedToJail(protesterSprite, copSprite) {
@@ -683,7 +712,11 @@ class Game {
         }
 
         protesterSprite.mz.setMode(PROTESTER_MODE_ARRESTED, {
-            x: -Math.sign(copSprite.body.velocity.x) * protesterSprite.body.halfWidth,
+            x: (
+                copSprite.body.velocity.x === 0 ?
+                    this.game.rnd.sign() :
+                    -Math.sign(copSprite.body.velocity.x)
+            ) * protesterSprite.body.halfWidth,
             y: protesterSprite.body.halfHeight
         });
 
@@ -749,6 +782,7 @@ class Game {
             }
         });
 
+        this.game.camera.unfollow();
         this.mz.groups.menu.killAll();
         this.mz.objects.timer.stop();
         this.mz.events.fieldClickHandler.kill();

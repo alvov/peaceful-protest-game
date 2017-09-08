@@ -38,7 +38,8 @@ export default {
             },
             mood: 0.3,
             moodUp: 0.001,
-            moodDown: 0.0001
+            moodDown: 0.0001,
+            dropPoster: 0.3
         },
         player: {
             speed: {
@@ -47,9 +48,11 @@ export default {
                 clickSpeedUp: 1.05,
                 running: 1.5
             },
-            radius: 150,
+            radius: 120,
             stamina: 100,
-            staminaCooldown: 5 // s
+            staminaCooldown: 5, // s
+            powerUp: 0.1,
+            powerDown: 0.01
         }
     },
     level2: {
@@ -100,7 +103,8 @@ export default {
             },
             mood: 0.25,
             moodUp: 0.002,
-            moodDown: 0.0001
+            moodDown: 0.0001,
+            dropPoster: 0.3
         },
         player: {
             speed: {
@@ -109,9 +113,11 @@ export default {
                 clickSpeedUp: 1.05,
                 running: 1.5
             },
-            radius: 120,
+            radius: 100,
             stamina: 200,
-            staminaCooldown: 5 // s
+            staminaCooldown: 5, // s
+            powerUp: 0.1,
+            powerDown: 0.0001
         }
     }
 };

@@ -77,6 +77,11 @@ export default {
             type: 'audio',
             key: 'truck',
             urls: require('./audio/truck.mp3')
+        },
+        {
+            type: 'audio',
+            key: 'pick',
+            urls: require('./audio/pick.mp3')
         }
     ],
     level1: [

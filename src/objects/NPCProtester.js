@@ -17,10 +17,11 @@ class NPCProtester extends Protester {
         mood,
         moodDown,
         moodUp,
+        dropPoster,
         onLeft,
-        callbackContext
+        onDropPoster
     }) {
-        super({ game, x, y, speed, spriteKey, spriteName });
+        super({ game, x, y, speed, spriteKey, spriteName, onDropPoster });
 
         this.group = group;
         this.group.add(this.sprite);
@@ -35,10 +36,11 @@ class NPCProtester extends Protester {
         this.moodUpValue = moodUp;
         this.moodDownValue = moodDown;
 
+        this.dropPoster = dropPoster;
+
         this.isBeingCheeredUp = false;
 
         this.onLeft = onLeft;
-        this.callbackContext = callbackContext;
 
         // initially dead
         this.kill();
@@ -91,7 +93,7 @@ class NPCProtester extends Protester {
 
     handleLeft() {
         this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
-        this.onLeft.call(this.callbackContext);
+        this.onLeft();
         this.kill();
     }
 
@@ -114,17 +116,12 @@ class NPCProtester extends Protester {
                 break;
             }
             case PROTESTER_MODE_ARRESTED: {
-                const { x, y } = props;
-                this.sprite.x = x;
-                this.sprite.y = y;
-
                 // clean up previous state
                 if (this.mode === PROTESTER_MODE_WANDER) {
                     this.stopWandering();
                 } else if (this.mode === PROTESTER_MODE_LEAVE) {
                     this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
                 }
-                this.stopMovement();
 
                 break;
             }
@@ -144,7 +141,7 @@ class NPCProtester extends Protester {
             }
         }
 
-        super.setMode(mode);
+        super.setMode(mode, props);
     }
 
     wander() {
@@ -185,6 +182,8 @@ class NPCProtester extends Protester {
         this.sprite.body.reset(x, y);
         this.sprite.x = x;
         this.sprite.y = y;
+
+        this.posterSprite.revive();
 
         this.mood = mood;
 

@@ -8,7 +8,7 @@ import {
 } from '../constants.js';
 
 class Journalist extends Prefab {
-    constructor({ game, x, y, speed, fov, shootingDuration, cooldownDuration, onFinishShooting, callbackContext }) {
+    constructor({ game, x, y, speed, fov, shootingDuration, cooldownDuration, onFinishShooting }) {
         super({ game, x, y, speed, spriteKey: 'journalist' });
 
         this.FOV = new FOV({
@@ -32,7 +32,6 @@ class Journalist extends Prefab {
         this.cooldownDuration = cooldownDuration * 1000;
 
         this.onFinishShooting = onFinishShooting;
-        this.callbackContext = callbackContext;
 
         this.target = null;
     }
@@ -107,7 +106,7 @@ class Journalist extends Prefab {
     }
 
     shootingTimerCallback() {
-        this.onFinishShooting.call(this.callbackContext);
+        this.onFinishShooting();
 
         this.FOV.kill();
 

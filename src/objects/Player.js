@@ -6,14 +6,28 @@ import {
 const DEFAULT_CLICK_SPEED_UP = 1;
 
 class Player extends Protester {
-    constructor({ game, x, y, speed, fovGroup, radius, cheering, stamina, staminaCooldown }) {
+    constructor({
+        game,
+        x,
+        y,
+        speed,
+        fovGroup,
+        radius,
+        cheering,
+        stamina,
+        staminaCooldown,
+        powerUp,
+        powerDown,
+        onDropPoster
+    }) {
         super({
             game,
             x,
             y,
             speed,
             spriteKey: 'player',
-            spriteName: 'player'
+            spriteName: 'player',
+            onDropPoster
         });
 
         this.sprite.inputEnabled = true;
@@ -21,8 +35,13 @@ class Player extends Protester {
 
         this.sprite.body.collideWorldBounds = true;
 
-        this.radius = radius;
-        this.radiusSq = this.radius ** 2;
+        this.power = 1;
+        this.powerUpValue = powerUp;
+        this.powerDownValue = powerDown;
+        this.powerTimer = this.game.time.create(false);
+        this.powerTimer.loop(2000, this.powerDown, this);
+        this.powerTimer.start();
+
         this.cheering = cheering;
 
         this.moveTarget = null;
@@ -41,9 +60,16 @@ class Player extends Protester {
         this.showPoster = false;
         this.isFrozen = false;
 
+        this.radius = {
+            initial: radius,
+            graphic: 0,
+            actual: 0,
+            actualSq: 0,
+            tween: {}
+        };
+        this.resetRadius();
+
         this.circleGraphics = this.game.add.graphics(0, 0);
-        this.circleGraphics.lineStyle(1, 0x33ff33, 1);
-        this.circleGraphics.drawCircle(0, 0, this.radius * 2);
         fovGroup.add(this.circleGraphics);
 
         // events
@@ -63,6 +89,8 @@ class Player extends Protester {
     }
 
     update() {
+        this.resetRadius();
+
         if (this.mode !== PROTESTER_MODE_ARRESTED) {
             this.speed.current = this.speed.value;
             this.speed.current *= this.clickSpeedUp;
@@ -70,11 +98,9 @@ class Player extends Protester {
 
         super.update();
 
-        this.circleGraphics.visible = this.showPoster;
-        if (this.showPoster) {
-            this.circleGraphics.x = this.sprite.x;
-            this.circleGraphics.y = this.sprite.y;
-        }
+        this.circleGraphics.clear();
+        this.circleGraphics.lineStyle(1, 0x33ff33, 1);
+        this.circleGraphics.drawCircle(this.sprite.x, this.sprite.y, this.radius.graphic * 2);
 
         if (this.mode === PROTESTER_MODE_ARRESTED || this.isFrozen) {
             this.updateProgressBar(0);
@@ -175,10 +201,6 @@ class Player extends Protester {
     setMode(mode, props = {}) {
         switch (mode) {
             case PROTESTER_MODE_ARRESTED: {
-                const { x, y } = props;
-                this.sprite.x = x;
-                this.sprite.y = y;
-                this.stopMovement();
                 this.togglePoster(false);
 
                 this.sprite.body.collideWorldBounds = false;
@@ -205,8 +227,51 @@ class Player extends Protester {
         this.showPoster = on;
     }
 
+    powerUp(value = this.powerUpValue) {
+        if (value !== 0) {
+            this.powerChange(value);
+        }
+    }
+
+    powerDown(value = this.powerDownValue) {
+        const power = Math.max(1, this.power - value);
+        if (power !== this.power) {
+            this.powerChange(-value);
+        }
+    }
+
+    powerChange(value) {
+        this.power += value;
+
+        this.posterSprite.scale.set(this.power);
+    }
+
     resetClickSpeedUp() {
         this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
+    }
+
+    resetRadius() {
+        let newRadius = this.showPoster ? this.radius.initial : 0;
+        newRadius *= this.power;
+
+        if (newRadius === this.radius.actual) {
+            return;
+        }
+
+        if (this.radius.tween.isRunning) {
+            this.radius.tween.stop();
+        }
+
+        if (this.game.math.fuzzyEqual(newRadius, this.radius.graphic, 1)) {
+            this.radius.graphic = newRadius;
+        } else {
+            this.radius.tween = this.game.add.tween(this.radius);
+            this.radius.tween.to({ graphic: newRadius }, 500, Phaser.Easing.Exponential.Out);
+            this.radius.tween.start();
+        }
+
+        this.radius.actual = newRadius;
+        this.radius.actualSq = this.radius.actual ** 2;
     }
 
     freeze() {
@@ -226,6 +291,7 @@ class Player extends Protester {
 
     kill() {
         this.game.onResume.removeAll();
+        this.powerTimer.stop(true);
 
         super.kill();
     }

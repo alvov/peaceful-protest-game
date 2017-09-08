@@ -134,6 +134,10 @@
         type: 'audio',
         key: 'truck',
         urls: __webpack_require__(318)
+    }, {
+        type: 'audio',
+        key: 'pick',
+        urls: __webpack_require__(337)
     }],
     level1: [{
         type: 'spritesheet',
@@ -364,6 +368,7 @@ module.exports = __webpack_require__.p + "assets/28dbeb6c57f67cd17abbd912371bac9
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Prefab_js__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(24);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -376,6 +381,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var Protester = function (_Prefab) {
     _inherits(Protester, _Prefab);
 
@@ -385,7 +391,8 @@ var Protester = function (_Prefab) {
             y = _ref.y,
             speed = _ref.speed,
             spriteKey = _ref.spriteKey,
-            spriteName = _ref.spriteName;
+            spriteName = _ref.spriteName,
+            onDropPoster = _ref.onDropPoster;
 
         _classCallCheck(this, Protester);
 
@@ -393,23 +400,54 @@ var Protester = function (_Prefab) {
 
         _this.injurySprite = _this.sprite.addChild(_this.game.make.sprite(-15, -_this.sprite.height / 2 - 2, 'injury'));
         _this.injurySprite.bringToTop();
-        _this.injurySprite.exists = false;
+        _this.injurySprite.visible = false;
 
-        _this.posterSprite = _this.sprite.addChild(_this.game.make.sprite(-40, -60, 'poster', 0));
+        _this.posterSprite = _this.sprite.addChild(_this.game.make.sprite(-10, 11, 'poster', 0));
         _this.posterSprite.bringToTop();
-        _this.posterSprite.exists = false;
+        _this.posterSprite.anchor.set(0.5, 1);
+        _this.posterSprite.visible = false;
 
         _this.showPoster = false;
+        _this.dropPoster = 1;
+
+        _this.onDropPoster = onDropPoster;
         return _this;
     }
 
     _createClass(Protester, [{
         key: 'update',
         value: function update() {
-            this.injurySprite.exists = this.sprite.health !== 1;
-            this.posterSprite.exists = this.showPoster;
+            this.injurySprite.visible = this.sprite.health !== 1;
+            this.posterSprite.visible = this.posterSprite.alive && this.showPoster;
 
             _get(Protester.prototype.__proto__ || Object.getPrototypeOf(Protester.prototype), 'update', this).call(this);
+        }
+    }, {
+        key: 'setMode',
+        value: function setMode(mode) {
+            var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            switch (mode) {
+                case __WEBPACK_IMPORTED_MODULE_1__constants_js__["l" /* PROTESTER_MODE_ARRESTED */]:
+                    {
+                        if (this.game.rnd.frac() < this.dropPoster) {
+                            this.posterSprite.kill();
+                            this.onDropPoster({ x: this.sprite.x, y: this.sprite.y });
+                        }
+
+                        this.stopMovement();
+
+                        var x = props.x,
+                            y = props.y;
+
+                        this.sprite.x = x;
+                        this.sprite.y = y;
+
+                        break;
+                    }
+            }
+
+            _get(Protester.prototype.__proto__ || Object.getPrototypeOf(Protester.prototype), 'setMode', this).call(this, mode, props);
         }
     }]);
 
@@ -983,7 +1021,8 @@ var StartMenu = function () {
             },
             mood: 0.3,
             moodUp: 0.001,
-            moodDown: 0.0001
+            moodDown: 0.0001,
+            dropPoster: 0.3
         },
         player: {
             speed: {
@@ -992,9 +1031,11 @@ var StartMenu = function () {
                 clickSpeedUp: 1.05,
                 running: 1.5
             },
-            radius: 150,
+            radius: 120,
             stamina: 100,
-            staminaCooldown: 5 // s
+            staminaCooldown: 5, // s
+            powerUp: 0.1,
+            powerDown: 0.01
         }
     },
     level2: {
@@ -1045,7 +1086,8 @@ var StartMenu = function () {
             },
             mood: 0.25,
             moodUp: 0.002,
-            moodDown: 0.0001
+            moodDown: 0.0001,
+            dropPoster: 0.3
         },
         player: {
             speed: {
@@ -1054,9 +1096,11 @@ var StartMenu = function () {
                 clickSpeedUp: 1.05,
                 running: 1.5
             },
-            radius: 120,
+            radius: 100,
             stamina: 200,
-            staminaCooldown: 5 // s
+            staminaCooldown: 5, // s
+            powerUp: 0.1,
+            powerDown: 0.0001
         }
     }
 });
@@ -1148,6 +1192,7 @@ var Game = function () {
                 groups: {
                     actors: null,
                     cars: null,
+                    droppedPosters: null,
                     copsFOV: null,
                     pressFOV: null,
                     playerFOV: null,
@@ -1171,11 +1216,14 @@ var Game = function () {
             this.mz.objects.audio.random = [this.game.add.audio('croud'), this.game.add.audio('cough01'), this.game.add.audio('cough02')];
             this.mz.objects.audio.applause = this.game.add.audio('applause');
             this.mz.objects.audio.boo = this.game.add.audio('boo');
+            this.mz.objects.audio.pick = this.game.add.audio('pick');
 
             // FOVs should always be below everything
             this.mz.groups.playerFOV = this.game.add.group();
             this.mz.groups.pressFOV = this.game.add.group();
             this.mz.groups.copsFOV = this.game.add.group();
+
+            this.mz.groups.droppedPosters = this.game.add.group();
 
             this.mz.groups.cars = this.game.add.group();
             // cars
@@ -1235,6 +1283,7 @@ var Game = function () {
             });
 
             // press
+            var onFinishShooting = this.handleFinishShooting.bind(this);
             for (var _i3 = 0; _i3 < this.mz.level.press.count; _i3++) {
                 var journalist = new __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__["a" /* default */](_extends({
                     game: this.game
@@ -1247,8 +1296,7 @@ var Game = function () {
                     speed: this.mz.level.press.speed,
                     shootingDuration: this.mz.level.press.duration,
                     cooldownDuration: this.mz.level.press.duration * this.mz.level.press.count * 2,
-                    onFinishShooting: this.handleFinishShooting,
-                    callbackContext: this,
+                    onFinishShooting: onFinishShooting,
                     spriteName: 'journalist' + _i3
                 }));
                 this.mz.arrays.press.push(journalist.sprite);
@@ -1265,7 +1313,9 @@ var Game = function () {
                 x: this.game.world.centerX,
                 y: this.game.world.centerY,
                 fovGroup: this.mz.groups.playerFOV
-            }, this.mz.level.player));
+            }, this.mz.level.player, {
+                onDropPoster: this.handleDropPoster.bind(this)
+            }));
             this.game.camera.follow(this.mz.objects.player.sprite);
             this.mz.groups.actors.add(this.mz.objects.player.sprite);
 
@@ -1368,7 +1418,7 @@ var Game = function () {
                     }
                 } else {
                     sprite.mz.update();
-                    sprite.mz.toggleCheering(!this.mz.gameEnded && this.mz.objects.player.showPoster && this.getDistanceSq(sprite, this.mz.objects.player.sprite) <= this.mz.objects.player.radiusSq);
+                    sprite.mz.toggleCheering(!this.mz.gameEnded && this.mz.objects.player.showPoster && this.getDistanceSq(sprite, this.mz.objects.player.sprite) <= this.mz.objects.player.radius.actualSq);
 
                     this.mz.protesters.alive++;
                     this.mz.protesters.meanMood += sprite.mz.mood;
@@ -1432,7 +1482,7 @@ var Game = function () {
                         }
                     });
                 }
-                cop.attractionStrength = Math.min(1, attractionStrength);
+                cop.attractionStrength = Math.min(1, attractionStrength * _this.mz.objects.player.power);
 
                 if (cop.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["a" /* COP_MODE_CONVOY */]) {
                     // find target for a cop
@@ -1488,20 +1538,32 @@ var Game = function () {
                 return protesterSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */];
             });
 
-            // swat vs player collision
-            if (this.mz.objects.swat) {
-                this.game.physics.arcade.overlap(this.mz.objects.player.sprite, this.mz.objects.swat.sprites, this.arrest, function (playerSprite, swatSprite) {
-                    return swatSprite.children.length === 0 && playerSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */];
-                }, this);
-            }
+            // player collisions
+            if (this.mz.objects.player.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */]) {
+                // vs posters
+                this.mz.groups.droppedPosters.forEachAlive(function (posterSprite) {
+                    if (Phaser.Rectangle.intersects(posterSprite.getBounds(), _this.mz.objects.player.sprite.getBounds())) {
+                        _this.mz.objects.audio.pick.play('', 0, 0.25);
+                        _this.mz.objects.player.powerUp();
+                        posterSprite.kill();
+                    }
+                });
 
-            // cops vs player collision
-            this.game.physics.arcade.overlap(this.mz.objects.player.sprite, this.mz.arrays.cops, function (playerSprite, copSprite) {
-                _this.mz.events.fieldClickHandler.events.onInputUp.remove(_this.handleClick, _this);
-                _this.proceedToJail(playerSprite, copSprite);
-            }, function (playerSprite, copSprite) {
-                return copSprite.mz.target === playerSprite && playerSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */];
-            });
+                // vs swat
+                if (this.mz.objects.swat) {
+                    this.game.physics.arcade.overlap(this.mz.objects.player.sprite, this.mz.objects.swat.sprites, this.arrest, function (playerSprite, swatSprite) {
+                        return swatSprite.children.length === 0;
+                    }, this);
+                }
+
+                // vs cops
+                this.game.physics.arcade.overlap(this.mz.objects.player.sprite, this.mz.arrays.cops, function (playerSprite, copSprite) {
+                    _this.mz.events.fieldClickHandler.events.onInputUp.remove(_this.handleClick, _this);
+                    _this.proceedToJail(playerSprite, copSprite);
+                }, function (playerSprite, copSprite) {
+                    return copSprite.mz.target === playerSprite;
+                });
+            }
 
             // player vs cars collision
             this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.cars, function (playerSprite) {
@@ -1572,6 +1634,11 @@ var Game = function () {
             this.mz.protesters.left++;
         }
     }, {
+        key: 'handleDropPoster',
+        value: function handleDropPoster(coords) {
+            this.createPoster(coords);
+        }
+    }, {
         key: 'handleFinishShooting',
         value: function handleFinishShooting() {
             this.mz.protesters.toRevive += this.mz.level.protesters.count.add;
@@ -1608,6 +1675,8 @@ var Game = function () {
     }, {
         key: 'createProtesters',
         value: function createProtesters(count) {
+            var onDropPoster = this.handleDropPoster.bind(this);
+            var onLeft = this.handleProtesterLeft.bind(this);
             for (var i = 0; i < count; i++) {
                 var protester = new __WEBPACK_IMPORTED_MODULE_1__objects_NPCProtester_js__["a" /* default */](_extends({
                     game: this.game
@@ -1619,8 +1688,9 @@ var Game = function () {
                     mood: this.mz.level.protesters.mood,
                     moodUp: this.mz.level.protesters.moodUp,
                     moodDown: this.mz.level.protesters.moodDown,
-                    onLeft: this.handleProtesterLeft,
-                    callbackContext: this
+                    dropPoster: this.mz.level.protesters.dropPoster,
+                    onLeft: onLeft,
+                    onDropPoster: onDropPoster
                 }));
                 this.mz.arrays.protesters.push(protester.sprite);
             }
@@ -1647,6 +1717,13 @@ var Game = function () {
         value: function beatUpProtester(sprite) {
             sprite.damage(0.1);
             this.playRandomPunch();
+        }
+    }, {
+        key: 'createPoster',
+        value: function createPoster(coords) {
+            var posterSprite = this.mz.groups.droppedPosters.getFirstDead(true, coords.x, coords.y, 'poster');
+            posterSprite.anchor.set(0.5);
+            posterSprite.rotation = this.game.rnd.sign() * Math.PI / 3;
         }
     }, {
         key: 'proceedToJail',
@@ -1682,7 +1759,7 @@ var Game = function () {
             }
 
             protesterSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */], {
-                x: -Math.sign(copSprite.body.velocity.x) * protesterSprite.body.halfWidth,
+                x: (copSprite.body.velocity.x === 0 ? this.game.rnd.sign() : -Math.sign(copSprite.body.velocity.x)) * protesterSprite.body.halfWidth,
                 y: protesterSprite.body.halfHeight
             });
 
@@ -1745,6 +1822,7 @@ var Game = function () {
                 }
             });
 
+            this.game.camera.unfollow();
             this.mz.groups.menu.killAll();
             this.mz.objects.timer.stop();
             this.mz.events.fieldClickHandler.kill();
@@ -1870,7 +1948,10 @@ var Player = function (_Protester) {
             radius = _ref.radius,
             cheering = _ref.cheering,
             stamina = _ref.stamina,
-            staminaCooldown = _ref.staminaCooldown;
+            staminaCooldown = _ref.staminaCooldown,
+            powerUp = _ref.powerUp,
+            powerDown = _ref.powerDown,
+            onDropPoster = _ref.onDropPoster;
 
         _classCallCheck(this, Player);
 
@@ -1880,7 +1961,8 @@ var Player = function (_Protester) {
             y: y,
             speed: speed,
             spriteKey: 'player',
-            spriteName: 'player'
+            spriteName: 'player',
+            onDropPoster: onDropPoster
         }));
 
         _this.sprite.inputEnabled = true;
@@ -1888,8 +1970,13 @@ var Player = function (_Protester) {
 
         _this.sprite.body.collideWorldBounds = true;
 
-        _this.radius = radius;
-        _this.radiusSq = Math.pow(_this.radius, 2);
+        _this.power = 1;
+        _this.powerUpValue = powerUp;
+        _this.powerDownValue = powerDown;
+        _this.powerTimer = _this.game.time.create(false);
+        _this.powerTimer.loop(2000, _this.powerDown, _this);
+        _this.powerTimer.start();
+
         _this.cheering = cheering;
 
         _this.moveTarget = null;
@@ -1908,9 +1995,16 @@ var Player = function (_Protester) {
         _this.showPoster = false;
         _this.isFrozen = false;
 
+        _this.radius = {
+            initial: radius,
+            graphic: 0,
+            actual: 0,
+            actualSq: 0,
+            tween: {}
+        };
+        _this.resetRadius();
+
         _this.circleGraphics = _this.game.add.graphics(0, 0);
-        _this.circleGraphics.lineStyle(1, 0x33ff33, 1);
-        _this.circleGraphics.drawCircle(0, 0, _this.radius * 2);
         fovGroup.add(_this.circleGraphics);
 
         // events
@@ -1935,6 +2029,8 @@ var Player = function (_Protester) {
         value: function update() {
             var _this2 = this;
 
+            this.resetRadius();
+
             if (this.mode !== __WEBPACK_IMPORTED_MODULE_1__constants_js__["l" /* PROTESTER_MODE_ARRESTED */]) {
                 this.speed.current = this.speed.value;
                 this.speed.current *= this.clickSpeedUp;
@@ -1942,11 +2038,9 @@ var Player = function (_Protester) {
 
             _get(Player.prototype.__proto__ || Object.getPrototypeOf(Player.prototype), 'update', this).call(this);
 
-            this.circleGraphics.visible = this.showPoster;
-            if (this.showPoster) {
-                this.circleGraphics.x = this.sprite.x;
-                this.circleGraphics.y = this.sprite.y;
-            }
+            this.circleGraphics.clear();
+            this.circleGraphics.lineStyle(1, 0x33ff33, 1);
+            this.circleGraphics.drawCircle(this.sprite.x, this.sprite.y, this.radius.graphic * 2);
 
             if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["l" /* PROTESTER_MODE_ARRESTED */] || this.isFrozen) {
                 this.updateProgressBar(0);
@@ -2042,12 +2136,6 @@ var Player = function (_Protester) {
             switch (mode) {
                 case __WEBPACK_IMPORTED_MODULE_1__constants_js__["l" /* PROTESTER_MODE_ARRESTED */]:
                     {
-                        var x = props.x,
-                            y = props.y;
-
-                        this.sprite.x = x;
-                        this.sprite.y = y;
-                        this.stopMovement();
                         this.togglePoster(false);
 
                         this.sprite.body.collideWorldBounds = false;
@@ -2077,9 +2165,60 @@ var Player = function (_Protester) {
             this.showPoster = on;
         }
     }, {
+        key: 'powerUp',
+        value: function powerUp() {
+            var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.powerUpValue;
+
+            if (value !== 0) {
+                this.powerChange(value);
+            }
+        }
+    }, {
+        key: 'powerDown',
+        value: function powerDown() {
+            var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.powerDownValue;
+
+            var power = Math.max(1, this.power - value);
+            if (power !== this.power) {
+                this.powerChange(-value);
+            }
+        }
+    }, {
+        key: 'powerChange',
+        value: function powerChange(value) {
+            this.power += value;
+
+            this.posterSprite.scale.set(this.power);
+        }
+    }, {
         key: 'resetClickSpeedUp',
         value: function resetClickSpeedUp() {
             this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
+        }
+    }, {
+        key: 'resetRadius',
+        value: function resetRadius() {
+            var newRadius = this.showPoster ? this.radius.initial : 0;
+            newRadius *= this.power;
+
+            if (newRadius === this.radius.actual) {
+                return;
+            }
+
+            if (this.radius.tween.isRunning) {
+                this.radius.tween.stop();
+            }
+
+            if (this.game.math.fuzzyEqual(newRadius, this.radius.graphic, 1)) {
+                this.radius.graphic = newRadius;
+            } else {
+                this.radius.tween = this.game.add.tween(this.radius);
+                this.radius.tween.to({ graphic: newRadius }, 500, Phaser.Easing.Exponential.Out);
+                this.radius.tween.start();
+            }
+
+            this.radius.actual = newRadius;
+            this.radius.actualSq = Math.pow(this.radius.actual, 2);
         }
     }, {
         key: 'freeze',
@@ -2102,6 +2241,7 @@ var Player = function (_Protester) {
         key: 'kill',
         value: function kill() {
             this.game.onResume.removeAll();
+            this.powerTimer.stop(true);
 
             _get(Player.prototype.__proto__ || Object.getPrototypeOf(Player.prototype), 'kill', this).call(this);
         }
@@ -2147,12 +2287,13 @@ var NPCProtester = function (_Protester) {
             mood = _ref.mood,
             moodDown = _ref.moodDown,
             moodUp = _ref.moodUp,
+            dropPoster = _ref.dropPoster,
             onLeft = _ref.onLeft,
-            callbackContext = _ref.callbackContext;
+            onDropPoster = _ref.onDropPoster;
 
         _classCallCheck(this, NPCProtester);
 
-        var _this = _possibleConstructorReturn(this, (NPCProtester.__proto__ || Object.getPrototypeOf(NPCProtester)).call(this, { game: game, x: x, y: y, speed: speed, spriteKey: spriteKey, spriteName: spriteName }));
+        var _this = _possibleConstructorReturn(this, (NPCProtester.__proto__ || Object.getPrototypeOf(NPCProtester)).call(this, { game: game, x: x, y: y, speed: speed, spriteKey: spriteKey, spriteName: spriteName, onDropPoster: onDropPoster }));
 
         _this.group = group;
         _this.group.add(_this.sprite);
@@ -2167,10 +2308,11 @@ var NPCProtester = function (_Protester) {
         _this.moodUpValue = moodUp;
         _this.moodDownValue = moodDown;
 
+        _this.dropPoster = dropPoster;
+
         _this.isBeingCheeredUp = false;
 
         _this.onLeft = onLeft;
-        _this.callbackContext = callbackContext;
 
         // initially dead
         _this.kill();
@@ -2215,7 +2357,7 @@ var NPCProtester = function (_Protester) {
         key: 'handleLeft',
         value: function handleLeft() {
             this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
-            this.onLeft.call(this.callbackContext);
+            this.onLeft();
             this.kill();
         }
     }, {
@@ -2244,19 +2386,12 @@ var NPCProtester = function (_Protester) {
                     }
                 case __WEBPACK_IMPORTED_MODULE_1__constants_js__["l" /* PROTESTER_MODE_ARRESTED */]:
                     {
-                        var x = props.x,
-                            y = props.y;
-
-                        this.sprite.x = x;
-                        this.sprite.y = y;
-
                         // clean up previous state
                         if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["n" /* PROTESTER_MODE_WANDER */]) {
                             this.stopWandering();
                         } else if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["m" /* PROTESTER_MODE_LEAVE */]) {
                             this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
                         }
-                        this.stopMovement();
 
                         break;
                     }
@@ -2277,7 +2412,7 @@ var NPCProtester = function (_Protester) {
                     }
             }
 
-            _get(NPCProtester.prototype.__proto__ || Object.getPrototypeOf(NPCProtester.prototype), 'setMode', this).call(this, mode);
+            _get(NPCProtester.prototype.__proto__ || Object.getPrototypeOf(NPCProtester.prototype), 'setMode', this).call(this, mode, props);
         }
     }, {
         key: 'wander',
@@ -2332,6 +2467,8 @@ var NPCProtester = function (_Protester) {
             this.sprite.body.reset(x, y);
             this.sprite.x = x;
             this.sprite.y = y;
+
+            this.posterSprite.revive();
 
             this.mood = mood;
 
@@ -2559,8 +2696,7 @@ var Journalist = function (_Prefab) {
             fov = _ref.fov,
             shootingDuration = _ref.shootingDuration,
             cooldownDuration = _ref.cooldownDuration,
-            onFinishShooting = _ref.onFinishShooting,
-            callbackContext = _ref.callbackContext;
+            onFinishShooting = _ref.onFinishShooting;
 
         _classCallCheck(this, Journalist);
 
@@ -2584,7 +2720,6 @@ var Journalist = function (_Prefab) {
         _this.cooldownDuration = cooldownDuration * 1000;
 
         _this.onFinishShooting = onFinishShooting;
-        _this.callbackContext = callbackContext;
 
         _this.target = null;
         return _this;
@@ -2674,7 +2809,7 @@ var Journalist = function (_Prefab) {
     }, {
         key: 'shootingTimerCallback',
         value: function shootingTimerCallback() {
-            this.onFinishShooting.call(this.callbackContext);
+            this.onFinishShooting();
 
             this.FOV.kill();
 
@@ -3183,6 +3318,13 @@ var EndMenu = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["a"] = (EndMenu);
+
+/***/ }),
+
+/***/ 337:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/dd570435d42a0e42441e1fc12af0f4fa.mp3";
 
 /***/ }),
 
