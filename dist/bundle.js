@@ -90,6 +90,12 @@
         frameHeight: 100
     }, {
         type: 'spritesheet',
+        key: 'repeatButton',
+        url: __webpack_require__(338),
+        frameWidth: 100,
+        frameHeight: 100
+    }, {
+        type: 'spritesheet',
         key: 'soundButtons',
         url: __webpack_require__(308),
         frameWidth: 50,
@@ -1087,7 +1093,7 @@ var StartMenu = function () {
             mood: 0.25,
             moodUp: 0.002,
             moodDown: 0.0001,
-            dropPoster: 0.3
+            dropPoster: 0.1
         },
         player: {
             speed: {
@@ -1372,7 +1378,7 @@ var Game = function () {
             fieldClickHandler.scale.setTo(this.game.width, this.game.height - 100);
             fieldClickHandler.inputEnabled = true;
             fieldClickHandler.input.priorityID = 1;
-            fieldClickHandler.events.onInputUp.add(this.handleClick, this);
+            fieldClickHandler.events.onInputDown.add(this.handleClick, this);
             this.mz.events.fieldClickHandler = fieldClickHandler;
 
             // pause
@@ -2008,7 +2014,7 @@ var Player = function (_Protester) {
         fovGroup.add(_this.circleGraphics);
 
         // events
-        _this.sprite.events.onInputUp.add(_this.handleClick, _this);
+        _this.sprite.events.onInputDown.add(_this.handleClick, _this);
         _this.sprite.input.priorityID = 2;
 
         _this.game.onResume.add(_this.handleGameResume, _this);
@@ -3256,7 +3262,7 @@ var EndMenu = function () {
         var overlayTween = this.game.add.tween(this.overlay).to({ alpha: 0.5 }, OVERLAY_DURATION).start();
         overlayTween.onComplete.addOnce(this.showStats, this);
 
-        this.replayButton = this.game.add.button(this.game.width - 50, 50, 'playButton', this.handleClickPlay, this);
+        this.replayButton = this.game.add.button(this.game.width - 50, 50, 'repeatButton', this.handleClickPlay, this);
         this.replayButton.anchor.setTo(0.5);
         this.replayButton.visible = false;
 
@@ -3325,6 +3331,13 @@ var EndMenu = function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/dd570435d42a0e42441e1fc12af0f4fa.mp3";
+
+/***/ }),
+
+/***/ 338:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/a41131e8dff8ee89ba12d9d36534a417.png";
 
 /***/ }),
 

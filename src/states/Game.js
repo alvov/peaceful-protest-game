@@ -277,7 +277,7 @@ class Game {
         fieldClickHandler.scale.setTo(this.game.width, this.game.height - 100);
         fieldClickHandler.inputEnabled = true;
         fieldClickHandler.input.priorityID = 1;
-        fieldClickHandler.events.onInputUp.add(this.handleClick, this);
+        fieldClickHandler.events.onInputDown.add(this.handleClick, this);
         this.mz.events.fieldClickHandler = fieldClickHandler;
 
         // pause

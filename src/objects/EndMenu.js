@@ -49,7 +49,7 @@ class EndMenu {
         this.replayButton = this.game.add.button(
             this.game.width - 50,
             50,
-            'playButton',
+            'repeatButton',
             this.handleClickPlay,
             this
         );

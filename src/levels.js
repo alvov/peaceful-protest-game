@@ -104,7 +104,7 @@ export default {
             mood: 0.25,
             moodUp: 0.002,
             moodDown: 0.0001,
-            dropPoster: 0.3
+            dropPoster: 0.1
         },
         player: {
             speed: {

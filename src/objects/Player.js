@@ -73,7 +73,7 @@ class Player extends Protester {
         fovGroup.add(this.circleGraphics);
 
         // events
-        this.sprite.events.onInputUp.add(this.handleClick, this);
+        this.sprite.events.onInputDown.add(this.handleClick, this);
         this.sprite.input.priorityID = 2;
 
         this.game.onResume.add(this.handleGameResume, this);

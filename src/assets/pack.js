@@ -23,6 +23,13 @@ export default {
         },
         {
             type: 'spritesheet',
+            key: 'repeatButton',
+            url: require('./repeatButton.png'),
+            frameWidth: 100,
+            frameHeight: 100
+        },
+        {
+            type: 'spritesheet',
             key: 'soundButtons',
             url: require('./soundButtons.png'),
             frameWidth: 50,
