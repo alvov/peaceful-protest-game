@@ -6,7 +6,20 @@ import {
 } from '../constants.js';
 
 class NPCProtester extends Protester {
-    constructor({ game, x, y, group, speed, spriteKey, spriteName, mood, moodDown, cheeringDuration }) {
+    constructor({
+        game,
+        x,
+        y,
+        group,
+        speed,
+        spriteKey,
+        spriteName,
+        mood,
+        moodDown,
+        moodUp,
+        onLeft,
+        callbackContext
+    }) {
         super({ game, x, y, speed, spriteKey, spriteName });
 
         this.group = group;
@@ -15,24 +28,29 @@ class NPCProtester extends Protester {
         this.progressBar = this.game.add.graphics();
         this.sprite.addChild(this.progressBar);
 
-        this.cheeringTimer = this.game.time.create(false);
-        this.cheeringDuration = cheeringDuration * 1000;
-
         this.leavingTimer = this.game.time.create(false);
 
         this.mood = mood;
         this.initialMood = mood;
+        this.moodUpValue = moodUp;
         this.moodDownValue = moodDown;
 
         this.isBeingCheeredUp = false;
+
+        this.onLeft = onLeft;
+        this.callbackContext = callbackContext;
 
         // initially dead
         this.kill();
     }
 
     update() {
-        if (this.mood === 0 && !this.leavingTimer.running) {
-            this.leavingTimer.add(this.game.rnd.between(5000, 10000), this.leave, this);
+        if (
+            this.mood === 0 &&
+            !this.leavingTimer.running &&
+            this.mode === PROTESTER_MODE_WANDER
+        ) {
+            this.leavingTimer.add(this.game.rnd.between(1000, 5000), this.leave, this);
             this.leavingTimer.start();
         } else if (this.mood > 0 && this.leavingTimer.running) {
             this.leavingTimer.stop(true);
@@ -41,8 +59,12 @@ class NPCProtester extends Protester {
             this.setMode(PROTESTER_MODE_WANDER);
         }
 
-        if (this.mood < 0.75) {
+        if (this.isBeingCheeredUp) {
+            this.updateProgressBar(this.mood);
+            this.moodUp(this.moodUpValue);
+        } else if (this.mood < 0.75) {
             this.moodDown(this.moodDownValue);
+            this.updateProgressBar(0);
         }
 
         this.showPoster = this.mode !== PROTESTER_MODE_ARRESTED && this.mood >= 0.75;
@@ -64,13 +86,13 @@ class NPCProtester extends Protester {
             ]);
         }
 
-        if (this.cheeringTimer.running) {
-            this.updateProgressBar(this.cheeringTimer.ms / this.cheeringDuration);
-        } else {
-            this.updateProgressBar(0);
-        }
-
         super.update();
+    }
+
+    handleLeft() {
+        this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
+        this.onLeft.call(this.callbackContext);
+        this.kill();
     }
 
     setMode(mode, props = {}) {
@@ -78,6 +100,7 @@ class NPCProtester extends Protester {
             case PROTESTER_MODE_WANDER: {
                 // clean up previous state
                 if (this.mode === PROTESTER_MODE_LEAVE) {
+                    this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
                     this.stopMovement();
                 }
 
@@ -98,6 +121,8 @@ class NPCProtester extends Protester {
                 // clean up previous state
                 if (this.mode === PROTESTER_MODE_WANDER) {
                     this.stopWandering();
+                } else if (this.mode === PROTESTER_MODE_LEAVE) {
+                    this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
                 }
                 this.stopMovement();
 
@@ -109,11 +134,11 @@ class NPCProtester extends Protester {
                     this.stopWandering();
                 }
 
-                this.sprite.body.onMoveComplete.add(this.kill, this);
                 this.setMoveTarget({
                     x: this.sprite.x < this.game.world.width / 2 ? -100 : this.game.world.width + 100,
                     y: this.sprite.y
                 });
+                this.sprite.body.onMoveComplete.add(this.handleLeft, this);
 
                 break;
             }
@@ -140,24 +165,12 @@ class NPCProtester extends Protester {
         this.leavingTimer.stop(true);
     }
 
-    toggleCheering(on = !this.isBeingCheeredUp, moodUpValue) {
+    toggleCheering(on = !this.isBeingCheeredUp) {
         if (on === this.isBeingCheeredUp) {
             return;
         }
 
-        if (on) {
-            this.cheeringTimer.add(this.cheeringDuration, this.onCheeredUp.bind(this, moodUpValue));
-            this.cheeringTimer.start();
-        } else {
-            this.cheeringTimer.stop(true);
-        }
-
         this.isBeingCheeredUp = on;
-    }
-
-    onCheeredUp(moodUpValue) {
-        this.moodUp(moodUpValue);
-        this.toggleCheering(false);
     }
 
     moodUp(value) {

@@ -3,7 +3,6 @@ class PauseMenu {
         this.game = game;
 
         this.sprite = this.game.add.sprite(0, 0);
-        this.sprite.exists = false;
 
         this.overlay = this.game.add.graphics(0, 0);
         this.overlay.beginFill(0xffffff, 0.7);
@@ -28,6 +27,8 @@ class PauseMenu {
         this.sprite.addChild(this.title);
         this.sprite.addChild(this.replayButton);
         this.sprite.fixedToCamera = true;
+
+        this.kill();
     }
 
     kill() {

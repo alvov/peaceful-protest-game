@@ -7,7 +7,9 @@ class StartMenu {
     }
 
     create() {
-        this.title = this.game.add.text(this.world.centerX, 2 / 3 * this.world.centerY, 'Мирный Протест MVP');
+        this.game.world.resize(this.game.width, this.game.height);
+
+        this.title = this.game.add.text(this.world.centerX, 2 / 3 * this.world.centerY, 'Peaceful Protest');
         this.title.anchor.setTo(0.5);
 
         this.level1Button = this.game.add.button(
@@ -27,15 +29,10 @@ class StartMenu {
         this.level2Button.anchor.setTo(0.5);
     }
 
-    resize(newWidth, newHeight) {
-
-    }
-
     handleClickPlay(level) {
         this.state.start('Loading', true, false, {
             assets: [
-                ['pack', level, null, JSON.stringify(pack)],
-                // ['tilemap', 'tilemap', null, JSON.stringify(levels[level].tilemap), Phaser.Tilemap.TILED_JSON]
+                ['pack', level, null, JSON.stringify(pack)]
             ],
             nextState: [
                 'Game', true, false, levels[level]

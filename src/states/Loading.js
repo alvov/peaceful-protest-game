@@ -25,17 +25,13 @@ class Loading {
                 case 'image':
                     this.load.image(...assetParams);
                     break;
-                case 'tilemap':
-                    debugger;
-                    this.load.tilemap(...assetParams);
-                    break;
             }
         });
 
         this.mz.objects.textProgress = this.game.add.text(
             300,
             300,
-            'Загрузка 0%',
+            'Loading 0%',
             {
                 font: '26px Arial',
                 fill: '#fff',
@@ -46,7 +42,7 @@ class Loading {
     }
 
     loadUpdate() {
-        this.mz.objects.textProgress.setText(`Загрузка ${this.game.load.progress}%`);
+        this.mz.objects.textProgress.setText(`Loading ${this.game.load.progress}%`);
     }
 
     create() {

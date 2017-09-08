@@ -22,6 +22,7 @@ class Player extends Protester {
         this.sprite.body.collideWorldBounds = true;
 
         this.radius = radius;
+        this.radiusSq = this.radius ** 2;
         this.cheering = cheering;
 
         this.moveTarget = null;
@@ -38,6 +39,7 @@ class Player extends Protester {
         this.audioScream = this.game.add.audio('scream03');
 
         this.showPoster = false;
+        this.isFrozen = false;
 
         this.circleGraphics = this.game.add.graphics(0, 0);
         this.circleGraphics.lineStyle(1, 0x33ff33, 1);
@@ -74,8 +76,12 @@ class Player extends Protester {
             this.circleGraphics.y = this.sprite.y;
         }
 
-        if (this.mode === PROTESTER_MODE_ARRESTED) {
+        if (this.mode === PROTESTER_MODE_ARRESTED || this.isFrozen) {
             this.updateProgressBar(0);
+            return;
+        }
+
+        if (this.isFrozen) {
             return;
         }
 
@@ -193,7 +199,7 @@ class Player extends Protester {
 
         // play sound
         if (on) {
-            this.audioScream.play('', 0, 0.25);
+            this.audioScream.play('', 0, 0.1);
         }
 
         this.showPoster = on;
@@ -201,6 +207,15 @@ class Player extends Protester {
 
     resetClickSpeedUp() {
         this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
+    }
+
+    freeze() {
+        if (this.sprite.alive) {
+            this.sprite.events.onInputUp.remove(this.handleClick, this);
+            this.stopMovement();
+        }
+
+        this.isFrozen = true;
     }
 
     stopMovement() {

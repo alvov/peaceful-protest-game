@@ -2,9 +2,9 @@ import pack from '../assets/pack.js';
 
 class Boot {
     init() {
-        // this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        // this.scale.pageAlignHorizontally = true;
-        // this.scale.pageAlignVertically = true;
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.pageAlignHorizontally = true;
+        this.scale.pageAlignVertically = true;
     }
 
     preload() {

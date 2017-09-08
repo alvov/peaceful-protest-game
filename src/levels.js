@@ -3,7 +3,7 @@ export default {
         id: 'level1',
         worldWidth: 600,
         worldHeight: 600,
-        duration: 5 * 60, // s
+        duration: 3 * 60, // s
         winningScore: 75,
         cops: {
             count: 1,
@@ -36,9 +36,9 @@ export default {
             speed: {
                 value: 60
             },
-            mood: 30,
-            moodDown: 0.01,
-            cheeringDuration: 5
+            mood: 0.3,
+            moodUp: 0.001,
+            moodDown: 0.0001
         },
         player: {
             speed: {
@@ -48,7 +48,6 @@ export default {
                 running: 1.5
             },
             radius: 150,
-            cheering: 0.5,
             stamina: 100,
             staminaCooldown: 5 // s
         }
@@ -57,7 +56,7 @@ export default {
         id: 'level2',
         worldWidth: 800,
         worldHeight: 800,
-        duration: 5 * 60, // s
+        duration: 4 * 60, // s
         winningScore: 75,
         cops: {
             count: 5,
@@ -75,7 +74,8 @@ export default {
             speed: {
                 value: 200
             },
-            frequency: 25000
+            frequency: 10000,
+            scoreThreshold: 50
         },
         press: {
             count: 5,
@@ -92,15 +92,15 @@ export default {
             count: {
                 start: 30,
                 max: 60,
-                add: 12
+                add: 10
             },
             max: 60,
             speed: {
                 value: 60
             },
-            mood: 30,
-            moodDown: 0.01,
-            cheeringDuration: 3
+            mood: 0.25,
+            moodUp: 0.002,
+            moodDown: 0.0001
         },
         player: {
             speed: {
@@ -110,7 +110,6 @@ export default {
                 running: 1.5
             },
             radius: 120,
-            cheering: 0.5,
             stamina: 200,
             staminaCooldown: 5 // s
         }

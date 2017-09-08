@@ -73,6 +73,11 @@ export default {
             key: 'scream03',
             urls: require('./audio/scream03.mp3')
         },
+        {
+            type: 'audio',
+            key: 'truck',
+            urls: require('./audio/truck.mp3')
+        }
     ],
     level1: [
         {
@@ -95,6 +100,13 @@ export default {
             url: require('./cop01.png'),
             frameWidth: 44,
             frameHeight: 49
+        },
+        {
+            type: 'spritesheet',
+            key: 'shield',
+            url: require('./shield.png'),
+            frameWidth: 451,
+            frameHeight: 200
         },
         {
             type: 'spritesheet',
@@ -180,6 +192,13 @@ export default {
             url: require('./swat.png'),
             frameWidth: 30,
             frameHeight: 46
+        },
+        {
+            type: 'spritesheet',
+            key: 'shield',
+            url: require('./shield.png'),
+            frameWidth: 451,
+            frameHeight: 200
         },
         {
             type: 'spritesheet',

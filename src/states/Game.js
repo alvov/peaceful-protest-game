@@ -3,19 +3,27 @@ import NPCProtester from './../objects/NPCProtester.js';
 import Cop from './../objects/Cop.js';
 import Journalist from './../objects/Journalist.js';
 import SWATSquad from '../objects/SWATSquad.js';
-import PauseMenu from './../objects/PauseMenu.js';
+import Shield from '../objects/Shield.js';
 import ScoreMeter from './../objects/ScoreMeter.js';
+import PauseMenu from './../objects/PauseMenu.js';
+import EndMenu from './../objects/EndMenu.js';
 
 import {
+    END_GAME_PLAYER_KILLED,
+    END_GAME_TIME_OUT,
+    END_GAME_PROTEST_RATE,
+    END_GAME_WIN,
     COP_MODE_WANDER,
     COP_MODE_PURSUE,
     COP_MODE_CONVOY,
     SWAT_MODE_HIDE,
     SWAT_MODE_HUNT,
+    SHIELD_MODE_DRIVE,
     PROTESTER_MODE_ARRESTED,
     JOURNALIST_MODE_SHOOTING,
     JOURNALIST_MODE_WANDER
 } from '../constants.js';
+import {SHIELD_MODE_HIDE} from '../constants';
 
 const GLOBAL_OFFSET = 100;
 
@@ -23,26 +31,36 @@ class Game {
     init(level) {
         this.mz = {
             level,
+            gameEnded: false,
             score: null,
-            aliveProtestersCount: null,
-            reviveProtestersNeeded: level.protesters.count.start,
-            meanMood: level.protesters.mood,
             timePassed: 0, // s
-            map: null,
+            protesters: {
+                alive: null,
+                arrested: 0,
+                revived: 0,
+                left: 0,
+                toRevive: level.protesters.count.start,
+                meanMood: level.protesters.mood
+            },
             events: {
                 keys: {},
                 fieldClickHandler: null,
             },
+            timers: {
+                swat: null
+            },
             objects: {
                 player: null,
                 swat: null,
+                shield: null,
                 score: null,
                 textTimer: null,
                 textProtestersCount: null,
                 bgTile: null,
                 buttonSound: null,
                 audio: {},
-                pauseMenu: null
+                pauseMenu: null,
+                endMenu: null
             },
             arrays: {
                 protesters: [],
@@ -79,8 +97,8 @@ class Game {
             this.game.add.audio('cough01'),
             this.game.add.audio('cough02')
         ];
-
-        // this.mz.map = this.game.add.tilemap('tilemap', 50, 50);
+        this.mz.objects.audio.applause = this.game.add.audio('applause');
+        this.mz.objects.audio.boo = this.game.add.audio('boo');
 
         // FOVs should always be below everything
         this.mz.groups.playerFOV = this.game.add.group();
@@ -136,8 +154,16 @@ class Game {
                 ...this.mz.level.swat,
                 group: this.mz.groups.actors
             });
-            this.swatTimer = this.game.time.create(false);
+            this.mz.timers.swat = this.game.time.create(false);
         }
+
+        // shield
+        this.mz.objects.shield = new Shield({
+            game: this.game,
+            speed: {
+                value: 400
+            }
+        });
 
         // press
         for (let i = 0; i < this.mz.level.press.count; i++) {
@@ -174,7 +200,6 @@ class Game {
         });
         this.game.camera.follow(this.mz.objects.player.sprite);
         this.mz.groups.actors.add(this.mz.objects.player.sprite);
-        this.mz.objects.player.sprite.events.onKilled.addOnce(this.handlePlayerKill, this);
 
         // bottom borders
         for (let i = 0; i < this.game.world.width; i += 100) {
@@ -194,9 +219,9 @@ class Game {
             winPoint: this.mz.level.winningScore
         });
 
-        const timer = this.game.time.create();
-        timer.loop(Phaser.Timer.SECOND, this.updateTimer, this);
-        timer.start();
+        this.mz.objects.timer = this.game.time.create();
+        this.mz.objects.timer.loop(Phaser.Timer.SECOND, this.updateTimer, this);
+        this.mz.objects.timer.start();
 
         this.mz.objects.textTimer = this.game.add.text(
             this.game.width - 10,
@@ -235,7 +260,11 @@ class Game {
             1, 1, 1, 1,
             this.mz.groups.menu
         );
-        // this.scale.setResizeCallback(this.handleResize, this);
+
+        // pause menu
+        this.mz.objects.pauseMenu = new PauseMenu({ game: this.game });
+
+        // events
 
         // click on field
         const fieldClickHandler = this.game.add.sprite(0, 100);
@@ -252,16 +281,15 @@ class Game {
         this.game.input.onDown.add(this.handleUnpause, this);
 
         this.mz.events.keys.esc = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-
-        // pause menu
-        this.mz.objects.pauseMenu = new PauseMenu({ game: this.game });
     }
 
     update() {
         // update background
         this.mz.objects.bgTile.tilePosition.set(-this.game.camera.x, -this.game.camera.y);
 
-        this.playRandomSound();
+        if (!this.mz.gameEnded) {
+            this.playRandomSound();
+        }
 
         this.mz.objects.buttonSound.frame = this.game.sound.mute ? 1 : 0;
 
@@ -269,42 +297,50 @@ class Game {
         this.mz.objects.player.update();
 
         // update protesters
-        if (this.mz.reviveProtestersNeeded !== 0) {
-            this.reviveProtesters({
-                count: this.mz.reviveProtestersNeeded,
-                mood: Math.max(this.mz.meanMood, this.mz.level.protesters.mood) / 100
-            });
-            this.mz.reviveProtestersNeeded = 0;
-        }
-
+        const lastTickMeanMood = this.mz.protesters.meanMood;
         this.mz.score = 0;
-        this.mz.meanMood = 0;
-        this.mz.aliveProtestersCount = 0;
-        this.mz.arrays.protesters.forEach(sprite => {
-            if (sprite.alive) {
+        this.mz.protesters.meanMood = 0;
+        this.mz.protesters.alive = 0;
+        for (let i = 0; i < this.mz.arrays.protesters.length; i++) {
+            const sprite = this.mz.arrays.protesters[i];
+            if (!sprite.alive) {
+                if (this.mz.protesters.toRevive !== 0) {
+                    const mood = Math.max(lastTickMeanMood, this.mz.level.protesters.mood);
+                    this.reviveProtester({
+                        sprite,
+                        mood
+                    });
+                    this.mz.protesters.alive++;
+                    this.mz.protesters.meanMood += mood;
+                }
+            } else {
                 sprite.mz.update();
                 sprite.mz.toggleCheering(
+                    !this.mz.gameEnded &&
                     this.mz.objects.player.showPoster &&
-                    this.game.math.distance(
-                        sprite.x,
-                        sprite.y,
-                        this.mz.objects.player.sprite.x,
-                        this.mz.objects.player.sprite.y
-                    ) <= this.mz.objects.player.radius,
-                    this.mz.objects.player.cheering
+                    this.getDistanceSq(sprite, this.mz.objects.player.sprite) <= this.mz.objects.player.radiusSq
                 );
-                this.mz.aliveProtestersCount++;
-                this.mz.meanMood += sprite.mz.mood;
+
+                this.mz.protesters.alive++;
+                this.mz.protesters.meanMood += sprite.mz.mood;
             }
-        });
-        this.mz.meanMood = this.mz.aliveProtestersCount !== 0 ? this.mz.meanMood / this.mz.aliveProtestersCount : 0;
+
+        }
+
+        this.mz.protesters.toRevive = 0;
+
+        this.mz.protesters.meanMood = this.mz.protesters.alive !== 0 ?
+            this.mz.protesters.meanMood / this.mz.protesters.alive :
+            0;
         this.mz.score = 100 * (
-            0.5 * this.mz.aliveProtestersCount / this.mz.level.protesters.count.max +
-            0.5 * this.mz.meanMood
+            0.5 * this.mz.protesters.alive / this.mz.level.protesters.count.max +
+            0.5 * this.mz.protesters.meanMood
         );
 
         // draw score
-        this.mz.objects.score.update(this.mz.score);
+        if (!this.mz.gameEnded) {
+            this.mz.objects.score.update(this.mz.score);
+        }
 
         // update journalists
         this.mz.arrays.press.forEach(journalistSprite => {
@@ -330,12 +366,24 @@ class Game {
 
         // update swat
         if (this.mz.objects.swat) {
-            if (this.mz.objects.swat.mode === SWAT_MODE_HIDE && !this.swatTimer.running) {
-                this.swatTimer.add(this.mz.level.swat.frequency, this.launchSWAT, this);
-                this.swatTimer.start();
+            if (
+                (this.mz.score >= this.mz.level.swat.scoreThreshold || this.mz.gameEnded) &&
+                this.mz.objects.swat.mode === SWAT_MODE_HIDE &&
+                !this.mz.timers.swat.running
+            ) {
+                this.mz.timers.swat.add(this.mz.level.swat.frequency, this.launchSWAT, this);
+                this.mz.timers.swat.start();
+            } else if (
+                this.mz.timers.swat.running &&
+                this.mz.score < this.mz.level.swat.scoreThreshold
+            ) {
+                this.mz.timers.swat.stop(true);
             }
             this.mz.objects.swat.update();
         }
+
+        // update shield
+        this.mz.objects.shield.update();
 
         // update cops
         this.mz.arrays.cops.forEach(copSprite => {
@@ -357,7 +405,7 @@ class Game {
             if (cop.mode !== COP_MODE_CONVOY) {
                 // find target for a cop
                 let newTarget = null;
-                let distanceToTarget = Infinity;
+                let distanceToTargetSq = Infinity;
                 for (let i = 0; i <= this.mz.arrays.protesters.length; i++) {
                     const protester = i === this.mz.arrays.protesters.length ?
                         this.mz.objects.player :
@@ -373,19 +421,14 @@ class Game {
                         protester.sprite === cop.target ||
                         protester.showPoster
                     ) {
-                        let distanceToProtester = this.game.math.distance(
-                            copSprite.x,
-                            copSprite.y,
-                            protester.sprite.x,
-                            protester.sprite.y
-                        );
+                        let distanceToProtesterSq = this.getDistanceSq(copSprite, protester.sprite);
                         // give higher priority to current target
                         if (protester.sprite === cop.target) {
-                            distanceToProtester *= 3 / 4;
+                            distanceToProtesterSq *= 3 / 4;
                         }
-                        if (distanceToProtester < distanceToTarget) {
+                        if (distanceToProtesterSq < distanceToTargetSq) {
                             newTarget = protester.sprite;
-                            distanceToTarget = distanceToProtester;
+                            distanceToTargetSq = distanceToProtesterSq;
                         }
                     }
                 }
@@ -471,13 +514,27 @@ class Game {
             }
         );
 
+        // player vs shield collision
+        this.game.physics.arcade.collide(
+            this.mz.objects.player.sprite,
+            this.mz.objects.shield.sprite,
+            (playerSprite) => {
+                playerSprite.body.collideWorldBounds = false;
+                if (playerSprite.health === 1) {
+                    this.beatUpProtester(playerSprite);
+                }
+            }
+        );
+
         this.mz.groups.actors.sort('y', Phaser.Group.SORT_ASCENDING);
 
-        this.checkWin();
+        if (!this.mz.gameEnded) {
+            this.checkWin();
+        }
 
         this.mz.objects.textProtestersCount.setText(
             'Protesters count: ' +
-            String(this.mz.aliveProtestersCount).padStart(2, '0') + ' / ' +
+            String(this.mz.protesters.alive).padStart(2, '0') + ' / ' +
             this.mz.level.protesters.count.max
         );
 
@@ -525,12 +582,12 @@ class Game {
         }
     }
 
-    handlePlayerKill() {
-        this.endGame(false);
+    handleProtesterLeft() {
+        this.mz.protesters.left++;
     }
 
     handleFinishShooting() {
-        this.mz.reviveProtestersNeeded += this.mz.level.protesters.count.add;
+        this.mz.protesters.toRevive += this.mz.level.protesters.count.add;
     }
 
     handleClickSound() {
@@ -553,16 +610,6 @@ class Game {
         }
     }
 
-    // handleResize(scale, parentBounds) {
-    //     let scaleFactor;
-    //     if (parentBounds.width > parentBounds.height) {
-    //         scaleFactor = parentBounds.width / this.game.width;
-    //     } else {
-    //         scaleFactor = parentBounds.height / this.game.height;
-    //     }
-    //     this.scale.setUserScale(scaleFactor, scaleFactor);
-    // }
-
     updateTimer() {
         this.mz.timePassed++;
         this.mz.objects.textTimer.setText(this.getFormattedTime(this.mz.timePassed));
@@ -577,33 +624,34 @@ class Game {
                 speed: this.mz.level.protesters.speed,
                 spriteKey: `protester${this.game.rnd.between(1, 3)}`,
                 spriteName: `protester${i}`,
-                mood: this.mz.level.protesters.mood / 100,
-                moodDown: this.mz.level.protesters.moodDown / 100,
-                cheeringDuration: this.mz.level.protesters.cheeringDuration
+                mood: this.mz.level.protesters.mood,
+                moodUp: this.mz.level.protesters.moodUp,
+                moodDown: this.mz.level.protesters.moodDown,
+                onLeft: this.handleProtesterLeft,
+                callbackContext: this
             });
             this.mz.arrays.protesters.push(protester.sprite);
         }
     }
 
-    reviveProtesters({ count, mood = this.mz.meanMood / 100 }) {
-        for (let i = 0; i < this.mz.arrays.protesters.length; i++) {
-            const sprite = this.mz.arrays.protesters[i];
-            if (!sprite.alive) {
-                const randomOffset = this.game.rnd.between(0, 100);
-                sprite.mz.revive({
-                    x: this.game.rnd.between(0, 1) === 0 ?
-                        -100 - randomOffset :
-                        this.game.world.width + 100 + randomOffset,
-                    y: this.getRandomCoordinateY(),
-                    nextCoords: this.getRandomCoordinates(),
-                    mood
-                });
-                count--;
-            }
-            if (count === 0) {
-                break;
-            }
-        }
+    reviveProtester({ sprite, mood }) {
+        const randomOffset = this.game.rnd.between(0, 100);
+        sprite.mz.revive({
+            x: this.game.rnd.between(0, 1) === 0 ?
+                -100 - randomOffset :
+                this.game.world.width + 100 + randomOffset,
+            y: this.getRandomCoordinateY(),
+            nextCoords: this.getRandomCoordinates(),
+            mood
+        });
+
+        this.mz.protesters.toRevive--;
+        this.mz.protesters.revived++;
+    }
+
+    beatUpProtester(sprite) {
+        sprite.damage(0.1);
+        this.playRandomPunch();
     }
 
     proceedToJail(protesterSprite, copSprite) {
@@ -614,7 +662,7 @@ class Game {
                 x: (carSprite.right + carSprite.left) / 2,
                 y: (carSprite.bottom + carSprite.top) / 2
             };
-            const distanceToCarSq = this.game.math.distanceSq(copSprite.x, copSprite.y, carCoords.x, carCoords.y);
+            const distanceToCarSq = this.getDistanceSq(copSprite, carCoords);
             if (distanceToCarSq < minDistanceSq) {
                 closestCarCoords = carCoords;
                 minDistanceSq = distanceToCarSq;
@@ -627,9 +675,7 @@ class Game {
     }
 
     arrest(protesterSprite, copSprite) {
-        // beat him up a little
-        protesterSprite.damage(0.8);
-        this.playRandomPunch();
+        this.beatUpProtester(protesterSprite);
 
         copSprite.addChild(protesterSprite);
         if (protesterSprite.name === 'player') {
@@ -640,10 +686,15 @@ class Game {
             x: -Math.sign(copSprite.body.velocity.x) * protesterSprite.body.halfWidth,
             y: protesterSprite.body.halfHeight
         });
+
+        this.mz.protesters.arrested++;
     }
 
     launchSWAT() {
-        this.swatTimer.stop(true);
+        this.mz.timers.swat.stop(true);
+
+        this.mz.objects.audio.boo.play();
+
         const direction = this.game.rnd.between(0, 1) === 0 ? 'ltor' : 'rtol';
         this.mz.objects.swat.setMode(SWAT_MODE_HUNT, {
             x: direction === 'ltor' ?
@@ -659,26 +710,82 @@ class Game {
         });
     }
 
+    launchShield() {
+        this.mz.objects.shield.setMode(SHIELD_MODE_DRIVE, {
+            y: this.mz.objects.player.sprite.y
+        });
+    }
+
     checkWin() {
-        if (
-            this.mz.score >= this.mz.level.winningScore ||
-            this.mz.score === 0 ||
-            this.mz.timePassed > this.mz.level.duration
+        if (this.mz.timePassed > this.mz.level.duration) {
+            this.endGame(END_GAME_TIME_OUT);
+        } else if (this.mz.score === 0) {
+            this.endGame(END_GAME_PROTEST_RATE);
+        } else if (this.mz.score >= this.mz.level.winningScore) {
+            this.endGame(END_GAME_WIN);
+        } else if (
+            this.mz.objects.player.mode === PROTESTER_MODE_ARRESTED ||
+            !this.mz.objects.player.sprite.alive
         ) {
-            this.endGame(this.mz.score >= this.mz.level.winningScore);
+            this.endGame(END_GAME_PLAYER_KILLED);
         }
     }
 
-    endGame(win) {
-        this.mz.objects.audio.theme.stop();
+    endGame(mode) {
+        this.mz.gameEnded = true;
 
+        this.mz.objects.audio.theme.fadeOut(2000);
+
+        this.mz.objects.endMenu = new EndMenu({
+            game: this.game,
+            mode,
+            score: this.mz.objects.score.group,
+            stats: {
+                time: this.mz.timePassed,
+                alive: this.mz.protesters.alive,
+                arrested: this.mz.protesters.arrested,
+                revived: this.mz.protesters.revived,
+                left: this.mz.protesters.left
+            }
+        });
+
+        this.mz.groups.menu.killAll();
+        this.mz.objects.timer.stop();
+        this.mz.events.fieldClickHandler.kill();
+
+        // pause
         this.game.onPause.removeAll();
         this.game.onResume.removeAll();
 
-        this.state.start('EndMenu', true, false, {
-            win,
-            time: this.mz.timePassed
-        });
+        // player
+        this.mz.objects.player.freeze();
+
+        this.game.input.keyboard.removeKey(Phaser.Keyboard.ESC);
+        this.game.input.onDown.remove(this.handleUnpause, this);
+
+        if (mode === END_GAME_WIN) {
+            this.mz.objects.audio.applause.play('', 0, 0.25);
+            this.mz.arrays.protesters.forEach(sprite => {
+                sprite.mz.moodUp(1);
+            });
+        } else {
+            this.mz.objects.audio.boo.play();
+            switch (mode) {
+                case END_GAME_TIME_OUT: {
+                    this.mz.arrays.protesters.forEach(sprite => {
+                        sprite.mz.moodDown(1);
+                    });
+                    break;
+                }
+                case END_GAME_PROTEST_RATE: {
+                    this.launchShield();
+                    break;
+                }
+                case END_GAME_PLAYER_KILLED: {
+                    break;
+                }
+            }
+        }
     }
 
     playRandomSound() {
@@ -689,6 +796,10 @@ class Game {
 
     playRandomPunch() {
         this.game.rnd.pick(this.mz.objects.audio.audioPunch).play('', 0, 0.25);
+    }
+
+    getDistanceSq(obj1, obj2) {
+        return this.game.math.distanceSq(obj1.x, obj1.y, obj2.x, obj2.y);
     }
 
     getRandomCoordinates() {

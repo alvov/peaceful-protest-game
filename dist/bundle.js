@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 302);
+/******/ 	return __webpack_require__(__webpack_require__.s = 303);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -73,63 +73,67 @@
     initial: [{
         type: 'spritesheet',
         key: 'level01',
-        url: __webpack_require__(304),
-        frameWidth: 300,
-        frameHeight: 150
-    }, {
-        type: 'spritesheet',
-        key: 'level02',
         url: __webpack_require__(305),
         frameWidth: 300,
         frameHeight: 150
     }, {
         type: 'spritesheet',
-        key: 'playButton',
+        key: 'level02',
         url: __webpack_require__(306),
+        frameWidth: 300,
+        frameHeight: 150
+    }, {
+        type: 'spritesheet',
+        key: 'playButton',
+        url: __webpack_require__(307),
         frameWidth: 100,
         frameHeight: 100
     }, {
         type: 'spritesheet',
         key: 'soundButtons',
-        url: __webpack_require__(307),
+        url: __webpack_require__(308),
         frameWidth: 50,
         frameHeight: 50
     }, {
         type: 'audio',
         key: 'theme',
-        urls: __webpack_require__(308)
-    }, {
-        type: 'audio',
-        key: 'punch01',
         urls: __webpack_require__(309)
     }, {
         type: 'audio',
-        key: 'punch02',
+        key: 'punch01',
         urls: __webpack_require__(310)
     }, {
         type: 'audio',
-        key: 'applause',
+        key: 'punch02',
         urls: __webpack_require__(311)
     }, {
         type: 'audio',
-        key: 'boo',
+        key: 'applause',
         urls: __webpack_require__(312)
     }, {
         type: 'audio',
-        key: 'croud',
+        key: 'boo',
         urls: __webpack_require__(313)
     }, {
         type: 'audio',
-        key: 'cough01',
+        key: 'croud',
         urls: __webpack_require__(314)
     }, {
         type: 'audio',
-        key: 'cough02',
+        key: 'cough01',
         urls: __webpack_require__(315)
     }, {
         type: 'audio',
-        key: 'scream03',
+        key: 'cough02',
         urls: __webpack_require__(316)
+    }, {
+        type: 'audio',
+        key: 'scream03',
+        urls: __webpack_require__(317)
+    }, {
+        type: 'audio',
+        key: 'truck',
+        urls: __webpack_require__(318)
     }],
     level1: [{
         type: 'spritesheet',
@@ -146,55 +150,61 @@
     }, {
         type: 'spritesheet',
         key: 'cop',
-        url: __webpack_require__(317),
+        url: __webpack_require__(319),
         frameWidth: 44,
         frameHeight: 49
     }, {
         type: 'spritesheet',
-        key: 'journalist',
+        key: 'shield',
         url: __webpack_require__(118),
+        frameWidth: 451,
+        frameHeight: 200
+    }, {
+        type: 'spritesheet',
+        key: 'journalist',
+        url: __webpack_require__(119),
         frameWidth: 32,
         frameHeight: 49
     }, {
         type: 'spritesheet',
         key: 'player',
-        url: __webpack_require__(119),
+        url: __webpack_require__(120),
         frameWidth: 30,
         frameHeight: 46
     }, {
         type: 'spritesheet',
         key: 'protester1',
-        url: __webpack_require__(120),
+        url: __webpack_require__(121),
         frameWidth: 32,
         frameHeight: 48
     }, {
         type: 'spritesheet',
         key: 'protester2',
-        url: __webpack_require__(121),
+        url: __webpack_require__(122),
         frameWidth: 30,
         frameHeight: 46
     }, {
         type: 'spritesheet',
         key: 'protester3',
-        url: __webpack_require__(122),
+        url: __webpack_require__(123),
         frameWidth: 30,
         frameHeight: 47
     }, {
         type: 'spritesheet',
         key: 'injury',
-        url: __webpack_require__(123),
+        url: __webpack_require__(124),
         frameWidth: 30,
         frameHeight: 31
     }, {
         type: 'spritesheet',
         key: 'poster',
-        url: __webpack_require__(124),
+        url: __webpack_require__(125),
         frameWidth: 60,
         frameHeight: 71
     }, {
         type: 'image',
         key: 'ground',
-        url: __webpack_require__(318),
+        url: __webpack_require__(320),
         overwrite: false
     }],
     level2: [{
@@ -212,61 +222,67 @@
     }, {
         type: 'spritesheet',
         key: 'cop',
-        url: __webpack_require__(319),
+        url: __webpack_require__(321),
         frameWidth: 46,
         frameHeight: 54
     }, {
         type: 'spritesheet',
         key: 'swat',
-        url: __webpack_require__(320),
+        url: __webpack_require__(322),
         frameWidth: 30,
         frameHeight: 46
     }, {
         type: 'spritesheet',
-        key: 'journalist',
+        key: 'shield',
         url: __webpack_require__(118),
+        frameWidth: 451,
+        frameHeight: 200
+    }, {
+        type: 'spritesheet',
+        key: 'journalist',
+        url: __webpack_require__(119),
         frameWidth: 32,
         frameHeight: 49
     }, {
         type: 'spritesheet',
         key: 'player',
-        url: __webpack_require__(119),
+        url: __webpack_require__(120),
         frameWidth: 30,
         frameHeight: 46
     }, {
         type: 'spritesheet',
         key: 'protester1',
-        url: __webpack_require__(120),
+        url: __webpack_require__(121),
         frameWidth: 32,
         frameHeight: 48
     }, {
         type: 'spritesheet',
         key: 'protester2',
-        url: __webpack_require__(121),
+        url: __webpack_require__(122),
         frameWidth: 30,
         frameHeight: 46
     }, {
         type: 'spritesheet',
         key: 'protester3',
-        url: __webpack_require__(122),
+        url: __webpack_require__(123),
         frameWidth: 30,
         frameHeight: 47
     }, {
         type: 'spritesheet',
         key: 'injury',
-        url: __webpack_require__(123),
+        url: __webpack_require__(124),
         frameWidth: 30,
         frameHeight: 31
     }, {
         type: 'spritesheet',
         key: 'poster',
-        url: __webpack_require__(124),
+        url: __webpack_require__(125),
         frameWidth: 60,
         frameHeight: 71
     }, {
         type: 'image',
         key: 'ground',
-        url: __webpack_require__(321),
+        url: __webpack_require__(323),
         overwrite: false
     }]
 });
@@ -290,53 +306,60 @@ module.exports = __webpack_require__.p + "assets/07cceb7a8ec87d8476bdf361029569d
 /***/ 118:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/0db8c7aedd9b6876feb9ee4371b27d14.png";
+module.exports = __webpack_require__.p + "assets/3a8fa075cb070f2ba52fda519e63fd33.png";
 
 /***/ }),
 
 /***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/c73e25fb0b044d025cd031db52c0704b.png";
+module.exports = __webpack_require__.p + "assets/0db8c7aedd9b6876feb9ee4371b27d14.png";
 
 /***/ }),
 
 /***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/c319d1c800f4e0f8c49b21f55ef1ee16.png";
+module.exports = __webpack_require__.p + "assets/c73e25fb0b044d025cd031db52c0704b.png";
 
 /***/ }),
 
 /***/ 121:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/51eaa920cd842f906dbb0ab9dafb2046.png";
+module.exports = __webpack_require__.p + "assets/c319d1c800f4e0f8c49b21f55ef1ee16.png";
 
 /***/ }),
 
 /***/ 122:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/373325f07721a6c1f012d59948a7b889.png";
+module.exports = __webpack_require__.p + "assets/51eaa920cd842f906dbb0ab9dafb2046.png";
 
 /***/ }),
 
 /***/ 123:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/d4bedbdde1c2adef9d869553fe67a350.png";
+module.exports = __webpack_require__.p + "assets/373325f07721a6c1f012d59948a7b889.png";
 
 /***/ }),
 
 /***/ 124:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/28dbeb6c57f67cd17abbd912371bac9c.png";
+module.exports = __webpack_require__.p + "assets/d4bedbdde1c2adef9d869553fe67a350.png";
 
 /***/ }),
 
 /***/ 125:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/28dbeb6c57f67cd17abbd912371bac9c.png";
+
+/***/ }),
+
+/***/ 126:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -397,11 +420,11 @@ var Protester = function (_Prefab) {
 
 /***/ }),
 
-/***/ 126:
+/***/ 127:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_js__ = __webpack_require__(24);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _DEFAULT_COLORS;
@@ -412,7 +435,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var DEFAULT_COLORS = (_DEFAULT_COLORS = {}, _defineProperty(_DEFAULT_COLORS, __WEBPACK_IMPORTED_MODULE_0__constants_js__["e" /* FOV_MODE_NORMAL */], 0x3a3a56), _defineProperty(_DEFAULT_COLORS, __WEBPACK_IMPORTED_MODULE_0__constants_js__["d" /* FOV_MODE_CAPTURE */], 0x563a3a), _DEFAULT_COLORS);
+var DEFAULT_COLORS = (_DEFAULT_COLORS = {}, _defineProperty(_DEFAULT_COLORS, __WEBPACK_IMPORTED_MODULE_0__constants_js__["i" /* FOV_MODE_NORMAL */], 0x3a3a56), _defineProperty(_DEFAULT_COLORS, __WEBPACK_IMPORTED_MODULE_0__constants_js__["h" /* FOV_MODE_CAPTURE */], 0x563a3a), _DEFAULT_COLORS);
 
 var FOV = function () {
     function FOV(_ref) {
@@ -458,7 +481,7 @@ var FOV = function () {
             var endAngle = this.angle + this.halfViewAngle;
             var arcStart = [x + Math.cos(startAngle) * this.radius, y + Math.sin(startAngle) * this.radius];
 
-            this.graphics.beginFill(this.colors[mode || __WEBPACK_IMPORTED_MODULE_0__constants_js__["e" /* FOV_MODE_NORMAL */]], 0.4);
+            this.graphics.beginFill(this.colors[mode || __WEBPACK_IMPORTED_MODULE_0__constants_js__["i" /* FOV_MODE_NORMAL */]], 0.4);
             this.graphics.moveTo(x, y);
             (_graphics = this.graphics).lineTo.apply(_graphics, arcStart);
             this.graphics.arc(x, y, this.radius, startAngle, endAngle, false, 10);
@@ -518,17 +541,64 @@ var FOV = function () {
 
 /***/ }),
 
-/***/ 302:
+/***/ 24:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return END_GAME_TIME_OUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return END_GAME_PLAYER_KILLED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return END_GAME_PROTEST_RATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return END_GAME_WIN; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return COP_MODE_WANDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return COP_MODE_PURSUE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return COP_MODE_CONVOY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return SWAT_MODE_HIDE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return SWAT_MODE_HUNT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return SHIELD_MODE_HIDE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return SHIELD_MODE_DRIVE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return FOV_MODE_NORMAL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return FOV_MODE_CAPTURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return PROTESTER_MODE_WANDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return PROTESTER_MODE_ARRESTED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return PROTESTER_MODE_LEAVE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return JOURNALIST_MODE_WANDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return JOURNALIST_MODE_SHOOTING; });
+var END_GAME_TIME_OUT = 'timeOut';
+var END_GAME_PLAYER_KILLED = 'playerKilled';
+var END_GAME_PROTEST_RATE = 'protestRate';
+var END_GAME_WIN = 'win';
+
+var COP_MODE_WANDER = 'wander';
+var COP_MODE_PURSUE = 'pursue';
+var COP_MODE_CONVOY = 'convoy';
+
+var SWAT_MODE_HIDE = 'hide';
+var SWAT_MODE_HUNT = 'hunt';
+
+var SHIELD_MODE_HIDE = 'hide';
+var SHIELD_MODE_DRIVE = 'drive';
+
+var FOV_MODE_NORMAL = 'normal';
+var FOV_MODE_CAPTURE = 'capture';
+
+var PROTESTER_MODE_WANDER = 'wander';
+var PROTESTER_MODE_ARRESTED = 'arrested';
+var PROTESTER_MODE_LEAVE = 'leave';
+
+var JOURNALIST_MODE_WANDER = 'wander';
+var JOURNALIST_MODE_SHOOTING = 'shooting';
+
+/***/ }),
+
+/***/ 303:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states_Boot_js__ = __webpack_require__(303);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__ = __webpack_require__(322);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_EndMenu_js__ = __webpack_require__(325);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__states_Game_js__ = __webpack_require__(326);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states_Boot_js__ = __webpack_require__(304);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_Game_js__ = __webpack_require__(327);
 
 
 
@@ -546,13 +616,13 @@ var game = new Phaser.Game({
 game.state.add('Boot', __WEBPACK_IMPORTED_MODULE_0__states_Boot_js__["a" /* default */]);
 game.state.add('Loading', __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__["a" /* default */]);
 game.state.add('StartMenu', __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__["a" /* default */]);
-game.state.add('EndMenu', __WEBPACK_IMPORTED_MODULE_3__states_EndMenu_js__["a" /* default */]);
-game.state.add('Game', __WEBPACK_IMPORTED_MODULE_4__states_Game_js__["a" /* default */]);
+game.state.add('Game', __WEBPACK_IMPORTED_MODULE_3__states_Game_js__["a" /* default */]);
+
 game.state.start('Boot');
 
 /***/ }),
 
-/***/ 303:
+/***/ 304:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -571,9 +641,9 @@ var Boot = function () {
     _createClass(Boot, [{
         key: 'init',
         value: function init() {
-            // this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            // this.scale.pageAlignHorizontally = true;
-            // this.scale.pageAlignVertically = true;
+            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            this.scale.pageAlignHorizontally = true;
+            this.scale.pageAlignVertically = true;
         }
     }, {
         key: 'preload',
@@ -597,133 +667,140 @@ var Boot = function () {
 
 /***/ }),
 
-/***/ 304:
+/***/ 305:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/f92bc2f5d7aa8c5e8ccf000dd5f2268c.jpg";
 
 /***/ }),
 
-/***/ 305:
+/***/ 306:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/c7118db4b46452ebb66ca9f1f72e7d53.jpg";
 
 /***/ }),
 
-/***/ 306:
+/***/ 307:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/121104892eaea3f65969e7beb7d9f45f.png";
 
 /***/ }),
 
-/***/ 307:
+/***/ 308:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/14ca0f6714021de1e9776c79ad48e916.png";
 
 /***/ }),
 
-/***/ 308:
+/***/ 309:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/31269e05cd13ab095ae3bbb217d2f567.mp3";
 
 /***/ }),
 
-/***/ 309:
+/***/ 310:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/0cb89b881decdf87d1ccaba4ae7aaffb.mp3";
 
 /***/ }),
 
-/***/ 310:
+/***/ 311:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/dca004f04dec60da50cca8fecc4161f2.mp3";
 
 /***/ }),
 
-/***/ 311:
+/***/ 312:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/3745bf01cd4446437f37de7991ad805b.mp3";
 
 /***/ }),
 
-/***/ 312:
+/***/ 313:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/52b53826ba253bf501d879893845b5f4.mp3";
 
 /***/ }),
 
-/***/ 313:
+/***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/15a327358f08be2e673ef27c2e5dcaa1.mp3";
 
 /***/ }),
 
-/***/ 314:
+/***/ 315:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/6632e8a1ef01b6e295413e6fa1606858.mp3";
 
 /***/ }),
 
-/***/ 315:
+/***/ 316:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/2db995ce7f0661c455b95602348d7c50.mp3";
 
 /***/ }),
 
-/***/ 316:
+/***/ 317:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "assets/05b4ea2cf7bcddf26622cdaafb40b881.mp3";
 
 /***/ }),
 
-/***/ 317:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "assets/d98ae72532ed2e0fe2b7596a57c1cbac.png";
-
-/***/ }),
-
 /***/ 318:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/7780fada5b5def9a73f068e7dee87e98.jpg";
+module.exports = __webpack_require__.p + "assets/b2187268a6f521f79c03adf9bedcf458.mp3";
 
 /***/ }),
 
 /***/ 319:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/733d7ab8b793f60f4c77b9d837fa3693.png";
+module.exports = __webpack_require__.p + "assets/d98ae72532ed2e0fe2b7596a57c1cbac.png";
 
 /***/ }),
 
 /***/ 320:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/d0797776e88d180a0467e06d6899a8ae.png";
+module.exports = __webpack_require__.p + "assets/7780fada5b5def9a73f068e7dee87e98.jpg";
 
 /***/ }),
 
 /***/ 321:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/a1a7aca8cdcabb0b6f29774a2b1eb971.jpg";
+module.exports = __webpack_require__.p + "assets/733d7ab8b793f60f4c77b9d837fa3693.png";
 
 /***/ }),
 
 /***/ 322:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/d0797776e88d180a0467e06d6899a8ae.png";
+
+/***/ }),
+
+/***/ 323:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/ba54524471c2d26696759b97325dc4fd.jpg";
+
+/***/ }),
+
+/***/ 324:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -761,7 +838,7 @@ var Loading = function () {
             // this.load.setPreloadSprite(loadingBar);
 
             this.mz.config.assets.forEach(function (_ref) {
-                var _load, _load2, _load3, _load4;
+                var _load, _load2, _load3;
 
                 var _ref2 = _toArray(_ref),
                     assetType = _ref2[0],
@@ -777,14 +854,10 @@ var Loading = function () {
                     case 'image':
                         (_load3 = _this.load).image.apply(_load3, _toConsumableArray(assetParams));
                         break;
-                    case 'tilemap':
-                        debugger;
-                        (_load4 = _this.load).tilemap.apply(_load4, _toConsumableArray(assetParams));
-                        break;
                 }
             });
 
-            this.mz.objects.textProgress = this.game.add.text(300, 300, 'Загрузка 0%', {
+            this.mz.objects.textProgress = this.game.add.text(300, 300, 'Loading 0%', {
                 font: '26px Arial',
                 fill: '#fff',
                 align: 'right'
@@ -794,7 +867,7 @@ var Loading = function () {
     }, {
         key: 'loadUpdate',
         value: function loadUpdate() {
-            this.mz.objects.textProgress.setText('\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 ' + this.game.load.progress + '%');
+            this.mz.objects.textProgress.setText('Loading ' + this.game.load.progress + '%');
         }
     }, {
         key: 'create',
@@ -812,11 +885,11 @@ var Loading = function () {
 
 /***/ }),
 
-/***/ 323:
+/***/ 325:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__levels_js__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__levels_js__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_pack_js__ = __webpack_require__(115);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -838,7 +911,9 @@ var StartMenu = function () {
     }, {
         key: 'create',
         value: function create() {
-            this.title = this.game.add.text(this.world.centerX, 2 / 3 * this.world.centerY, 'Мирный Протест MVP');
+            this.game.world.resize(this.game.width, this.game.height);
+
+            this.title = this.game.add.text(this.world.centerX, 2 / 3 * this.world.centerY, 'Peaceful Protest');
             this.title.anchor.setTo(0.5);
 
             this.level1Button = this.game.add.button(150, this.world.centerY, 'level02', this.handleClickPlay.bind(this, 'level1'));
@@ -847,9 +922,6 @@ var StartMenu = function () {
             this.level2Button = this.game.add.button(this.world.width - 150, this.world.centerY, 'level01', this.handleClickPlay.bind(this, 'level2'));
             this.level2Button.anchor.setTo(0.5);
         }
-    }, {
-        key: 'resize',
-        value: function resize(newWidth, newHeight) {}
     }, {
         key: 'handleClickPlay',
         value: function handleClickPlay(level) {
@@ -867,7 +939,7 @@ var StartMenu = function () {
 
 /***/ }),
 
-/***/ 324:
+/***/ 326:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -876,7 +948,7 @@ var StartMenu = function () {
         id: 'level1',
         worldWidth: 600,
         worldHeight: 600,
-        duration: 5 * 60, // s
+        duration: 3 * 60, // s
         winningScore: 75,
         cops: {
             count: 1,
@@ -909,9 +981,9 @@ var StartMenu = function () {
             speed: {
                 value: 60
             },
-            mood: 30,
-            moodDown: 0.01,
-            cheeringDuration: 5
+            mood: 0.3,
+            moodUp: 0.001,
+            moodDown: 0.0001
         },
         player: {
             speed: {
@@ -921,7 +993,6 @@ var StartMenu = function () {
                 running: 1.5
             },
             radius: 150,
-            cheering: 0.5,
             stamina: 100,
             staminaCooldown: 5 // s
         }
@@ -930,7 +1001,7 @@ var StartMenu = function () {
         id: 'level2',
         worldWidth: 800,
         worldHeight: 800,
-        duration: 5 * 60, // s
+        duration: 4 * 60, // s
         winningScore: 75,
         cops: {
             count: 5,
@@ -948,7 +1019,8 @@ var StartMenu = function () {
             speed: {
                 value: 200
             },
-            frequency: 25000
+            frequency: 10000,
+            scoreThreshold: 50
         },
         press: {
             count: 5,
@@ -965,15 +1037,15 @@ var StartMenu = function () {
             count: {
                 start: 30,
                 max: 60,
-                add: 12
+                add: 10
             },
             max: 60,
             speed: {
                 value: 60
             },
-            mood: 30,
-            moodDown: 0.01,
-            cheeringDuration: 3
+            mood: 0.25,
+            moodUp: 0.002,
+            moodDown: 0.0001
         },
         player: {
             speed: {
@@ -983,7 +1055,6 @@ var StartMenu = function () {
                 running: 1.5
             },
             radius: 120,
-            cheering: 0.5,
             stamina: 200,
             staminaCooldown: 5 // s
         }
@@ -992,80 +1063,29 @@ var StartMenu = function () {
 
 /***/ }),
 
-/***/ 325:
+/***/ 327:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var EndMenu = function () {
-    function EndMenu() {
-        _classCallCheck(this, EndMenu);
-    }
-
-    _createClass(EndMenu, [{
-        key: 'init',
-        value: function init(config) {
-            this.mz = {
-                config: config
-            };
-        }
-    }, {
-        key: 'preload',
-        value: function preload() {
-            this.game.stage.backgroundColor = '#ccc';
-        }
-    }, {
-        key: 'create',
-        value: function create() {
-            this.game.world.resize(this.game.width, this.game.height);
-
-            this.title = this.game.add.text(this.world.centerX, 2 / 3 * this.world.centerY, this.mz.config.win ? 'Протест удался!' : 'Вы слили протест :(');
-            this.title.anchor.setTo(0.5);
-
-            var timeString = String(Math.floor(this.mz.config.time / 60)).padStart(2, '0') + ':' + String(this.mz.config.time % 60).padStart(2, '0');
-            this.time = this.game.add.text(this.world.centerX, 2 / 3 * this.world.centerY + 31, '\u0412\u0430\u0448\u0435 \u0432\u0440\u0435\u043C\u044F: ' + timeString);
-            this.time.anchor.setTo(0.5);
-
-            this.replayButton = this.game.add.button(this.world.centerX, this.world.centerY, 'playButton', this.handleClickPlay, this);
-            this.replayButton.anchor.setTo(0.5);
-        }
-    }, {
-        key: 'resize',
-        value: function resize(newWidth, newHeight) {}
-    }, {
-        key: 'handleClickPlay',
-        value: function handleClickPlay() {
-            this.state.start('StartMenu');
-        }
-    }]);
-
-    return EndMenu;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (EndMenu);
-
-/***/ }),
-
-/***/ 326:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(327);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_NPCProtester_js__ = __webpack_require__(328);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__objects_SWATSquad_js__ = __webpack_require__(331);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__objects_PauseMenu_js__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__objects_ScoreMeter_js__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__constants_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(328);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_NPCProtester_js__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__objects_SWATSquad_js__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__objects_Shield_js__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__objects_ScoreMeter_js__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__objects_PauseMenu_js__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__objects_EndMenu_js__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__constants_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__constants__ = __webpack_require__(24);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
 
 
 
@@ -1089,26 +1109,36 @@ var Game = function () {
         value: function init(level) {
             this.mz = {
                 level: level,
+                gameEnded: false,
                 score: null,
-                aliveProtestersCount: null,
-                reviveProtestersNeeded: level.protesters.count.start,
-                meanMood: level.protesters.mood,
                 timePassed: 0, // s
-                map: null,
+                protesters: {
+                    alive: null,
+                    arrested: 0,
+                    revived: 0,
+                    left: 0,
+                    toRevive: level.protesters.count.start,
+                    meanMood: level.protesters.mood
+                },
                 events: {
                     keys: {},
                     fieldClickHandler: null
                 },
+                timers: {
+                    swat: null
+                },
                 objects: {
                     player: null,
                     swat: null,
+                    shield: null,
                     score: null,
                     textTimer: null,
                     textProtestersCount: null,
                     bgTile: null,
                     buttonSound: null,
                     audio: {},
-                    pauseMenu: null
+                    pauseMenu: null,
+                    endMenu: null
                 },
                 arrays: {
                     protesters: [],
@@ -1139,8 +1169,8 @@ var Game = function () {
             this.mz.objects.audio.theme.loopFull(0.1);
             this.mz.objects.audio.audioPunch = [this.game.add.audio('punch01'), this.game.add.audio('punch02')];
             this.mz.objects.audio.random = [this.game.add.audio('croud'), this.game.add.audio('cough01'), this.game.add.audio('cough02')];
-
-            // this.mz.map = this.game.add.tilemap('tilemap', 50, 50);
+            this.mz.objects.audio.applause = this.game.add.audio('applause');
+            this.mz.objects.audio.boo = this.game.add.audio('boo');
 
             // FOVs should always be below everything
             this.mz.groups.playerFOV = this.game.add.group();
@@ -1183,7 +1213,7 @@ var Game = function () {
                 }));
                 this.mz.arrays.cops.push(cop.sprite);
                 this.mz.groups.actors.add(cop.sprite);
-                cop.setMode(__WEBPACK_IMPORTED_MODULE_7__constants_js__["c" /* COP_MODE_WANDER */]);
+                cop.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["c" /* COP_MODE_WANDER */]);
             }
 
             // swat
@@ -1193,8 +1223,16 @@ var Game = function () {
                 }, this.mz.level.swat, {
                     group: this.mz.groups.actors
                 }));
-                this.swatTimer = this.game.time.create(false);
+                this.mz.timers.swat = this.game.time.create(false);
             }
+
+            // shield
+            this.mz.objects.shield = new __WEBPACK_IMPORTED_MODULE_5__objects_Shield_js__["a" /* default */]({
+                game: this.game,
+                speed: {
+                    value: 400
+                }
+            });
 
             // press
             for (var _i3 = 0; _i3 < this.mz.level.press.count; _i3++) {
@@ -1215,7 +1253,7 @@ var Game = function () {
                 }));
                 this.mz.arrays.press.push(journalist.sprite);
                 this.mz.groups.actors.add(journalist.sprite);
-                journalist.setMode(__WEBPACK_IMPORTED_MODULE_7__constants_js__["g" /* JOURNALIST_MODE_WANDER */]);
+                journalist.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["k" /* JOURNALIST_MODE_WANDER */]);
             }
 
             // protesters
@@ -1230,7 +1268,6 @@ var Game = function () {
             }, this.mz.level.player));
             this.game.camera.follow(this.mz.objects.player.sprite);
             this.mz.groups.actors.add(this.mz.objects.player.sprite);
-            this.mz.objects.player.sprite.events.onKilled.addOnce(this.handlePlayerKill, this);
 
             // bottom borders
             for (var _i4 = 0; _i4 < this.game.world.width; _i4 += 100) {
@@ -1250,9 +1287,9 @@ var Game = function () {
                 winPoint: this.mz.level.winningScore
             });
 
-            var timer = this.game.time.create();
-            timer.loop(Phaser.Timer.SECOND, this.updateTimer, this);
-            timer.start();
+            this.mz.objects.timer = this.game.time.create();
+            this.mz.objects.timer.loop(Phaser.Timer.SECOND, this.updateTimer, this);
+            this.mz.objects.timer.start();
 
             this.mz.objects.textTimer = this.game.add.text(this.game.width - 10, 20, '', {
                 font: '25px Arial',
@@ -1273,7 +1310,11 @@ var Game = function () {
             this.mz.groups.menu.add(this.mz.objects.textProtestersCount);
 
             this.mz.objects.buttonSound = this.game.add.button(0, 0, 'soundButtons', this.handleClickSound, this, 1, 1, 1, 1, this.mz.groups.menu);
-            // this.scale.setResizeCallback(this.handleResize, this);
+
+            // pause menu
+            this.mz.objects.pauseMenu = new __WEBPACK_IMPORTED_MODULE_7__objects_PauseMenu_js__["a" /* default */]({ game: this.game });
+
+            // events
 
             // click on field
             var fieldClickHandler = this.game.add.sprite(0, 100);
@@ -1290,9 +1331,6 @@ var Game = function () {
             this.game.input.onDown.add(this.handleUnpause, this);
 
             this.mz.events.keys.esc = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-
-            // pause menu
-            this.mz.objects.pauseMenu = new __WEBPACK_IMPORTED_MODULE_5__objects_PauseMenu_js__["a" /* default */]({ game: this.game });
         }
     }, {
         key: 'update',
@@ -1302,7 +1340,9 @@ var Game = function () {
             // update background
             this.mz.objects.bgTile.tilePosition.set(-this.game.camera.x, -this.game.camera.y);
 
-            this.playRandomSound();
+            if (!this.mz.gameEnded) {
+                this.playRandomSound();
+            }
 
             this.mz.objects.buttonSound.frame = this.game.sound.mute ? 1 : 0;
 
@@ -1310,30 +1350,40 @@ var Game = function () {
             this.mz.objects.player.update();
 
             // update protesters
-            if (this.mz.reviveProtestersNeeded !== 0) {
-                this.reviveProtesters({
-                    count: this.mz.reviveProtestersNeeded,
-                    mood: Math.max(this.mz.meanMood, this.mz.level.protesters.mood) / 100
-                });
-                this.mz.reviveProtestersNeeded = 0;
+            var lastTickMeanMood = this.mz.protesters.meanMood;
+            this.mz.score = 0;
+            this.mz.protesters.meanMood = 0;
+            this.mz.protesters.alive = 0;
+            for (var i = 0; i < this.mz.arrays.protesters.length; i++) {
+                var sprite = this.mz.arrays.protesters[i];
+                if (!sprite.alive) {
+                    if (this.mz.protesters.toRevive !== 0) {
+                        var mood = Math.max(lastTickMeanMood, this.mz.level.protesters.mood);
+                        this.reviveProtester({
+                            sprite: sprite,
+                            mood: mood
+                        });
+                        this.mz.protesters.alive++;
+                        this.mz.protesters.meanMood += mood;
+                    }
+                } else {
+                    sprite.mz.update();
+                    sprite.mz.toggleCheering(!this.mz.gameEnded && this.mz.objects.player.showPoster && this.getDistanceSq(sprite, this.mz.objects.player.sprite) <= this.mz.objects.player.radiusSq);
+
+                    this.mz.protesters.alive++;
+                    this.mz.protesters.meanMood += sprite.mz.mood;
+                }
             }
 
-            this.mz.score = 0;
-            this.mz.meanMood = 0;
-            this.mz.aliveProtestersCount = 0;
-            this.mz.arrays.protesters.forEach(function (sprite) {
-                if (sprite.alive) {
-                    sprite.mz.update();
-                    sprite.mz.toggleCheering(_this.mz.objects.player.showPoster && _this.game.math.distance(sprite.x, sprite.y, _this.mz.objects.player.sprite.x, _this.mz.objects.player.sprite.y) <= _this.mz.objects.player.radius, _this.mz.objects.player.cheering);
-                    _this.mz.aliveProtestersCount++;
-                    _this.mz.meanMood += sprite.mz.mood;
-                }
-            });
-            this.mz.meanMood = this.mz.aliveProtestersCount !== 0 ? this.mz.meanMood / this.mz.aliveProtestersCount : 0;
-            this.mz.score = 100 * (0.5 * this.mz.aliveProtestersCount / this.mz.level.protesters.count.max + 0.5 * this.mz.meanMood);
+            this.mz.protesters.toRevive = 0;
+
+            this.mz.protesters.meanMood = this.mz.protesters.alive !== 0 ? this.mz.protesters.meanMood / this.mz.protesters.alive : 0;
+            this.mz.score = 100 * (0.5 * this.mz.protesters.alive / this.mz.level.protesters.count.max + 0.5 * this.mz.protesters.meanMood);
 
             // draw score
-            this.mz.objects.score.update(this.mz.score);
+            if (!this.mz.gameEnded) {
+                this.mz.objects.score.update(this.mz.score);
+            }
 
             // update journalists
             this.mz.arrays.press.forEach(function (journalistSprite) {
@@ -1345,9 +1395,9 @@ var Game = function () {
                 }
 
                 if (newTarget) {
-                    journalist.setMode(__WEBPACK_IMPORTED_MODULE_7__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */], { target: newTarget });
-                } else if (journalist.mode !== __WEBPACK_IMPORTED_MODULE_7__constants_js__["g" /* JOURNALIST_MODE_WANDER */]) {
-                    journalist.setMode(__WEBPACK_IMPORTED_MODULE_7__constants_js__["g" /* JOURNALIST_MODE_WANDER */]);
+                    journalist.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["j" /* JOURNALIST_MODE_SHOOTING */], { target: newTarget });
+                } else if (journalist.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["k" /* JOURNALIST_MODE_WANDER */]) {
+                    journalist.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["k" /* JOURNALIST_MODE_WANDER */]);
                 }
 
                 journalist.update();
@@ -1355,12 +1405,17 @@ var Game = function () {
 
             // update swat
             if (this.mz.objects.swat) {
-                if (this.mz.objects.swat.mode === __WEBPACK_IMPORTED_MODULE_7__constants_js__["k" /* SWAT_MODE_HIDE */] && !this.swatTimer.running) {
-                    this.swatTimer.add(this.mz.level.swat.frequency, this.launchSWAT, this);
-                    this.swatTimer.start();
+                if ((this.mz.score >= this.mz.level.swat.scoreThreshold || this.mz.gameEnded) && this.mz.objects.swat.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["q" /* SWAT_MODE_HIDE */] && !this.mz.timers.swat.running) {
+                    this.mz.timers.swat.add(this.mz.level.swat.frequency, this.launchSWAT, this);
+                    this.mz.timers.swat.start();
+                } else if (this.mz.timers.swat.running && this.mz.score < this.mz.level.swat.scoreThreshold) {
+                    this.mz.timers.swat.stop(true);
                 }
                 this.mz.objects.swat.update();
             }
+
+            // update shield
+            this.mz.objects.shield.update();
 
             // update cops
             this.mz.arrays.cops.forEach(function (copSprite) {
@@ -1372,40 +1427,40 @@ var Game = function () {
                 if (_this.mz.objects.player.showPoster) {
                     attractionStrength += 0.2;
                     _this.mz.arrays.press.forEach(function (journalistSprite) {
-                        if (journalistSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_7__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */]) {
+                        if (journalistSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["j" /* JOURNALIST_MODE_SHOOTING */]) {
                             attractionStrength += 0.4;
                         }
                     });
                 }
                 cop.attractionStrength = Math.min(1, attractionStrength);
 
-                if (cop.mode !== __WEBPACK_IMPORTED_MODULE_7__constants_js__["a" /* COP_MODE_CONVOY */]) {
+                if (cop.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["a" /* COP_MODE_CONVOY */]) {
                     // find target for a cop
                     var newTarget = null;
-                    var distanceToTarget = Infinity;
-                    for (var i = 0; i <= _this.mz.arrays.protesters.length; i++) {
-                        var protester = i === _this.mz.arrays.protesters.length ? _this.mz.objects.player : _this.mz.arrays.protesters[i].mz;
-                        if (!protester.sprite.alive || protester.mode === __WEBPACK_IMPORTED_MODULE_7__constants_js__["h" /* PROTESTER_MODE_ARRESTED */] || !cop.FOV.containsPoint(protester.sprite.body.center)) {
+                    var distanceToTargetSq = Infinity;
+                    for (var _i5 = 0; _i5 <= _this.mz.arrays.protesters.length; _i5++) {
+                        var protester = _i5 === _this.mz.arrays.protesters.length ? _this.mz.objects.player : _this.mz.arrays.protesters[_i5].mz;
+                        if (!protester.sprite.alive || protester.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */] || !cop.FOV.containsPoint(protester.sprite.body.center)) {
                             continue;
                         }
                         if (protester.sprite === cop.target || protester.showPoster) {
-                            var distanceToProtester = _this.game.math.distance(copSprite.x, copSprite.y, protester.sprite.x, protester.sprite.y);
+                            var distanceToProtesterSq = _this.getDistanceSq(copSprite, protester.sprite);
                             // give higher priority to current target
                             if (protester.sprite === cop.target) {
-                                distanceToProtester *= 3 / 4;
+                                distanceToProtesterSq *= 3 / 4;
                             }
-                            if (distanceToProtester < distanceToTarget) {
+                            if (distanceToProtesterSq < distanceToTargetSq) {
                                 newTarget = protester.sprite;
-                                distanceToTarget = distanceToProtester;
+                                distanceToTargetSq = distanceToProtesterSq;
                             }
                         }
                     }
                     if (newTarget) {
                         // if theres a target in a view, pursue him
-                        cop.setMode(__WEBPACK_IMPORTED_MODULE_7__constants_js__["b" /* COP_MODE_PURSUE */], { target: newTarget });
-                    } else if (cop.mode !== __WEBPACK_IMPORTED_MODULE_7__constants_js__["c" /* COP_MODE_WANDER */]) {
+                        cop.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["b" /* COP_MODE_PURSUE */], { target: newTarget });
+                    } else if (cop.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["c" /* COP_MODE_WANDER */]) {
                         // else wander around, if not yet
-                        cop.setMode(__WEBPACK_IMPORTED_MODULE_7__constants_js__["c" /* COP_MODE_WANDER */]);
+                        cop.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["c" /* COP_MODE_WANDER */]);
                     }
                 }
 
@@ -1414,7 +1469,7 @@ var Game = function () {
 
             // cops vs protesters collision
             this.game.physics.arcade.overlap(this.mz.arrays.protesters, this.mz.arrays.cops, this.proceedToJail, function (protesterSprite, copSprite) {
-                return copSprite.mz.target === protesterSprite && protesterSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_7__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
+                return copSprite.mz.target === protesterSprite && protesterSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */];
             }, this);
 
             // swat vs protesters collision
@@ -1422,7 +1477,7 @@ var Game = function () {
                 this.game.physics.arcade.overlap(this.mz.objects.swat.sprites, this.mz.arrays.protesters, function (swatSprite, protesterSprite) {
                     _this.arrest(protesterSprite, swatSprite);
                 }, function (swatSprite, protesterSprite) {
-                    return swatSprite.children.length === 0 && protesterSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_7__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
+                    return swatSprite.children.length === 0 && protesterSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */];
                 });
             }
 
@@ -1430,13 +1485,13 @@ var Game = function () {
             this.game.physics.arcade.overlap(this.mz.arrays.protesters, this.mz.groups.cars, function (protesterSprite) {
                 protesterSprite.mz.kill();
             }, function (protesterSprite) {
-                return protesterSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_7__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
+                return protesterSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */];
             });
 
             // swat vs player collision
             if (this.mz.objects.swat) {
                 this.game.physics.arcade.overlap(this.mz.objects.player.sprite, this.mz.objects.swat.sprites, this.arrest, function (playerSprite, swatSprite) {
-                    return swatSprite.children.length === 0 && playerSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_7__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
+                    return swatSprite.children.length === 0 && playerSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */];
                 }, this);
             }
 
@@ -1445,21 +1500,31 @@ var Game = function () {
                 _this.mz.events.fieldClickHandler.events.onInputUp.remove(_this.handleClick, _this);
                 _this.proceedToJail(playerSprite, copSprite);
             }, function (playerSprite, copSprite) {
-                return copSprite.mz.target === playerSprite && playerSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_7__constants_js__["h" /* PROTESTER_MODE_ARRESTED */];
+                return copSprite.mz.target === playerSprite && playerSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */];
             });
 
             // player vs cars collision
             this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.cars, function (playerSprite) {
-                if (playerSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_7__constants_js__["h" /* PROTESTER_MODE_ARRESTED */]) {
+                if (playerSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */]) {
                     playerSprite.mz.kill();
+                }
+            });
+
+            // player vs shield collision
+            this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.objects.shield.sprite, function (playerSprite) {
+                playerSprite.body.collideWorldBounds = false;
+                if (playerSprite.health === 1) {
+                    _this.beatUpProtester(playerSprite);
                 }
             });
 
             this.mz.groups.actors.sort('y', Phaser.Group.SORT_ASCENDING);
 
-            this.checkWin();
+            if (!this.mz.gameEnded) {
+                this.checkWin();
+            }
 
-            this.mz.objects.textProtestersCount.setText('Protesters count: ' + String(this.mz.aliveProtestersCount).padStart(2, '0') + ' / ' + this.mz.level.protesters.count.max);
+            this.mz.objects.textProtestersCount.setText('Protesters count: ' + String(this.mz.protesters.alive).padStart(2, '0') + ' / ' + this.mz.level.protesters.count.max);
 
             // events
             if (this.mz.events.keys.esc.justUp) {
@@ -1502,14 +1567,14 @@ var Game = function () {
             }
         }
     }, {
-        key: 'handlePlayerKill',
-        value: function handlePlayerKill() {
-            this.endGame(false);
+        key: 'handleProtesterLeft',
+        value: function handleProtesterLeft() {
+            this.mz.protesters.left++;
         }
     }, {
         key: 'handleFinishShooting',
         value: function handleFinishShooting() {
-            this.mz.reviveProtestersNeeded += this.mz.level.protesters.count.add;
+            this.mz.protesters.toRevive += this.mz.level.protesters.count.add;
         }
     }, {
         key: 'handleClickSound',
@@ -1534,17 +1599,6 @@ var Game = function () {
                 }
             }
         }
-
-        // handleResize(scale, parentBounds) {
-        //     let scaleFactor;
-        //     if (parentBounds.width > parentBounds.height) {
-        //         scaleFactor = parentBounds.width / this.game.width;
-        //     } else {
-        //         scaleFactor = parentBounds.height / this.game.height;
-        //     }
-        //     this.scale.setUserScale(scaleFactor, scaleFactor);
-        // }
-
     }, {
         key: 'updateTimer',
         value: function updateTimer() {
@@ -1562,36 +1616,37 @@ var Game = function () {
                     speed: this.mz.level.protesters.speed,
                     spriteKey: 'protester' + this.game.rnd.between(1, 3),
                     spriteName: 'protester' + i,
-                    mood: this.mz.level.protesters.mood / 100,
-                    moodDown: this.mz.level.protesters.moodDown / 100,
-                    cheeringDuration: this.mz.level.protesters.cheeringDuration
+                    mood: this.mz.level.protesters.mood,
+                    moodUp: this.mz.level.protesters.moodUp,
+                    moodDown: this.mz.level.protesters.moodDown,
+                    onLeft: this.handleProtesterLeft,
+                    callbackContext: this
                 }));
                 this.mz.arrays.protesters.push(protester.sprite);
             }
         }
     }, {
-        key: 'reviveProtesters',
-        value: function reviveProtesters(_ref) {
-            var count = _ref.count,
-                _ref$mood = _ref.mood,
-                mood = _ref$mood === undefined ? this.mz.meanMood / 100 : _ref$mood;
+        key: 'reviveProtester',
+        value: function reviveProtester(_ref) {
+            var sprite = _ref.sprite,
+                mood = _ref.mood;
 
-            for (var i = 0; i < this.mz.arrays.protesters.length; i++) {
-                var sprite = this.mz.arrays.protesters[i];
-                if (!sprite.alive) {
-                    var randomOffset = this.game.rnd.between(0, 100);
-                    sprite.mz.revive({
-                        x: this.game.rnd.between(0, 1) === 0 ? -100 - randomOffset : this.game.world.width + 100 + randomOffset,
-                        y: this.getRandomCoordinateY(),
-                        nextCoords: this.getRandomCoordinates(),
-                        mood: mood
-                    });
-                    count--;
-                }
-                if (count === 0) {
-                    break;
-                }
-            }
+            var randomOffset = this.game.rnd.between(0, 100);
+            sprite.mz.revive({
+                x: this.game.rnd.between(0, 1) === 0 ? -100 - randomOffset : this.game.world.width + 100 + randomOffset,
+                y: this.getRandomCoordinateY(),
+                nextCoords: this.getRandomCoordinates(),
+                mood: mood
+            });
+
+            this.mz.protesters.toRevive--;
+            this.mz.protesters.revived++;
+        }
+    }, {
+        key: 'beatUpProtester',
+        value: function beatUpProtester(sprite) {
+            sprite.damage(0.1);
+            this.playRandomPunch();
         }
     }, {
         key: 'proceedToJail',
@@ -1605,40 +1660,43 @@ var Game = function () {
                     x: (carSprite.right + carSprite.left) / 2,
                     y: (carSprite.bottom + carSprite.top) / 2
                 };
-                var distanceToCarSq = _this2.game.math.distanceSq(copSprite.x, copSprite.y, carCoords.x, carCoords.y);
+                var distanceToCarSq = _this2.getDistanceSq(copSprite, carCoords);
                 if (distanceToCarSq < minDistanceSq) {
                     closestCarCoords = carCoords;
                     minDistanceSq = distanceToCarSq;
                 }
             });
 
-            copSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_7__constants_js__["a" /* COP_MODE_CONVOY */], { jailCoords: closestCarCoords });
+            copSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["a" /* COP_MODE_CONVOY */], { jailCoords: closestCarCoords });
 
             this.arrest(protesterSprite, copSprite);
         }
     }, {
         key: 'arrest',
         value: function arrest(protesterSprite, copSprite) {
-            // beat him up a little
-            protesterSprite.damage(0.8);
-            this.playRandomPunch();
+            this.beatUpProtester(protesterSprite);
 
             copSprite.addChild(protesterSprite);
             if (protesterSprite.name === 'player') {
                 this.game.camera.follow(copSprite);
             }
 
-            protesterSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_7__constants_js__["h" /* PROTESTER_MODE_ARRESTED */], {
+            protesterSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */], {
                 x: -Math.sign(copSprite.body.velocity.x) * protesterSprite.body.halfWidth,
                 y: protesterSprite.body.halfHeight
             });
+
+            this.mz.protesters.arrested++;
         }
     }, {
         key: 'launchSWAT',
         value: function launchSWAT() {
-            this.swatTimer.stop(true);
+            this.mz.timers.swat.stop(true);
+
+            this.mz.objects.audio.boo.play();
+
             var direction = this.game.rnd.between(0, 1) === 0 ? 'ltor' : 'rtol';
-            this.mz.objects.swat.setMode(__WEBPACK_IMPORTED_MODULE_7__constants_js__["l" /* SWAT_MODE_HUNT */], {
+            this.mz.objects.swat.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["r" /* SWAT_MODE_HUNT */], {
                 x: direction === 'ltor' ? -GLOBAL_OFFSET : this.game.world.width + GLOBAL_OFFSET,
                 y: this.getRandomCoordinateY(),
                 target: {
@@ -1648,24 +1706,85 @@ var Game = function () {
             });
         }
     }, {
+        key: 'launchShield',
+        value: function launchShield() {
+            this.mz.objects.shield.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["o" /* SHIELD_MODE_DRIVE */], {
+                y: this.mz.objects.player.sprite.y
+            });
+        }
+    }, {
         key: 'checkWin',
         value: function checkWin() {
-            if (this.mz.score >= this.mz.level.winningScore || this.mz.score === 0 || this.mz.timePassed > this.mz.level.duration) {
-                this.endGame(this.mz.score >= this.mz.level.winningScore);
+            if (this.mz.timePassed > this.mz.level.duration) {
+                this.endGame(__WEBPACK_IMPORTED_MODULE_9__constants_js__["f" /* END_GAME_TIME_OUT */]);
+            } else if (this.mz.score === 0) {
+                this.endGame(__WEBPACK_IMPORTED_MODULE_9__constants_js__["e" /* END_GAME_PROTEST_RATE */]);
+            } else if (this.mz.score >= this.mz.level.winningScore) {
+                this.endGame(__WEBPACK_IMPORTED_MODULE_9__constants_js__["g" /* END_GAME_WIN */]);
+            } else if (this.mz.objects.player.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["l" /* PROTESTER_MODE_ARRESTED */] || !this.mz.objects.player.sprite.alive) {
+                this.endGame(__WEBPACK_IMPORTED_MODULE_9__constants_js__["d" /* END_GAME_PLAYER_KILLED */]);
             }
         }
     }, {
         key: 'endGame',
-        value: function endGame(win) {
-            this.mz.objects.audio.theme.stop();
+        value: function endGame(mode) {
+            this.mz.gameEnded = true;
 
+            this.mz.objects.audio.theme.fadeOut(2000);
+
+            this.mz.objects.endMenu = new __WEBPACK_IMPORTED_MODULE_8__objects_EndMenu_js__["a" /* default */]({
+                game: this.game,
+                mode: mode,
+                score: this.mz.objects.score.group,
+                stats: {
+                    time: this.mz.timePassed,
+                    alive: this.mz.protesters.alive,
+                    arrested: this.mz.protesters.arrested,
+                    revived: this.mz.protesters.revived,
+                    left: this.mz.protesters.left
+                }
+            });
+
+            this.mz.groups.menu.killAll();
+            this.mz.objects.timer.stop();
+            this.mz.events.fieldClickHandler.kill();
+
+            // pause
             this.game.onPause.removeAll();
             this.game.onResume.removeAll();
 
-            this.state.start('EndMenu', true, false, {
-                win: win,
-                time: this.mz.timePassed
-            });
+            // player
+            this.mz.objects.player.freeze();
+
+            this.game.input.keyboard.removeKey(Phaser.Keyboard.ESC);
+            this.game.input.onDown.remove(this.handleUnpause, this);
+
+            if (mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["g" /* END_GAME_WIN */]) {
+                this.mz.objects.audio.applause.play('', 0, 0.25);
+                this.mz.arrays.protesters.forEach(function (sprite) {
+                    sprite.mz.moodUp(1);
+                });
+            } else {
+                this.mz.objects.audio.boo.play();
+                switch (mode) {
+                    case __WEBPACK_IMPORTED_MODULE_9__constants_js__["f" /* END_GAME_TIME_OUT */]:
+                        {
+                            this.mz.arrays.protesters.forEach(function (sprite) {
+                                sprite.mz.moodDown(1);
+                            });
+                            break;
+                        }
+                    case __WEBPACK_IMPORTED_MODULE_9__constants_js__["e" /* END_GAME_PROTEST_RATE */]:
+                        {
+                            this.launchShield();
+                            break;
+                        }
+                    case __WEBPACK_IMPORTED_MODULE_9__constants_js__["d" /* END_GAME_PLAYER_KILLED */]:
+                        {
+                            break;
+                        }
+                }
+            }
         }
     }, {
         key: 'playRandomSound',
@@ -1678,6 +1797,11 @@ var Game = function () {
         key: 'playRandomPunch',
         value: function playRandomPunch() {
             this.game.rnd.pick(this.mz.objects.audio.audioPunch).play('', 0, 0.25);
+        }
+    }, {
+        key: 'getDistanceSq',
+        value: function getDistanceSq(obj1, obj2) {
+            return this.game.math.distanceSq(obj1.x, obj1.y, obj2.x, obj2.y);
         }
     }, {
         key: 'getRandomCoordinates',
@@ -1713,12 +1837,12 @@ var Game = function () {
 
 /***/ }),
 
-/***/ 327:
+/***/ 328:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Protester_js__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Protester_js__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(24);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -1765,6 +1889,7 @@ var Player = function (_Protester) {
         _this.sprite.body.collideWorldBounds = true;
 
         _this.radius = radius;
+        _this.radiusSq = Math.pow(_this.radius, 2);
         _this.cheering = cheering;
 
         _this.moveTarget = null;
@@ -1781,6 +1906,7 @@ var Player = function (_Protester) {
         _this.audioScream = _this.game.add.audio('scream03');
 
         _this.showPoster = false;
+        _this.isFrozen = false;
 
         _this.circleGraphics = _this.game.add.graphics(0, 0);
         _this.circleGraphics.lineStyle(1, 0x33ff33, 1);
@@ -1809,7 +1935,7 @@ var Player = function (_Protester) {
         value: function update() {
             var _this2 = this;
 
-            if (this.mode !== __WEBPACK_IMPORTED_MODULE_1__constants_js__["h" /* PROTESTER_MODE_ARRESTED */]) {
+            if (this.mode !== __WEBPACK_IMPORTED_MODULE_1__constants_js__["l" /* PROTESTER_MODE_ARRESTED */]) {
                 this.speed.current = this.speed.value;
                 this.speed.current *= this.clickSpeedUp;
             }
@@ -1822,8 +1948,12 @@ var Player = function (_Protester) {
                 this.circleGraphics.y = this.sprite.y;
             }
 
-            if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["h" /* PROTESTER_MODE_ARRESTED */]) {
+            if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["l" /* PROTESTER_MODE_ARRESTED */] || this.isFrozen) {
                 this.updateProgressBar(0);
+                return;
+            }
+
+            if (this.isFrozen) {
                 return;
             }
 
@@ -1910,7 +2040,7 @@ var Player = function (_Protester) {
             var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
             switch (mode) {
-                case __WEBPACK_IMPORTED_MODULE_1__constants_js__["h" /* PROTESTER_MODE_ARRESTED */]:
+                case __WEBPACK_IMPORTED_MODULE_1__constants_js__["l" /* PROTESTER_MODE_ARRESTED */]:
                     {
                         var x = props.x,
                             y = props.y;
@@ -1941,7 +2071,7 @@ var Player = function (_Protester) {
 
             // play sound
             if (on) {
-                this.audioScream.play('', 0, 0.25);
+                this.audioScream.play('', 0, 0.1);
             }
 
             this.showPoster = on;
@@ -1950,6 +2080,16 @@ var Player = function (_Protester) {
         key: 'resetClickSpeedUp',
         value: function resetClickSpeedUp() {
             this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
+        }
+    }, {
+        key: 'freeze',
+        value: function freeze() {
+            if (this.sprite.alive) {
+                this.sprite.events.onInputUp.remove(this.handleClick, this);
+                this.stopMovement();
+            }
+
+            this.isFrozen = true;
         }
     }, {
         key: 'stopMovement',
@@ -1974,12 +2114,12 @@ var Player = function (_Protester) {
 
 /***/ }),
 
-/***/ 328:
+/***/ 329:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Protester_js__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Protester_js__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(24);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -2006,7 +2146,9 @@ var NPCProtester = function (_Protester) {
             spriteName = _ref.spriteName,
             mood = _ref.mood,
             moodDown = _ref.moodDown,
-            cheeringDuration = _ref.cheeringDuration;
+            moodUp = _ref.moodUp,
+            onLeft = _ref.onLeft,
+            callbackContext = _ref.callbackContext;
 
         _classCallCheck(this, NPCProtester);
 
@@ -2018,16 +2160,17 @@ var NPCProtester = function (_Protester) {
         _this.progressBar = _this.game.add.graphics();
         _this.sprite.addChild(_this.progressBar);
 
-        _this.cheeringTimer = _this.game.time.create(false);
-        _this.cheeringDuration = cheeringDuration * 1000;
-
         _this.leavingTimer = _this.game.time.create(false);
 
         _this.mood = mood;
         _this.initialMood = mood;
+        _this.moodUpValue = moodUp;
         _this.moodDownValue = moodDown;
 
         _this.isBeingCheeredUp = false;
+
+        _this.onLeft = onLeft;
+        _this.callbackContext = callbackContext;
 
         // initially dead
         _this.kill();
@@ -2037,21 +2180,25 @@ var NPCProtester = function (_Protester) {
     _createClass(NPCProtester, [{
         key: 'update',
         value: function update() {
-            if (this.mood === 0 && !this.leavingTimer.running) {
-                this.leavingTimer.add(this.game.rnd.between(5000, 10000), this.leave, this);
+            if (this.mood === 0 && !this.leavingTimer.running && this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["n" /* PROTESTER_MODE_WANDER */]) {
+                this.leavingTimer.add(this.game.rnd.between(1000, 5000), this.leave, this);
                 this.leavingTimer.start();
             } else if (this.mood > 0 && this.leavingTimer.running) {
                 this.leavingTimer.stop(true);
             }
-            if (this.mood > 0 && this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["i" /* PROTESTER_MODE_LEAVE */]) {
-                this.setMode(__WEBPACK_IMPORTED_MODULE_1__constants_js__["j" /* PROTESTER_MODE_WANDER */]);
+            if (this.mood > 0 && this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["m" /* PROTESTER_MODE_LEAVE */]) {
+                this.setMode(__WEBPACK_IMPORTED_MODULE_1__constants_js__["n" /* PROTESTER_MODE_WANDER */]);
             }
 
-            if (this.mood < 0.75) {
+            if (this.isBeingCheeredUp) {
+                this.updateProgressBar(this.mood);
+                this.moodUp(this.moodUpValue);
+            } else if (this.mood < 0.75) {
                 this.moodDown(this.moodDownValue);
+                this.updateProgressBar(0);
             }
 
-            this.showPoster = this.mode !== __WEBPACK_IMPORTED_MODULE_1__constants_js__["h" /* PROTESTER_MODE_ARRESTED */] && this.mood >= 0.75;
+            this.showPoster = this.mode !== __WEBPACK_IMPORTED_MODULE_1__constants_js__["l" /* PROTESTER_MODE_ARRESTED */] && this.mood >= 0.75;
 
             this.sprite.tint = 0xffffff;
             if (this.mood >= 0.75) {
@@ -2062,13 +2209,14 @@ var NPCProtester = function (_Protester) {
                 this.sprite.tint = Phaser.Color.RGBArrayToHex([1, 1 - _tintSaturation, 1 - _tintSaturation]);
             }
 
-            if (this.cheeringTimer.running) {
-                this.updateProgressBar(this.cheeringTimer.ms / this.cheeringDuration);
-            } else {
-                this.updateProgressBar(0);
-            }
-
             _get(NPCProtester.prototype.__proto__ || Object.getPrototypeOf(NPCProtester.prototype), 'update', this).call(this);
+        }
+    }, {
+        key: 'handleLeft',
+        value: function handleLeft() {
+            this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
+            this.onLeft.call(this.callbackContext);
+            this.kill();
         }
     }, {
         key: 'setMode',
@@ -2076,10 +2224,11 @@ var NPCProtester = function (_Protester) {
             var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
             switch (mode) {
-                case __WEBPACK_IMPORTED_MODULE_1__constants_js__["j" /* PROTESTER_MODE_WANDER */]:
+                case __WEBPACK_IMPORTED_MODULE_1__constants_js__["n" /* PROTESTER_MODE_WANDER */]:
                     {
                         // clean up previous state
-                        if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["i" /* PROTESTER_MODE_LEAVE */]) {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["m" /* PROTESTER_MODE_LEAVE */]) {
+                            this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
                             this.stopMovement();
                         }
 
@@ -2093,7 +2242,7 @@ var NPCProtester = function (_Protester) {
                         }
                         break;
                     }
-                case __WEBPACK_IMPORTED_MODULE_1__constants_js__["h" /* PROTESTER_MODE_ARRESTED */]:
+                case __WEBPACK_IMPORTED_MODULE_1__constants_js__["l" /* PROTESTER_MODE_ARRESTED */]:
                     {
                         var x = props.x,
                             y = props.y;
@@ -2102,25 +2251,27 @@ var NPCProtester = function (_Protester) {
                         this.sprite.y = y;
 
                         // clean up previous state
-                        if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["j" /* PROTESTER_MODE_WANDER */]) {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["n" /* PROTESTER_MODE_WANDER */]) {
                             this.stopWandering();
+                        } else if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["m" /* PROTESTER_MODE_LEAVE */]) {
+                            this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
                         }
                         this.stopMovement();
 
                         break;
                     }
-                case __WEBPACK_IMPORTED_MODULE_1__constants_js__["i" /* PROTESTER_MODE_LEAVE */]:
+                case __WEBPACK_IMPORTED_MODULE_1__constants_js__["m" /* PROTESTER_MODE_LEAVE */]:
                     {
                         // clean up previous state
-                        if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["j" /* PROTESTER_MODE_WANDER */]) {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_1__constants_js__["n" /* PROTESTER_MODE_WANDER */]) {
                             this.stopWandering();
                         }
 
-                        this.sprite.body.onMoveComplete.add(this.kill, this);
                         this.setMoveTarget({
                             x: this.sprite.x < this.game.world.width / 2 ? -100 : this.game.world.width + 100,
                             y: this.sprite.y
                         });
+                        this.sprite.body.onMoveComplete.add(this.handleLeft, this);
 
                         break;
                     }
@@ -2145,33 +2296,19 @@ var NPCProtester = function (_Protester) {
     }, {
         key: 'leave',
         value: function leave() {
-            this.setMode(__WEBPACK_IMPORTED_MODULE_1__constants_js__["i" /* PROTESTER_MODE_LEAVE */]);
+            this.setMode(__WEBPACK_IMPORTED_MODULE_1__constants_js__["m" /* PROTESTER_MODE_LEAVE */]);
             this.leavingTimer.stop(true);
         }
     }, {
         key: 'toggleCheering',
         value: function toggleCheering() {
             var on = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : !this.isBeingCheeredUp;
-            var moodUpValue = arguments[1];
 
             if (on === this.isBeingCheeredUp) {
                 return;
             }
 
-            if (on) {
-                this.cheeringTimer.add(this.cheeringDuration, this.onCheeredUp.bind(this, moodUpValue));
-                this.cheeringTimer.start();
-            } else {
-                this.cheeringTimer.stop(true);
-            }
-
             this.isBeingCheeredUp = on;
-        }
-    }, {
-        key: 'onCheeredUp',
-        value: function onCheeredUp(moodUpValue) {
-            this.moodUp(moodUpValue);
-            this.toggleCheering(false);
         }
     }, {
         key: 'moodUp',
@@ -2200,7 +2337,7 @@ var NPCProtester = function (_Protester) {
 
             _get(NPCProtester.prototype.__proto__ || Object.getPrototypeOf(NPCProtester.prototype), 'revive', this).call(this);
 
-            this.setMode(__WEBPACK_IMPORTED_MODULE_1__constants_js__["j" /* PROTESTER_MODE_WANDER */], { coords: nextCoords });
+            this.setMode(__WEBPACK_IMPORTED_MODULE_1__constants_js__["n" /* PROTESTER_MODE_WANDER */], { coords: nextCoords });
         }
     }, {
         key: 'kill',
@@ -2219,13 +2356,13 @@ var NPCProtester = function (_Protester) {
 
 /***/ }),
 
-/***/ 329:
+/***/ 330:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Prefab_js__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(24);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -2286,7 +2423,7 @@ var Cop = function (_Prefab) {
                 x: this.sprite.x,
                 y: this.sprite.y,
                 angle: this.sprite.body.angle,
-                mode: this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["b" /* COP_MODE_PURSUE */] ? __WEBPACK_IMPORTED_MODULE_2__constants_js__["d" /* FOV_MODE_CAPTURE */] : __WEBPACK_IMPORTED_MODULE_2__constants_js__["e" /* FOV_MODE_NORMAL */]
+                mode: this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["b" /* COP_MODE_PURSUE */] ? __WEBPACK_IMPORTED_MODULE_2__constants_js__["h" /* FOV_MODE_CAPTURE */] : __WEBPACK_IMPORTED_MODULE_2__constants_js__["i" /* FOV_MODE_NORMAL */]
             });
         }
     }, {
@@ -2386,13 +2523,13 @@ var Cop = function (_Prefab) {
 
 /***/ }),
 
-/***/ 330:
+/***/ 331:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Prefab_js__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FOV_js__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(24);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -2433,7 +2570,7 @@ var Journalist = function (_Prefab) {
             game: _this.game,
             radius: fov.distance,
             angle: fov.angle,
-            colors: (_colors = {}, _defineProperty(_colors, __WEBPACK_IMPORTED_MODULE_2__constants_js__["e" /* FOV_MODE_NORMAL */], 0xdddddd), _defineProperty(_colors, __WEBPACK_IMPORTED_MODULE_2__constants_js__["d" /* FOV_MODE_CAPTURE */], 0xffffff), _colors)
+            colors: (_colors = {}, _defineProperty(_colors, __WEBPACK_IMPORTED_MODULE_2__constants_js__["i" /* FOV_MODE_NORMAL */], 0xdddddd), _defineProperty(_colors, __WEBPACK_IMPORTED_MODULE_2__constants_js__["h" /* FOV_MODE_CAPTURE */], 0xffffff), _colors)
         });
         fov.group.add(_this.FOV.graphics);
 
@@ -2449,8 +2586,6 @@ var Journalist = function (_Prefab) {
         _this.onFinishShooting = onFinishShooting;
         _this.callbackContext = callbackContext;
 
-        _this.audioFinishShooting = _this.game.add.audio('applause');
-
         _this.target = null;
         return _this;
     }
@@ -2458,7 +2593,7 @@ var Journalist = function (_Prefab) {
     _createClass(Journalist, [{
         key: 'update',
         value: function update() {
-            if (this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */]) {
+            if (this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["j" /* JOURNALIST_MODE_SHOOTING */]) {
                 this.turnTo(this.target);
             }
             if (this.shootingTimer.running) {
@@ -2473,7 +2608,7 @@ var Journalist = function (_Prefab) {
                 x: this.sprite.x,
                 y: this.sprite.y,
                 angle: this.sprite.body.angle,
-                mode: this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */] ? __WEBPACK_IMPORTED_MODULE_2__constants_js__["d" /* FOV_MODE_CAPTURE */] : __WEBPACK_IMPORTED_MODULE_2__constants_js__["e" /* FOV_MODE_NORMAL */]
+                mode: this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["j" /* JOURNALIST_MODE_SHOOTING */] ? __WEBPACK_IMPORTED_MODULE_2__constants_js__["h" /* FOV_MODE_CAPTURE */] : __WEBPACK_IMPORTED_MODULE_2__constants_js__["i" /* FOV_MODE_NORMAL */]
             });
 
             _get(Journalist.prototype.__proto__ || Object.getPrototypeOf(Journalist.prototype), 'update', this).call(this);
@@ -2484,22 +2619,22 @@ var Journalist = function (_Prefab) {
             var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
             switch (mode) {
-                case __WEBPACK_IMPORTED_MODULE_2__constants_js__["g" /* JOURNALIST_MODE_WANDER */]:
+                case __WEBPACK_IMPORTED_MODULE_2__constants_js__["k" /* JOURNALIST_MODE_WANDER */]:
                     {
-                        if (this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */]) {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["j" /* JOURNALIST_MODE_SHOOTING */]) {
                             this.target = null;
                             this.shootingTimer.stop(true);
                         }
                         this.wander();
                         break;
                     }
-                case __WEBPACK_IMPORTED_MODULE_2__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */]:
+                case __WEBPACK_IMPORTED_MODULE_2__constants_js__["j" /* JOURNALIST_MODE_SHOOTING */]:
                     {
                         var target = props.target;
 
-                        if (this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["f" /* JOURNALIST_MODE_SHOOTING */] && this.target === target) {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["j" /* JOURNALIST_MODE_SHOOTING */] && this.target === target) {
                             break;
-                        } else if (this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["g" /* JOURNALIST_MODE_WANDER */]) {
+                        } else if (this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["k" /* JOURNALIST_MODE_WANDER */]) {
                             this.stopWandering();
                             this.stopMovement();
                         }
@@ -2543,13 +2678,11 @@ var Journalist = function (_Prefab) {
 
             this.FOV.kill();
 
-            this.setMode(__WEBPACK_IMPORTED_MODULE_2__constants_js__["g" /* JOURNALIST_MODE_WANDER */]);
+            this.setMode(__WEBPACK_IMPORTED_MODULE_2__constants_js__["k" /* JOURNALIST_MODE_WANDER */]);
 
             this.shootingTimer.stop(true);
             this.cooldownTimer.add(this.cooldownDuration, this.cooldownTimerCallback, this);
             this.cooldownTimer.start();
-
-            this.audioFinishShooting.play('', 0, 0.25);
         }
     }, {
         key: 'cooldownTimerCallback',
@@ -2576,11 +2709,11 @@ var Journalist = function (_Prefab) {
 
 /***/ }),
 
-/***/ 331:
+/***/ 332:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_js__ = __webpack_require__(24);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2608,14 +2741,13 @@ var SWATSquad = function () {
             current: speed.value
         }, speed);
 
-        this.mode = __WEBPACK_IMPORTED_MODULE_0__constants_js__["k" /* SWAT_MODE_HIDE */];
+        this.mode = __WEBPACK_IMPORTED_MODULE_0__constants_js__["q" /* SWAT_MODE_HIDE */];
         this.moveTarget = null;
         this.updateIndex = 0;
-        this.audioAppear = this.game.add.audio('boo');
 
         this.sprites = [];
         for (var i = 0; i < count; i++) {
-            var swatSprite = this.game.add.sprite(0, 0, 'swat', 0);
+            var swatSprite = this.game.add.sprite(-100, -100, 'swat', 0);
             swatSprite.anchor.set(0.5);
             swatSprite.visible = false;
 
@@ -2629,11 +2761,11 @@ var SWATSquad = function () {
     _createClass(SWATSquad, [{
         key: 'update',
         value: function update() {
-            if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["l" /* SWAT_MODE_HUNT */]) {
+            if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["r" /* SWAT_MODE_HUNT */]) {
                 var lastSprite = this.sprites[this.sprites.length - 1];
 
                 if (this.game.math.fuzzyEqual(this.game.math.distanceSq(lastSprite.x, lastSprite.y, this.moveTarget.x, this.moveTarget.y), 0, lastSprite.width)) {
-                    this.setMode(__WEBPACK_IMPORTED_MODULE_0__constants_js__["k" /* SWAT_MODE_HIDE */]);
+                    this.setMode(__WEBPACK_IMPORTED_MODULE_0__constants_js__["q" /* SWAT_MODE_HIDE */]);
                 } else {
                     // change direction once in a while
                     if (this.updateIndex % TURN_FREQUENCY === 0) {
@@ -2662,9 +2794,9 @@ var SWATSquad = function () {
             var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
             switch (mode) {
-                case __WEBPACK_IMPORTED_MODULE_0__constants_js__["k" /* SWAT_MODE_HIDE */]:
+                case __WEBPACK_IMPORTED_MODULE_0__constants_js__["q" /* SWAT_MODE_HIDE */]:
                     {
-                        if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["l" /* SWAT_MODE_HUNT */]) {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["r" /* SWAT_MODE_HUNT */]) {
                             for (var i = 0; i < this.sprites.length; i++) {
                                 for (var j = 0; j < this.sprites[i].children.length; j++) {
                                     this.sprites[i].getChildAt(j).mz.kill();
@@ -2677,9 +2809,9 @@ var SWATSquad = function () {
                         }
                         break;
                     }
-                case __WEBPACK_IMPORTED_MODULE_0__constants_js__["l" /* SWAT_MODE_HUNT */]:
+                case __WEBPACK_IMPORTED_MODULE_0__constants_js__["r" /* SWAT_MODE_HUNT */]:
                     {
-                        if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["k" /* SWAT_MODE_HIDE */]) {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["q" /* SWAT_MODE_HIDE */]) {
                             var x = props.x,
                                 y = props.y,
                                 target = props.target;
@@ -2693,8 +2825,6 @@ var SWATSquad = function () {
                                 swatSprite.y = y;
                                 swatSprite.visible = true;
                             }
-
-                            this.audioAppear.play();
                         }
                         break;
                     }
@@ -2711,62 +2841,109 @@ var SWATSquad = function () {
 
 /***/ }),
 
-/***/ 332:
+/***/ 333:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_js__ = __webpack_require__(24);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var PauseMenu = function () {
-    function PauseMenu(_ref) {
-        var game = _ref.game;
 
-        _classCallCheck(this, PauseMenu);
+
+var DIR = {
+    ltr: 'ltr',
+    rtl: 'rtl'
+};
+
+var Shield = function () {
+    function Shield(_ref) {
+        var game = _ref.game,
+            speed = _ref.speed;
+
+        _classCallCheck(this, Shield);
 
         this.game = game;
 
-        this.sprite = this.game.add.sprite(0, 0);
-        this.sprite.exists = false;
+        this.speed = _extends({
+            current: speed.value
+        }, speed);
 
-        this.overlay = this.game.add.graphics(0, 0);
-        this.overlay.beginFill(0xffffff, 0.7);
-        this.overlay.drawRect(0, 0, this.game.width, this.game.height);
-        this.overlay.endFill();
+        this.mode = __WEBPACK_IMPORTED_MODULE_0__constants_js__["p" /* SHIELD_MODE_HIDE */];
 
-        this.title = this.game.add.text(this.game.width / 2, 2 / 3 * this.game.height / 2, 'Пауза');
-        this.title.anchor.setTo(0.5);
+        this.sprite = this.game.add.sprite(this.game.world.width * 2, this.game.world.height / 2 + this.game.camera.y, 'shield');
+        this.sprite.anchor.set(0.5);
+        this.sprite.scale.set(0.70);
+        this.sprite.exist = false;
 
-        this.replayButton = this.game.add.sprite(this.game.width / 2, this.game.height / 2, 'playButton');
-        this.replayButton.anchor.setTo(0.5);
+        this.game.physics.arcade.enable(this.sprite);
+        this.sprite.body.immovable = true;
 
-        this.sprite.addChild(this.overlay);
-        this.sprite.addChild(this.title);
-        this.sprite.addChild(this.replayButton);
-        this.sprite.fixedToCamera = true;
+        this.direction = DIR.rtl;
+
+        this.audio = this.game.add.audio('truck');
     }
 
-    _createClass(PauseMenu, [{
-        key: 'kill',
-        value: function kill() {
-            this.sprite.kill();
+    _createClass(Shield, [{
+        key: 'update',
+        value: function update() {
+            if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["o" /* SHIELD_MODE_DRIVE */]) {
+                if (this.direction === DIR.ltr && this.sprite.x >= this.game.world.width + this.sprite.width || this.direction === DIR.rtl && this.sprite.x <= -this.sprite.width) {
+                    this.setMode(__WEBPACK_IMPORTED_MODULE_0__constants_js__["p" /* SHIELD_MODE_HIDE */]);
+                }
+            }
         }
     }, {
-        key: 'revive',
-        value: function revive() {
-            this.sprite.revive();
+        key: 'setMode',
+        value: function setMode(mode) {
+            var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            switch (mode) {
+                case __WEBPACK_IMPORTED_MODULE_0__constants_js__["p" /* SHIELD_MODE_HIDE */]:
+                    {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["o" /* SHIELD_MODE_DRIVE */]) {
+                            // change direction for the next ride
+                            this.direction = this.direction === DIR.ltr ? DIR.rtl : DIR.ltr;
+
+                            this.sprite.kill();
+                            this.sprite.body.stopMovement(true);
+
+                            this.audio.stop();
+                        }
+                        break;
+                    }
+                case __WEBPACK_IMPORTED_MODULE_0__constants_js__["o" /* SHIELD_MODE_DRIVE */]:
+                    {
+                        if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["p" /* SHIELD_MODE_HIDE */]) {
+                            var y = props.y;
+
+                            this.sprite.x = this.direction === DIR.ltr ? -this.game.world.width : this.game.world.width * 2;
+                            this.sprite.y = y;
+                            this.sprite.body.velocity.x = this.speed.current * (this.direction === DIR.ltr ? 1 : -1);
+                            this.sprite.scale.x = this.sprite.scale.y * (this.direction === DIR.ltr ? -1 : 1);
+
+                            this.audio.loopFull(0.25);
+                            this.game.camera.shake(0.005, 3000);
+                        }
+                        break;
+                    }
+            }
+
+            this.mode = mode;
         }
     }]);
 
-    return PauseMenu;
+    return Shield;
 }();
 
-/* harmony default export */ __webpack_exports__["a"] = (PauseMenu);
+/* harmony default export */ __webpack_exports__["a"] = (Shield);
 
 /***/ }),
 
-/***/ 333:
+/***/ 334:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2835,38 +3012,177 @@ var ScoreMeter = function () {
 
 /***/ }),
 
-/***/ 40:
+/***/ 335:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return COP_MODE_WANDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return COP_MODE_PURSUE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return COP_MODE_CONVOY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return SWAT_MODE_HIDE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return SWAT_MODE_HUNT; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return FOV_MODE_NORMAL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return FOV_MODE_CAPTURE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return PROTESTER_MODE_WANDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return PROTESTER_MODE_ARRESTED; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return PROTESTER_MODE_LEAVE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return JOURNALIST_MODE_WANDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return JOURNALIST_MODE_SHOOTING; });
-var COP_MODE_WANDER = 'wander';
-var COP_MODE_PURSUE = 'pursue';
-var COP_MODE_CONVOY = 'convoy';
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var SWAT_MODE_HIDE = 'hide';
-var SWAT_MODE_HUNT = 'hunt';
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var FOV_MODE_NORMAL = 'normal';
-var FOV_MODE_CAPTURE = 'capture';
+var PauseMenu = function () {
+    function PauseMenu(_ref) {
+        var game = _ref.game;
 
-var PROTESTER_MODE_WANDER = 'wander';
-var PROTESTER_MODE_ARRESTED = 'arrested';
-var PROTESTER_MODE_LEAVE = 'leave';
+        _classCallCheck(this, PauseMenu);
 
-var JOURNALIST_MODE_WANDER = 'wander';
-var JOURNALIST_MODE_SHOOTING = 'shooting';
+        this.game = game;
+
+        this.sprite = this.game.add.sprite(0, 0);
+
+        this.overlay = this.game.add.graphics(0, 0);
+        this.overlay.beginFill(0xffffff, 0.7);
+        this.overlay.drawRect(0, 0, this.game.width, this.game.height);
+        this.overlay.endFill();
+
+        this.title = this.game.add.text(this.game.width / 2, 2 / 3 * this.game.height / 2, 'Пауза');
+        this.title.anchor.setTo(0.5);
+
+        this.replayButton = this.game.add.sprite(this.game.width / 2, this.game.height / 2, 'playButton');
+        this.replayButton.anchor.setTo(0.5);
+
+        this.sprite.addChild(this.overlay);
+        this.sprite.addChild(this.title);
+        this.sprite.addChild(this.replayButton);
+        this.sprite.fixedToCamera = true;
+
+        this.kill();
+    }
+
+    _createClass(PauseMenu, [{
+        key: 'kill',
+        value: function kill() {
+            this.sprite.kill();
+        }
+    }, {
+        key: 'revive',
+        value: function revive() {
+            this.sprite.revive();
+        }
+    }]);
+
+    return PauseMenu;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (PauseMenu);
+
+/***/ }),
+
+/***/ 336:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_js__ = __webpack_require__(24);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+var STRIPE_HEIGHT = 100;
+var STRIPE_DURATION = 1500;
+var OVERLAY_DURATION = 3000;
+
+var EndMenu = function () {
+    function EndMenu(_ref) {
+        var game = _ref.game,
+            mode = _ref.mode,
+            score = _ref.score,
+            stats = _ref.stats;
+
+        _classCallCheck(this, EndMenu);
+
+        this.game = game;
+        this.mode = mode;
+        this.stats = stats;
+
+        this.sprite = this.game.add.sprite(0, 0);
+        this.sprite.fixedToCamera = true;
+
+        this.topStripe = this.game.add.graphics(0, 0);
+        this.topStripe.beginFill(0);
+        this.topStripe.drawRect(0, -STRIPE_HEIGHT, this.game.width, STRIPE_HEIGHT);
+        this.topStripe.endFill();
+
+        var stripesTween = this.game.add.tween(this.topStripe).to({ top: STRIPE_HEIGHT }, STRIPE_DURATION).start();
+        stripesTween.onComplete.addOnce(this.handleTweenComplete, this);
+
+        this.bottomStripe = this.game.add.graphics(0, 0);
+        this.bottomStripe.beginFill(0);
+        this.bottomStripe.drawRect(0, this.game.height, this.game.width, this.game.height + STRIPE_HEIGHT);
+        this.bottomStripe.endFill();
+        this.game.add.tween(this.bottomStripe).to({ top: -STRIPE_HEIGHT }, STRIPE_DURATION).start();
+
+        this.overlay = this.game.add.graphics(0, 0);
+        this.overlay.beginFill(0);
+        this.overlay.drawRect(0, 0, this.game.width, this.game.height);
+        this.overlay.endFill();
+        this.overlay.alpha = 0;
+        var overlayTween = this.game.add.tween(this.overlay).to({ alpha: 0.5 }, OVERLAY_DURATION).start();
+        overlayTween.onComplete.addOnce(this.showStats, this);
+
+        this.replayButton = this.game.add.button(this.game.width - 50, 50, 'playButton', this.handleClickPlay, this);
+        this.replayButton.anchor.setTo(0.5);
+        this.replayButton.visible = false;
+
+        this.sprite.addChild(this.topStripe);
+        this.sprite.addChild(this.bottomStripe);
+        this.sprite.addChild(this.overlay);
+        this.sprite.addChild(this.replayButton);
+        this.sprite.addChild(score);
+    }
+
+    _createClass(EndMenu, [{
+        key: 'handleTweenComplete',
+        value: function handleTweenComplete() {
+            this.replayButton.visible = true;
+        }
+    }, {
+        key: 'handleClickPlay',
+        value: function handleClickPlay() {
+            this.game.state.start('StartMenu');
+        }
+    }, {
+        key: 'showStats',
+        value: function showStats() {
+            var titleText = '';
+            if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["g" /* END_GAME_WIN */]) {
+                titleText = 'You did it!';
+            } else if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["d" /* END_GAME_PLAYER_KILLED */]) {
+                titleText = 'They turned you in, pal';
+            } else if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["f" /* END_GAME_TIME_OUT */]) {
+                titleText = 'Time is out!';
+            } else if (this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["e" /* END_GAME_PROTEST_RATE */]) {
+                titleText = 'You let the protest fail :(';
+            }
+
+            var title = this.game.add.text(40, 40, titleText, {
+                font: '24px Arial',
+                fill: this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["g" /* END_GAME_WIN */] ? '#393' : '#933'
+            });
+            this.sprite.addChild(title);
+
+            if (this.mode !== __WEBPACK_IMPORTED_MODULE_0__constants_js__["f" /* END_GAME_TIME_OUT */]) {
+                var timeString = String(Math.floor(this.stats.time / 60)).padStart(2, '0') + ':' + String(this.stats.time % 60).padStart(2, '0');
+                var time = this.game.add.text(40, 100, 'Your time: ' + timeString, {
+                    font: '24px Arial',
+                    fill: '#fff'
+                });
+                this.sprite.addChild(time);
+            }
+
+            var stats = this.game.add.text(40, this.mode === __WEBPACK_IMPORTED_MODULE_0__constants_js__["f" /* END_GAME_TIME_OUT */] ? 100 : 130, '\nTotal protesters: ' + this.stats.revived + '\nActive: ' + this.stats.alive + '\nArrested: ' + this.stats.arrested + '\nLeft home: ' + this.stats.left + '\n', {
+                font: '24px Arial',
+                fill: '#fff'
+            });
+            this.sprite.addChild(stats);
+        }
+    }]);
+
+    return EndMenu;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (EndMenu);
 
 /***/ }),
 

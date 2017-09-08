@@ -34,8 +34,6 @@ class Journalist extends Prefab {
         this.onFinishShooting = onFinishShooting;
         this.callbackContext = callbackContext;
 
-        this.audioFinishShooting = this.game.add.audio('applause');
-
         this.target = null;
     }
 
@@ -118,8 +116,6 @@ class Journalist extends Prefab {
         this.shootingTimer.stop(true);
         this.cooldownTimer.add(this.cooldownDuration, this.cooldownTimerCallback, this);
         this.cooldownTimer.start();
-
-        this.audioFinishShooting.play('', 0, 0.25);
     }
 
     cooldownTimerCallback() {

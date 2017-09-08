@@ -21,31 +21,22 @@ TechDebt
 ? game config
 ? phaser custom build
 ? remove moveTo
-? continual mood gain
-? no progress bars for full mood
 ? refactor update loops
-? remove tilemap/resize attempts
-? drop posters when arrested
-? pick up posters for upgrade
-? lighter 2nd level background
-? number of arrested/left/newcommers on end screen
+? press shooting animation/sound
+? gradually increase complexity (more cops)
+? add 'show poster' button for mouse controls
 - menu via html
 - extend sprite object
 
 Cpx Prf Feature
-1   1   passersby
-2   2   cops in disguise
+2   0   cops in disguise
 +   +   protesters: reappear
-?   ?   protesters: shout
-?   ?   protesters: distract
-?   ?   protesters: disguise
 +   +   cops FOV: cone
 +   +   cops: swat
-1   1   points for passersby
 +   +   extra points for photographers
 +   +   extra points for position
-2   0   rpg-like upgrades for points/shares
+2   2   upgrades for posters
 +   +   kill: prison bus
-2   2   play for cops
+2   0   play for cops
 +   +   sounds
 +   +   music
