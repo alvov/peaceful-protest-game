@@ -20,11 +20,11 @@ MVP
 TechDebt
 ? game config
 ? phaser custom build
-? remove moveTo
 ? refactor update loops
 ? press shooting animation/sound
-? gradually increase complexity (more cops)
 ? add 'show poster' button for mouse controls
+? scale colors
+? common functions formatted time
 - menu via html
 - extend sprite object
 

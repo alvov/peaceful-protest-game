@@ -1,3 +1,7 @@
+import {
+    FIELD_OFFSET
+} from '../constants.js';
+
 class Prefab {
     constructor({ game, x, y, speed, spriteKey, spriteName, props }) {
         this.props = props;
@@ -14,21 +18,34 @@ class Prefab {
         this.sprite.anchor.set(0.5);
 
         this.game.physics.arcade.enable(this.sprite);
+        this.sprite.body.reset(this.sprite.x, this.sprite.y);
 
         this.stayingTimer = this.game.time.create(false);
 
         this.mode = null;
-        this.moveTarget = null;
-
-        // events
-        this.sprite.body.onMoveComplete.add(() => {
-            this.setMoveTarget(null);
-        });
+        this.moveTarget = [];
     }
 
     update() {
-        if (!this.sprite.body.isMoving && this.moveTarget) {
-            this.moveTo(this.moveTarget);
+        if (this.moveTarget.length) {
+            const { x, y, callback } = this.moveTarget[0];
+            if (
+                this.game.math.fuzzyEqual(x, this.sprite.body.center.x, 1) &&
+                this.game.math.fuzzyEqual(y, this.sprite.body.center.y, 1)
+            ) {
+                // stop and call callback
+                this.stop();
+
+                // go to next target
+                this.moveTarget.shift();
+                if (this.moveTarget.length) {
+                    this.setVelocity(this.moveTarget[0]);
+                }
+
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            }
         }
     }
 
@@ -36,22 +53,42 @@ class Prefab {
         this.mode = mode;
     }
 
-    moveTo(coords) {
-        const distance = this.game.math.distance(this.sprite.x, this.sprite.y, coords.x, coords.y);
-        const duration = distance / this.speed.current * 1000; // ms
-        const angle = this.game.math.angleBetweenPoints(this.sprite, coords);
-        const angleDeg = this.game.math.radToDeg(angle);
-        this.sprite.body.angle = angle;
+    setSpeed(value) {
+        if (this.speed.current === value) {
+            return;
+        }
+        this.speed.current = value;
 
-        this.sprite.body.moveTo(duration, distance, angleDeg);
+        // update velocity
+        if (this.moveTarget.length) {
+            this.setVelocity(this.moveTarget[0]);
+        }
+    }
+
+    setVelocity(target) {
+        const rotationToTarget = this.game.math.angleBetweenPoints(this.sprite.body.center, target);
+        this.game.physics.arcade.velocityFromRotation(rotationToTarget, this.speed.current, this.sprite.body.velocity);
+    }
+
+    moveTo(target) {
+        if (target) {
+            this.moveTarget = [{
+                x: target.x,
+                y: target.y,
+                callback: target.callback
+            }];
+            this.setVelocity(target);
+        } else {
+            this.stop();
+            this.moveTarget = [];
+        }
     }
 
     getNextCoords(bounds) {
         const directions = [];
-        const offsetTop = 50;
         if (!bounds) {
             bounds = {
-                top: this.sprite.y - this.sprite.top + offsetTop,
+                top: this.sprite.y - this.sprite.top + FIELD_OFFSET.top,
                 right: this.game.world.width - (this.sprite.right - this.sprite.x),
                 bottom: this.game.world.height - (this.sprite.bottom - this.sprite.y),
                 left: this.sprite.x - this.sprite.left
@@ -106,38 +143,31 @@ class Prefab {
         }
     }
 
-    setMoveTarget(coords) {
-        this.stopMovement();
-        if (coords) {
-            this.moveTarget = { x: coords.x, y: coords.y };
+    addMoveTarget(target) {
+        if (!this.moveTarget.length) {
+            this.moveTo(target);
         } else {
-            this.moveTarget = null;
+            this.moveTarget.push(target);
         }
     }
 
-    stopMovement() {
-        this.sprite.body.stopMovement(true);
+    stop() {
+        this.sprite.body.stop();
     }
 
     stopWandering() {
-        this.sprite.body.onMoveComplete.remove(this.wander, this);
+        this.moveTo(null);
         this.stayingTimer.stop(true);
     }
 
     revive() {
         this.sprite.revive(1);
-
-        this.mode = null;
-        this.moveTarget = null;
-
-        // events
-        this.sprite.body.onMoveComplete.add(() => {
-            this.setMoveTarget(null);
-        });
     }
 
     kill() {
-        this.sprite.body.onMoveComplete.removeAll();
+        this.mode = null;
+        this.moveTo(null);
+
         this.sprite.kill();
     }
 }

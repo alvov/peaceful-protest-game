@@ -1,8 +1,16 @@
+export const FIELD_OFFSET = {
+    top: 150,
+    right: 50,
+    bottom: 50,
+    left: 50
+};
+
 export const END_GAME_TIME_OUT = 'timeOut';
 export const END_GAME_PLAYER_KILLED = 'playerKilled';
 export const END_GAME_PROTEST_RATE = 'protestRate';
 export const END_GAME_WIN = 'win';
 
+export const COP_MODE_ENTER = 'enter';
 export const COP_MODE_WANDER = 'wander';
 export const COP_MODE_PURSUE = 'pursue';
 export const COP_MODE_CONVOY = 'convoy';

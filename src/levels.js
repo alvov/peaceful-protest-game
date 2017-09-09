@@ -6,7 +6,11 @@ export default {
         duration: 3 * 60, // s
         winningScore: 75,
         cops: {
-            count: 1,
+            count: [
+                [40, 0],
+                [60, 1],
+                [100, 2]
+            ],
             speed: {
                 value: 50,
                 running: 1.7
@@ -62,7 +66,11 @@ export default {
         duration: 4 * 60, // s
         winningScore: 75,
         cops: {
-            count: 5,
+            count: [
+                [40, 3],
+                [60, 4],
+                [100, 5]
+            ],
             speed: {
                 value: 60,
                 running: 1.7
@@ -117,7 +125,7 @@ export default {
             stamina: 200,
             staminaCooldown: 5, // s
             powerUp: 0.1,
-            powerDown: 0.0001
+            powerDown: 0.01
         }
     }
 };

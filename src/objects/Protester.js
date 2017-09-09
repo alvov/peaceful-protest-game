@@ -43,7 +43,7 @@ class Protester extends Prefab {
                     this.onDropPoster({ x: this.sprite.x, y: this.sprite.y });
                 }
 
-                this.stopMovement();
+                this.moveTo(null);
 
                 const { x, y } = props;
                 this.sprite.x = x;

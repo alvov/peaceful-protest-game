@@ -25,7 +25,6 @@ class Shield {
             'shield'
         );
         this.sprite.anchor.set(0.5);
-        this.sprite.scale.set(0.70);
         this.sprite.exist = false;
 
         this.game.physics.arcade.enable(this.sprite);
@@ -55,7 +54,7 @@ class Shield {
                     this.direction = this.direction === DIR.ltr ? DIR.rtl : DIR.ltr;
 
                     this.sprite.kill();
-                    this.sprite.body.stopMovement(true);
+                    this.sprite.body.stop();
 
                     this.audio.stop();
                 }

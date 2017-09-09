@@ -74,7 +74,6 @@ class Journalist extends Prefab {
                     break;
                 } else if (this.mode === JOURNALIST_MODE_WANDER) {
                     this.stopWandering();
-                    this.stopMovement();
                 }
                 this.target = target;
 
@@ -89,11 +88,12 @@ class Journalist extends Prefab {
     }
 
     wander() {
-        this.sprite.body.onMoveComplete.remove(this.wander, this);
         const nextAction = this.game.rnd.between(0, 2);
         if (nextAction !== 0) {
-            this.sprite.body.onMoveComplete.add(this.wander, this);
-            this.setMoveTarget(this.getNextCoords());
+            this.moveTo({
+                ...this.getNextCoords(),
+                callback: this.wander.bind(this)
+            });
         } else {
             this.stayingTimer.stop(true);
             this.stayingTimer.add(this.game.rnd.between(1000, 3000), this.wander, this);

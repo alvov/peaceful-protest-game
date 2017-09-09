@@ -92,7 +92,6 @@ class NPCProtester extends Protester {
     }
 
     handleLeft() {
-        this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
         this.onLeft();
         this.kill();
     }
@@ -102,14 +101,15 @@ class NPCProtester extends Protester {
             case PROTESTER_MODE_WANDER: {
                 // clean up previous state
                 if (this.mode === PROTESTER_MODE_LEAVE) {
-                    this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
-                    this.stopMovement();
+                    this.moveTo(null);
                 }
 
                 const { coords } = props;
                 if (coords) {
-                    this.sprite.body.onMoveComplete.add(this.wander, this);
-                    this.setMoveTarget(coords);
+                    this.moveTo({
+                        ...coords,
+                        callback: this.wander.bind(this)
+                    });
                 } else {
                     this.wander();
                 }
@@ -119,8 +119,6 @@ class NPCProtester extends Protester {
                 // clean up previous state
                 if (this.mode === PROTESTER_MODE_WANDER) {
                     this.stopWandering();
-                } else if (this.mode === PROTESTER_MODE_LEAVE) {
-                    this.sprite.body.onMoveComplete.remove(this.handleLeft, this);
                 }
 
                 break;
@@ -131,11 +129,11 @@ class NPCProtester extends Protester {
                     this.stopWandering();
                 }
 
-                this.setMoveTarget({
+                this.moveTo({
                     x: this.sprite.x < this.game.world.width / 2 ? -100 : this.game.world.width + 100,
-                    y: this.sprite.y
+                    y: this.sprite.y,
+                    callback: this.handleLeft.bind(this)
                 });
-                this.sprite.body.onMoveComplete.add(this.handleLeft, this);
 
                 break;
             }
@@ -145,11 +143,12 @@ class NPCProtester extends Protester {
     }
 
     wander() {
-        this.sprite.body.onMoveComplete.remove(this.wander, this);
         const nextAction = this.game.rnd.between(0, 10);
         if (nextAction === 0) {
-            this.sprite.body.onMoveComplete.add(this.wander, this);
-            this.setMoveTarget(this.getNextCoords());
+            this.moveTo({
+                ...this.getNextCoords(),
+                callback: this.wander.bind(this)
+            });
         } else {
             this.stayingTimer.stop(true);
             this.stayingTimer.add(this.game.rnd.between(3000, 6000), this.wander, this);
@@ -179,9 +178,9 @@ class NPCProtester extends Protester {
     }
 
     revive({ x, y, nextCoords, mood = this.initialMood }) {
-        this.sprite.body.reset(x, y);
         this.sprite.x = x;
         this.sprite.y = y;
+        this.sprite.body.reset(x, y);
 
         this.posterSprite.revive();
 

@@ -77,8 +77,9 @@ class SWATSquad {
                         for (let j = 0; j < this.sprites[i].children.length; j++) {
                             this.sprites[i].getChildAt(j).mz.kill();
                         }
+                        this.sprites[i].removeChildren();
                         this.sprites[i].visible = false;
-                        this.sprites[i].body.stopMovement(true);
+                        this.sprites[i].body.stop();
                     }
                     this.updateIndex = 0;
                     this.moveTarget = null;

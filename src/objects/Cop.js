@@ -1,6 +1,7 @@
 import Prefab from './Prefab.js';
 import FOV from './FOV.js';
 import {
+    COP_MODE_ENTER,
     COP_MODE_WANDER,
     COP_MODE_PURSUE,
     COP_MODE_CONVOY,
@@ -9,7 +10,7 @@ import {
 } from '../constants.js';
 
 class Cop extends Prefab {
-    constructor({ game, x, y, fov, speed, spriteName }) {
+    constructor({ game, x = 0, y = 0, alive, fov, speed, spriteName }) {
         super({ game, x, y, speed, spriteKey: 'cop', spriteName });
 
         this.FOV = new FOV({
@@ -23,13 +24,19 @@ class Cop extends Prefab {
         this.attractionPoint = null;
         this.attractionStrength = 0;
         this.returnCoords = null;
+
+        if (!alive) {
+            this.kill();
+        }
     }
 
     update() {
-        this.speed.current = this.speed.value;
-        if (this.mode === COP_MODE_PURSUE) {
-            this.speed.current *= this.speed.running;
+        let newSpeed = this.speed.value;
+        if (this.mode === COP_MODE_PURSUE || this.mode === COP_MODE_ENTER) {
+            newSpeed *= this.speed.running;
         }
+        this.setSpeed(newSpeed);
+
         if (this.mode === COP_MODE_CONVOY && !this.target.alive) {
             this.setMode(COP_MODE_WANDER, { coords: this.returnCoords });
         }
@@ -57,10 +64,12 @@ class Cop extends Prefab {
                     this.FOV.revive();
                 }
                 if (coords) {
-                    this.sprite.body.onMoveComplete.add(this.wander, this);
-                    this.setMoveTarget(coords);
+                    this.moveTo({
+                        ...coords,
+                        callback: this.wander.bind(this)
+                    });
                 } else {
-                    this.wander(coords);
+                    this.wander();
                 }
                 break;
             }
@@ -71,14 +80,26 @@ class Cop extends Prefab {
                     this.stopWandering();
                 }
                 this.target = target;
-                this.setMoveTarget(target);
+                this.moveTo(target);
                 break;
             }
             case COP_MODE_CONVOY: {
                 const { jailCoords } = props;
                 this.FOV.kill();
                 this.returnCoords = { x: this.sprite.x, y: this.sprite.y };
-                this.setMoveTarget(jailCoords);
+                this.moveTo(jailCoords);
+                break;
+            }
+            case COP_MODE_ENTER: {
+                const { coords } = props;
+                this.moveTo(coords[0]);
+                this.addMoveTarget({
+                    ...coords[1],
+                    callback: () => {
+                        this.FOV.revive();
+                        this.setMode(COP_MODE_WANDER);
+                    }
+                });
                 break;
             }
         }
@@ -87,11 +108,12 @@ class Cop extends Prefab {
     }
 
     wander() {
-        this.sprite.body.onMoveComplete.remove(this.wander, this);
         const nextAction = this.attractionStrength > 0 ? 1 : this.game.rnd.between(0, 2);
         if (nextAction !== 0) {
-            this.sprite.body.onMoveComplete.add(this.wander, this);
-            this.setMoveTarget(this.getNextCoords());
+            this.moveTo({
+                ...this.getNextCoords(),
+                callback: this.wander.bind(this)
+            });
         } else {
             this.stayingTimer.stop(true);
             this.stayingTimer.add(this.game.rnd.between(1000, 3000), this.wander, this);
@@ -116,7 +138,25 @@ class Cop extends Prefab {
         return super.getNextCoords(bounds);
     }
 
+    revive(rtl) {
+        const offset = this.game.rnd.between(50, 200);
+        const x = rtl ? -offset : this.game.world.width + offset;
+        const y = 110;
+        this.sprite.x = x;
+        this.sprite.y = y;
+        this.sprite.body.reset(x, y);
+
+        const entranceX = this.game.rnd.between(1, Math.floor(this.game.world.width / 100) - 1) * 100;
+        this.setMode(COP_MODE_ENTER, {
+            coords: [{ x: entranceX, y }, { x: entranceX, y: y + this.sprite.height }]
+        });
+
+        super.revive();
+    }
+
     kill() {
+        this.target = null;
+
         this.stopWandering();
         this.FOV.kill();
 

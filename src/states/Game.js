@@ -9,6 +9,7 @@ import PauseMenu from './../objects/PauseMenu.js';
 import EndMenu from './../objects/EndMenu.js';
 
 import {
+    FIELD_OFFSET,
     END_GAME_PLAYER_KILLED,
     END_GAME_TIME_OUT,
     END_GAME_PROTEST_RATE,
@@ -16,6 +17,7 @@ import {
     COP_MODE_WANDER,
     COP_MODE_PURSUE,
     COP_MODE_CONVOY,
+    COP_MODE_ENTER,
     SWAT_MODE_HIDE,
     SWAT_MODE_HUNT,
     SHIELD_MODE_DRIVE,
@@ -23,24 +25,24 @@ import {
     JOURNALIST_MODE_SHOOTING,
     JOURNALIST_MODE_WANDER
 } from '../constants.js';
-import {SHIELD_MODE_HIDE} from '../constants';
-
-const GLOBAL_OFFSET = 100;
 
 class Game {
     init(level) {
         this.mz = {
             level,
             gameEnded: false,
-            score: null,
+            score: 100 * (0.5 * level.protesters.mood + 0.5 * level.protesters.count.start / level.protesters.count.max),
             timePassed: 0, // s
             protesters: {
-                alive: null,
+                alive: 0,
                 arrested: 0,
                 revived: 0,
                 left: 0,
                 toRevive: level.protesters.count.start,
                 meanMood: level.protesters.mood
+            },
+            cops: {
+                alive: 0
             },
             events: {
                 keys: {},
@@ -112,44 +114,27 @@ class Game {
         this.mz.groups.cars = this.game.add.group();
         // cars
         for (let i = 0; i < this.game.world.width; i += 300) {
-            const autoSprite = this.game.add.sprite(i, 100, 'auto');
+            const autoSprite = this.game.add.sprite(i, 120, 'auto');
             autoSprite.anchor.set(0, 1);
-            autoSprite.scale.set(0.70);
             this.game.physics.arcade.enable(autoSprite);
             autoSprite.body.setSize(
-                autoSprite.width / autoSprite.scale.x,
-                autoSprite.height / autoSprite.scale.y - 50
+                autoSprite.width,
+                autoSprite.height - 10
             );
             autoSprite.body.immovable = true;
             this.mz.groups.cars.add(autoSprite);
         }
 
+        this.mz.groups.actors = this.game.add.group();
+
         // top borders
         for (let i = 0; i < this.game.world.width; i += 100) {
-            const borderSprite = this.game.add.sprite(i, 50, 'border');
-            borderSprite.scale.set(0.25);
+            const sprite = this.game.add.sprite(i, FIELD_OFFSET.top - 25, 'border', 0, this.mz.groups.actors);
+            sprite.anchor.set(0, 0.5);
         }
-
-        this.mz.groups.actors = this.game.add.group();
-        this.mz.groups.obstacles = this.game.add.group();
 
         // cops
-        for (let i = 0; i < this.mz.level.cops.count; i++) {
-            const cop = new Cop({
-                game: this.game,
-                ...this.getRandomCoordinates(),
-                fov: {
-                    group: this.mz.groups.copsFOV,
-                    distance: this.mz.level.cops.fov.distance,
-                    angle: this.mz.level.cops.fov.angle
-                },
-                speed: this.mz.level.cops.speed,
-                spriteName: `cop${i}`
-            });
-            this.mz.arrays.cops.push(cop.sprite);
-            this.mz.groups.actors.add(cop.sprite);
-            cop.setMode(COP_MODE_WANDER);
-        }
+        this.createCops();
 
         // swat
         if (this.mz.level.swat) {
@@ -192,7 +177,7 @@ class Game {
         }
 
         // protesters
-        this.createProtesters(this.mz.level.protesters.count.max);
+        this.createProtesters();
 
         // player
         this.mz.objects.player = new Player({
@@ -206,12 +191,6 @@ class Game {
         this.game.camera.follow(this.mz.objects.player.sprite);
         this.mz.groups.actors.add(this.mz.objects.player.sprite);
 
-        // bottom borders
-        for (let i = 0; i < this.game.world.width; i += 100) {
-            const borderSprite = this.game.add.sprite(i, this.game.world.height - 50, 'border');
-            borderSprite.scale.set(0.25);
-        }
-
         this.mz.groups.menu = this.game.add.group();
         this.mz.groups.menu.fixedToCamera = true;
 
@@ -223,6 +202,12 @@ class Game {
             parentGroup: this.mz.groups.menu,
             winPoint: this.mz.level.winningScore
         });
+
+        // bottom borders
+        for (let i = 0; i < this.game.world.width; i += 100) {
+            const sprite = this.game.add.sprite(i, this.game.world.height - 25, 'border', 0, this.mz.groups.actors);
+            sprite.anchor.set(0, 0.5);
+        }
 
         this.mz.objects.timer = this.game.time.create();
         this.mz.objects.timer.loop(Phaser.Timer.SECOND, this.updateTimer, this);
@@ -353,6 +338,7 @@ class Game {
             let newTarget = null;
 
             if (
+                !this.mz.gameEnded &&
                 journalist.FOV.isActive &&
                 this.mz.objects.player.showPoster &&
                 journalist.FOV.containsPoint(this.mz.objects.player.sprite.body.center)
@@ -391,23 +377,33 @@ class Game {
         this.mz.objects.shield.update();
 
         // update cops
-        this.mz.arrays.cops.forEach(copSprite => {
+        if (this.mz.cops.alive < this.mz.arrays.cops.length) {
+            // revive if necessary
+            const copsRequired = this.getCopsRequiredNumber();
+            if (copsRequired > this.mz.cops.alive) {
+                this.reviveCops(copsRequired - this.mz.cops.alive);
+                this.mz.cops.alive = copsRequired;
+            }
+        }
+
+        for (let i = 0; i < this.mz.cops.alive; i++) {
+            const copSprite = this.mz.arrays.cops[i];
             const cop = copSprite.mz;
 
-            // set attraction point and strength
-            cop.attractionPoint = { ...this.mz.objects.player.sprite.body.center };
-            let attractionStrength = 0;
-            if (this.mz.objects.player.showPoster) {
-                attractionStrength += 0.2;
-                this.mz.arrays.press.forEach(journalistSprite => {
-                    if (journalistSprite.mz.mode === JOURNALIST_MODE_SHOOTING) {
-                        attractionStrength += 0.4;
-                    }
-                });
-            }
-            cop.attractionStrength = Math.min(1, attractionStrength * this.mz.objects.player.power);
+            if (cop.mode !== COP_MODE_CONVOY && cop.mode !== COP_MODE_ENTER) {
+                // set attraction point and strength
+                cop.attractionPoint = { ...this.mz.objects.player.sprite.body.center };
+                let attractionStrength = 0;
+                if (this.mz.objects.player.showPoster) {
+                    attractionStrength += 0.2;
+                    this.mz.arrays.press.forEach(journalistSprite => {
+                        if (journalistSprite.mz.mode === JOURNALIST_MODE_SHOOTING) {
+                            attractionStrength += 0.4;
+                        }
+                    });
+                }
+                cop.attractionStrength = Math.min(1, attractionStrength * this.mz.objects.player.power);
 
-            if (cop.mode !== COP_MODE_CONVOY) {
                 // find target for a cop
                 let newTarget = null;
                 let distanceToTargetSq = Infinity;
@@ -447,7 +443,7 @@ class Game {
             }
 
             cop.update();
-        });
+        }
 
         // cops vs protesters collision
         this.game.physics.arcade.overlap(
@@ -585,16 +581,14 @@ class Game {
         };
         const player = this.mz.objects.player;
         if (
-            player.sprite.body.isMoving &&
-            player.moveTarget &&
-            this.game.math.fuzzyEqual(player.moveTarget.x, coords.x, 5) &&
-            this.game.math.fuzzyEqual(player.moveTarget.y, coords.y, 5)
+            player.moveTarget.length &&
+            this.game.math.fuzzyEqual(player.moveTarget[0].x, coords.x, 5) &&
+            this.game.math.fuzzyEqual(player.moveTarget[0].y, coords.y, 5)
         ) {
             player.clickSpeedUp *= player.speed.clickSpeedUp;
-            this.mz.objects.player.setMoveTarget(player.moveTarget);
         } else {
             player.resetClickSpeedUp();
-            this.mz.objects.player.setMoveTarget(coords);
+            player.moveTo(coords);
         }
     }
 
@@ -635,7 +629,52 @@ class Game {
         this.mz.objects.textTimer.setText(this.getFormattedTime(this.mz.timePassed));
     }
 
-    createProtesters(count) {
+    createCops() {
+        const totalCount = this.mz.level.cops.count[this.mz.level.cops.count.length - 1][1];
+        this.mz.cops.alive = this.getCopsRequiredNumber();
+        for (let i = 0; i < totalCount; i++) {
+            const cop = new Cop({
+                game: this.game,
+                ...this.getRandomCoordinates(),
+                alive: i < this.mz.cops.alive,
+                fov: {
+                    group: this.mz.groups.copsFOV,
+                    distance: this.mz.level.cops.fov.distance,
+                    angle: this.mz.level.cops.fov.angle
+                },
+                speed: this.mz.level.cops.speed,
+                spriteName: `cop${i}`
+            });
+            this.mz.arrays.cops.push(cop.sprite);
+            this.mz.groups.actors.add(cop.sprite);
+
+            if (i < this.mz.cops.alive) {
+                cop.setMode(COP_MODE_WANDER);
+            }
+        }
+    }
+
+    reviveCops(count) {
+        for (let i = 0; i < count; i++) {
+            const index = i + this.mz.cops.alive;
+            const copSprite = this.mz.arrays.cops[index];
+            copSprite.mz.revive(Boolean(index % 2));
+        }
+    }
+
+    getCopsRequiredNumber() {
+        let result = 0;
+        for (let i = 0; i < this.mz.level.cops.count.length; i++) {
+            if (this.mz.score <= this.mz.level.cops.count[i][0]) {
+                result = this.mz.level.cops.count[i][1];
+                break;
+            }
+        }
+        return result;
+    }
+
+    createProtesters() {
+        const count = this.mz.level.protesters.count.max;
         const onDropPoster = this.handleDropPoster.bind(this);
         const onLeft = this.handleProtesterLeft.bind(this);
         for (let i = 0; i < count; i++) {
@@ -731,13 +770,13 @@ class Game {
         const direction = this.game.rnd.between(0, 1) === 0 ? 'ltor' : 'rtol';
         this.mz.objects.swat.setMode(SWAT_MODE_HUNT, {
             x: direction === 'ltor' ?
-                -GLOBAL_OFFSET :
-                this.game.world.width + GLOBAL_OFFSET,
+                -100 :
+                this.game.world.width + 100,
             y: this.getRandomCoordinateY(),
             target: {
                 x: direction === 'ltor' ?
-                    this.game.world.width + GLOBAL_OFFSET:
-                    -GLOBAL_OFFSET,
+                    this.game.world.width + 100:
+                    -100,
                 y: this.getRandomCoordinateY()
             }
         });
@@ -844,11 +883,19 @@ class Game {
     }
 
     getRandomCoordinateX() {
-        return this.game.math.clamp(this.game.world.randomX, GLOBAL_OFFSET, this.game.world.width - GLOBAL_OFFSET);
+        return this.game.math.clamp(
+            this.game.world.randomX,
+            FIELD_OFFSET.left,
+            this.game.world.width - FIELD_OFFSET.right
+        );
     }
 
     getRandomCoordinateY() {
-        return this.game.math.clamp(this.game.world.randomY, GLOBAL_OFFSET, this.game.world.height - GLOBAL_OFFSET);
+        return this.game.math.clamp(
+            this.game.world.randomY,
+            FIELD_OFFSET.top,
+            this.game.world.height - FIELD_OFFSET.bottom
+        );
     }
 
     getFormattedTime(secondsPassed) {

@@ -44,13 +44,13 @@ class Player extends Protester {
 
         this.cheering = cheering;
 
-        this.moveTarget = null;
         this.stamina = stamina;
         this.maxStamina = stamina;
         this.cooldownTimer = this.game.time.create(false);
         this.staminaCooldown = staminaCooldown * 1000;
 
-        this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
+        this.clickSpeedUp = null;
+        this.resetClickSpeedUp();
 
         this.progressBar = this.game.add.graphics();
         this.sprite.addChild(this.progressBar);
@@ -73,7 +73,7 @@ class Player extends Protester {
         fovGroup.add(this.circleGraphics);
 
         // events
-        this.sprite.events.onInputDown.add(this.handleClick, this);
+        this.sprite.events.onInputDown.add(this.handleClickOnSelf, this);
         this.sprite.input.priorityID = 2;
 
         this.game.onResume.add(this.handleGameResume, this);
@@ -91,25 +91,20 @@ class Player extends Protester {
     update() {
         this.resetRadius();
 
-        if (this.mode !== PROTESTER_MODE_ARRESTED) {
-            this.speed.current = this.speed.value;
-            this.speed.current *= this.clickSpeedUp;
-        }
-
         super.update();
 
         this.circleGraphics.clear();
-        this.circleGraphics.lineStyle(1, 0x33ff33, 1);
-        this.circleGraphics.drawCircle(this.sprite.x, this.sprite.y, this.radius.graphic * 2);
 
         if (this.mode === PROTESTER_MODE_ARRESTED || this.isFrozen) {
             this.updateProgressBar(0);
             return;
         }
 
-        if (this.isFrozen) {
-            return;
-        }
+        this.circleGraphics.lineStyle(1, 0x33ff33, 1);
+        this.circleGraphics.drawCircle(this.sprite.x, this.sprite.y, this.radius.graphic * 2);
+
+        let newSpeed = this.speed.value;
+        newSpeed *= this.clickSpeedUp;
 
         const areMovingKeysDown = this.keys.up.isDown ||
             this.keys.down.isDown ||
@@ -120,7 +115,7 @@ class Player extends Protester {
             if (areMovingKeysDown && this.keys.shift.isDown) {
                 if (this.stamina > 0) {
                     this.stamina -= 1;
-                    this.speed.current *= this.speed.running;
+                    newSpeed *= this.speed.running;
                 } else {
                     this.cooldownTimer.add(this.staminaCooldown, () => {
                         this.cooldownTimer.stop(true);
@@ -141,11 +136,13 @@ class Player extends Protester {
         }
 
         if (this.showPoster) {
-            this.speed.current *= this.speed.withPoster;
+            newSpeed *= this.speed.withPoster;
         }
 
+        this.setSpeed(newSpeed);
+
         if (areMovingKeysDown) {
-            this.stopMovement();
+            this.moveTo(null);
             const angles = [];
 
             if (this.keys.up.isDown) {
@@ -178,7 +175,7 @@ class Player extends Protester {
             this.keys.left.justUp ||
             this.keys.right.justUp
         ) {
-            this.stopMovement();
+            this.stop();
         }
 
         if (this.keys.space.justDown) {
@@ -187,12 +184,12 @@ class Player extends Protester {
     }
 
     handleGameResume() {
-        this.stopMovement();
+        this.moveTo(null);
     }
 
-    handleClick() {
-        if (this.sprite.body.isMoving) {
-            this.stopMovement();
+    handleClickOnSelf() {
+        if (this.moveTarget.length) {
+            this.moveTo(null);
         } else {
             this.togglePoster();
         }
@@ -205,7 +202,7 @@ class Player extends Protester {
 
                 this.sprite.body.collideWorldBounds = false;
 
-                this.sprite.events.onInputUp.removeAll();
+                this.sprite.events.onInputDown.removeAll();
                 this.cooldownTimer.stop(true);
                 break;
             }
@@ -276,17 +273,11 @@ class Player extends Protester {
 
     freeze() {
         if (this.sprite.alive) {
-            this.sprite.events.onInputUp.remove(this.handleClick, this);
-            this.stopMovement();
+            this.sprite.events.onInputDown.removeAll();
+            this.moveTo(null);
         }
 
         this.isFrozen = true;
-    }
-
-    stopMovement() {
-        this.sprite.body.stop();
-
-        super.stopMovement();
     }
 
     kill() {

@@ -96,15 +96,15 @@ export default {
             type: 'spritesheet',
             key: 'border',
             url: require('./border.png'),
-            frameWidth: 400,
-            frameHeight: 200
+            frameWidth: 100,
+            frameHeight: 50
         },
         {
             type: 'spritesheet',
             key: 'auto',
             url: require('./auto.png'),
-            frameWidth: 400,
-            frameHeight: 187
+            frameWidth: 290,
+            frameHeight: 135
         },
         {
             type: 'spritesheet',
@@ -117,8 +117,8 @@ export default {
             type: 'spritesheet',
             key: 'shield',
             url: require('./shield.png'),
-            frameWidth: 451,
-            frameHeight: 200
+            frameWidth: 316,
+            frameHeight: 140
         },
         {
             type: 'spritesheet',
@@ -181,15 +181,15 @@ export default {
             type: 'spritesheet',
             key: 'border',
             url: require('./border.png'),
-            frameWidth: 400,
-            frameHeight: 200
+            frameWidth: 100,
+            frameHeight: 50
         },
         {
             type: 'spritesheet',
             key: 'auto',
             url: require('./auto.png'),
-            frameWidth: 400,
-            frameHeight: 187
+            frameWidth: 290,
+            frameHeight: 135
         },
         {
             type: 'spritesheet',
@@ -209,8 +209,8 @@ export default {
             type: 'spritesheet',
             key: 'shield',
             url: require('./shield.png'),
-            frameWidth: 451,
-            frameHeight: 200
+            frameWidth: 316,
+            frameHeight: 140
         },
         {
             type: 'spritesheet',
