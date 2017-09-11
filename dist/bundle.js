@@ -1017,9 +1017,9 @@ var StartMenu = function () {
         worldWidth: 600,
         worldHeight: 600,
         duration: 3 * 60, // s
-        winningScore: 75,
+        winningThreshold: 75,
         cops: {
-            count: [[40, 0], [60, 1], [100, 2]],
+            count: [[60, 0], [85, 1], [100, 2]],
             speed: {
                 value: 50,
                 running: 1.7
@@ -1073,9 +1073,9 @@ var StartMenu = function () {
         worldWidth: 800,
         worldHeight: 800,
         duration: 4 * 60, // s
-        winningScore: 75,
+        winningThreshold: 75,
         cops: {
-            count: [[40, 3], [60, 4], [100, 5]],
+            count: [[40, 1], [50, 2], [60, 3], [100, 4]],
             speed: {
                 value: 60,
                 running: 1.7
@@ -1090,8 +1090,8 @@ var StartMenu = function () {
             speed: {
                 value: 200
             },
-            frequency: 10000,
-            scoreThreshold: 50
+            frequency: 15000,
+            scoreThreshold: 60
         },
         press: {
             count: 5,
@@ -1106,7 +1106,7 @@ var StartMenu = function () {
         },
         protesters: {
             count: {
-                start: 30,
+                start: 20,
                 max: 60,
                 add: 10
             },
@@ -1115,7 +1115,7 @@ var StartMenu = function () {
                 value: 60
             },
             mood: 0.25,
-            moodUp: 0.002,
+            moodUp: 0.0024,
             moodDown: 0.0001,
             dropPoster: 0.1
         },
@@ -1126,7 +1126,7 @@ var StartMenu = function () {
                 clickSpeedUp: 1.05,
                 running: 1.5
             },
-            radius: 100,
+            radius: 120,
             stamina: 200,
             staminaCooldown: 5, // s
             powerUp: 0.1,
@@ -1147,7 +1147,7 @@ var StartMenu = function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__objects_SWATSquad_js__ = __webpack_require__(334);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__objects_Shield_js__ = __webpack_require__(335);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__objects_ScoreMeter_js__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__objects_GameInterface_js__ = __webpack_require__(339);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__objects_PauseMenu_js__ = __webpack_require__(337);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__objects_EndMenu_js__ = __webpack_require__(338);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__constants_js__ = __webpack_require__(21);
@@ -1204,11 +1204,8 @@ var Game = function () {
                     player: null,
                     swat: null,
                     shield: null,
-                    score: null,
-                    textTimer: null,
-                    textProtestersCount: null,
                     bgTile: null,
-                    buttonSound: null,
+                    interface: null,
                     audio: {},
                     pauseMenu: null,
                     endMenu: null
@@ -1224,8 +1221,7 @@ var Game = function () {
                     droppedPosters: null,
                     copsFOV: null,
                     pressFOV: null,
-                    playerFOV: null,
-                    menu: null
+                    playerFOV: null
                 }
             };
         }
@@ -1331,16 +1327,8 @@ var Game = function () {
             this.game.camera.follow(this.mz.objects.player.sprite);
             this.mz.groups.actors.add(this.mz.objects.player.sprite);
 
-            this.mz.groups.menu = this.game.add.group();
-            this.mz.groups.menu.fixedToCamera = true;
-
-            this.mz.objects.score = new __WEBPACK_IMPORTED_MODULE_6__objects_ScoreMeter_js__["a" /* default */]({
-                game: this.game,
-                x: 10,
-                y: this.game.height - 10,
-                width: this.game.width - 20,
-                parentGroup: this.mz.groups.menu,
-                winPoint: this.mz.level.winningScore
+            this.mz.objects.interface = new __WEBPACK_IMPORTED_MODULE_6__objects_GameInterface_js__["a" /* default */]({
+                game: this.game
             });
 
             // bottom borders
@@ -1352,26 +1340,6 @@ var Game = function () {
             this.mz.objects.timer = this.game.time.create();
             this.mz.objects.timer.loop(Phaser.Timer.SECOND, this.updateTimer, this);
             this.mz.objects.timer.start();
-
-            this.mz.objects.textTimer = this.game.add.text(this.game.width - 10, 20, '', {
-                font: '25px Arial',
-                fill: '#fff',
-                align: 'right'
-            });
-            this.mz.objects.textTimer.anchor.set(1, 0.5);
-            this.mz.objects.textTimer.setShadow(2, 2, 'rgba(0, 0, 0, .5)', 0);
-            this.mz.groups.menu.add(this.mz.objects.textTimer);
-
-            this.mz.objects.textProtestersCount = this.game.add.text(this.game.width - 10, 60, '', {
-                font: '25px Arial',
-                fill: '#fff',
-                align: 'right'
-            });
-            this.mz.objects.textProtestersCount.anchor.set(1, 0.5);
-            this.mz.objects.textProtestersCount.setShadow(2, 2, 'rgba(0, 0, 0, .5)', 0);
-            this.mz.groups.menu.add(this.mz.objects.textProtestersCount);
-
-            this.mz.objects.buttonSound = this.game.add.button(0, 0, 'soundButtons', this.handleClickSound, this, 1, 1, 1, 1, this.mz.groups.menu);
 
             // pause menu
             this.mz.objects.pauseMenu = new __WEBPACK_IMPORTED_MODULE_7__objects_PauseMenu_js__["a" /* default */]({ game: this.game });
@@ -1406,8 +1374,6 @@ var Game = function () {
                 this.playRandomSound();
             }
 
-            this.mz.objects.buttonSound.frame = this.game.sound.mute ? 1 : 0;
-
             // update player
             this.mz.objects.player.update();
 
@@ -1420,7 +1386,7 @@ var Game = function () {
                 var sprite = this.mz.arrays.protesters[i];
                 if (!sprite.alive) {
                     if (this.mz.protesters.toRevive !== 0) {
-                        var mood = Math.max(lastTickMeanMood, this.mz.level.protesters.mood);
+                        var mood = this.game.math.clamp(lastTickMeanMood, this.mz.level.protesters.mood, (this.mz.level.winningThreshold - 1) / 100);
                         this.reviveProtester({
                             sprite: sprite,
                             mood: mood
@@ -1440,11 +1406,15 @@ var Game = function () {
             this.mz.protesters.toRevive = 0;
 
             this.mz.protesters.meanMood = this.mz.protesters.alive !== 0 ? this.mz.protesters.meanMood / this.mz.protesters.alive : 0;
-            this.mz.score = 100 * (0.5 * this.mz.protesters.alive / this.mz.level.protesters.count.max + 0.5 * this.mz.protesters.meanMood);
+            this.mz.score = 100 * this.game.math.clamp(100 * (0.5 * this.mz.protesters.alive / this.mz.level.protesters.count.max + 0.5 * this.mz.protesters.meanMood) / this.mz.level.winningThreshold, 0, 1);
 
-            // draw score
+            // update interface
             if (!this.mz.gameEnded) {
-                this.mz.objects.score.update(this.mz.score);
+                this.mz.objects.interface.update({
+                    score: this.mz.score,
+                    protestersAlive: this.mz.protesters.alive,
+                    protestersTotal: this.mz.level.protesters.count.max
+                });
             }
 
             // update journalists
@@ -1516,7 +1486,7 @@ var Game = function () {
                             continue;
                         }
                         if (protester.sprite === cop.target || protester.showPoster) {
-                            var distanceToProtesterSq = this.getDistanceSq(copSprite, protester.sprite);
+                            var distanceToProtesterSq = this.getDistanceSq(copSprite.body.center, protester.sprite.body.center);
                             // give higher priority to current target
                             if (protester.sprite === cop.target) {
                                 distanceToProtesterSq *= 3 / 4;
@@ -1539,26 +1509,36 @@ var Game = function () {
                 cop.update();
             }
 
-            // cops vs protesters collision
-            this.game.physics.arcade.overlap(this.mz.arrays.protesters, this.mz.arrays.cops, this.proceedToJail, function (protesterSprite, copSprite) {
-                return copSprite.mz.target === protesterSprite && protesterSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["n" /* PROTESTER_MODE_ARRESTED */];
-            }, this);
+            // protesters collision
+            for (var _i6 = 0; _i6 <= this.mz.arrays.protesters.length; _i6++) {
+                var protesterSprite = _i6 === this.mz.arrays.protesters.length ? this.mz.objects.player.sprite : this.mz.arrays.protesters[_i6];
 
-            // swat vs protesters collision
-            if (this.mz.objects.swat) {
-                this.game.physics.arcade.overlap(this.mz.objects.swat.sprites, this.mz.arrays.protesters, function (swatSprite, protesterSprite) {
-                    _this.arrest(protesterSprite, swatSprite);
-                }, function (swatSprite, protesterSprite) {
-                    return swatSprite.children.length === 0 && protesterSprite.mz.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["n" /* PROTESTER_MODE_ARRESTED */];
-                });
+                if (!protesterSprite.alive || protesterSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["n" /* PROTESTER_MODE_ARRESTED */]) {
+                    continue;
+                }
+
+                var protesterBounds = protesterSprite.getBounds();
+
+                // vs cops
+                for (var j = 0; j < this.mz.arrays.cops.length; j++) {
+                    var _copSprite = this.mz.arrays.cops[j];
+                    if (!_copSprite.alive || _copSprite.mz.target !== protesterSprite || !Phaser.Rectangle.intersects(protesterBounds, _copSprite.getBounds())) {
+                        continue;
+                    }
+                    this.proceedToJail(protesterSprite, _copSprite);
+                }
+
+                // vs swat
+                if (this.mz.objects.swat) {
+                    for (var _j = 0; _j < this.mz.objects.swat.sprites.length; _j++) {
+                        var swatSprite = this.mz.objects.swat.sprites[_j];
+                        if (swatSprite.children !== 0 || !Phaser.Rectangle.intersects(protesterBounds, swatSprite.getBounds())) {
+                            continue;
+                        }
+                        this.arrest(protesterSprite, swatSprite);
+                    }
+                }
             }
-
-            // cars vs protesters collision
-            this.game.physics.arcade.overlap(this.mz.arrays.protesters, this.mz.groups.cars, function (protesterSprite) {
-                protesterSprite.mz.kill();
-            }, function (protesterSprite) {
-                return protesterSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["n" /* PROTESTER_MODE_ARRESTED */];
-            });
 
             // player collisions
             if (this.mz.objects.player.mode !== __WEBPACK_IMPORTED_MODULE_9__constants_js__["n" /* PROTESTER_MODE_ARRESTED */]) {
@@ -1570,45 +1550,26 @@ var Game = function () {
                         posterSprite.kill();
                     }
                 });
-
-                // vs swat
-                if (this.mz.objects.swat) {
-                    this.game.physics.arcade.overlap(this.mz.objects.player.sprite, this.mz.objects.swat.sprites, this.arrest, function (playerSprite, swatSprite) {
-                        return swatSprite.children.length === 0;
-                    }, this);
-                }
-
-                // vs cops
-                this.game.physics.arcade.overlap(this.mz.objects.player.sprite, this.mz.arrays.cops, function (playerSprite, copSprite) {
-                    _this.mz.events.fieldClickHandler.events.onInputUp.remove(_this.handleClick, _this);
-                    _this.proceedToJail(playerSprite, copSprite);
-                }, function (playerSprite, copSprite) {
-                    return copSprite.mz.target === playerSprite;
-                });
             }
 
             // player vs cars collision
-            this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.cars, function (playerSprite) {
-                if (playerSprite.mz.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["n" /* PROTESTER_MODE_ARRESTED */]) {
-                    playerSprite.mz.kill();
-                }
-            });
+            this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.groups.cars);
 
             // player vs shield collision
-            this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.objects.shield.sprite, function (playerSprite) {
-                playerSprite.body.collideWorldBounds = false;
-                if (playerSprite.health === 1) {
-                    _this.beatUpProtester(playerSprite);
-                }
-            });
+            if (this.mz.gameEnded) {
+                this.game.physics.arcade.collide(this.mz.objects.player.sprite, this.mz.objects.shield.sprite, function (playerSprite) {
+                    playerSprite.body.collideWorldBounds = false;
+                    if (playerSprite.health === 1) {
+                        _this.beatUpProtester(playerSprite);
+                    }
+                });
+            }
 
             this.mz.groups.actors.sort('y', Phaser.Group.SORT_ASCENDING);
 
             if (!this.mz.gameEnded) {
                 this.checkWin();
             }
-
-            this.mz.objects.textProtestersCount.setText('Protesters count: ' + String(this.mz.protesters.alive).padStart(2, '0') + ' / ' + this.mz.level.protesters.count.max);
 
             // events
             if (this.mz.events.keys.esc.justUp) {
@@ -1665,11 +1626,6 @@ var Game = function () {
             this.mz.protesters.toRevive += this.mz.level.protesters.count.add;
         }
     }, {
-        key: 'handleClickSound',
-        value: function handleClickSound() {
-            this.game.sound.mute = !this.game.sound.mute;
-        }
-    }, {
         key: 'handlePause',
         value: function handlePause() {
             if (this.game.paused) {
@@ -1691,7 +1647,7 @@ var Game = function () {
         key: 'updateTimer',
         value: function updateTimer() {
             this.mz.timePassed++;
-            this.mz.objects.textTimer.setText(this.getFormattedTime(this.mz.timePassed));
+            this.mz.objects.interface.updateTimer(this.getFormattedTime(this.mz.timePassed));
         }
     }, {
         key: 'createCops',
@@ -1804,7 +1760,7 @@ var Game = function () {
             this.mz.groups.cars.forEach(function (carSprite) {
                 var carCoords = {
                     x: (carSprite.right + carSprite.left) / 2,
-                    y: (carSprite.bottom + carSprite.top) / 2
+                    y: carSprite.bottom + 25
                 };
                 var distanceToCarSq = _this2.getDistanceSq(copSprite, carCoords);
                 if (distanceToCarSq < minDistanceSq) {
@@ -1813,9 +1769,9 @@ var Game = function () {
                 }
             });
 
-            copSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["a" /* COP_MODE_CONVOY */], { jailCoords: closestCarCoords });
-
             this.arrest(protesterSprite, copSprite);
+
+            copSprite.mz.setMode(__WEBPACK_IMPORTED_MODULE_9__constants_js__["a" /* COP_MODE_CONVOY */], { jailCoords: closestCarCoords });
         }
     }, {
         key: 'arrest',
@@ -1823,6 +1779,7 @@ var Game = function () {
             this.beatUpProtester(protesterSprite);
 
             copSprite.addChild(protesterSprite);
+
             if (protesterSprite.name === 'player') {
                 this.game.camera.follow(copSprite);
             }
@@ -1832,7 +1789,9 @@ var Game = function () {
                 y: protesterSprite.body.halfHeight
             });
 
-            this.mz.protesters.arrested++;
+            if (protesterSprite.name !== 'player') {
+                this.mz.protesters.arrested++;
+            }
         }
     }, {
         key: 'launchSWAT',
@@ -1865,7 +1824,7 @@ var Game = function () {
                 this.endGame(__WEBPACK_IMPORTED_MODULE_9__constants_js__["g" /* END_GAME_TIME_OUT */]);
             } else if (this.mz.score === 0) {
                 this.endGame(__WEBPACK_IMPORTED_MODULE_9__constants_js__["f" /* END_GAME_PROTEST_RATE */]);
-            } else if (this.mz.score >= this.mz.level.winningScore) {
+            } else if (this.mz.score === 100) {
                 this.endGame(__WEBPACK_IMPORTED_MODULE_9__constants_js__["h" /* END_GAME_WIN */]);
             } else if (this.mz.objects.player.mode === __WEBPACK_IMPORTED_MODULE_9__constants_js__["n" /* PROTESTER_MODE_ARRESTED */] || !this.mz.objects.player.sprite.alive) {
                 this.endGame(__WEBPACK_IMPORTED_MODULE_9__constants_js__["e" /* END_GAME_PLAYER_KILLED */]);
@@ -1881,7 +1840,7 @@ var Game = function () {
             this.mz.objects.endMenu = new __WEBPACK_IMPORTED_MODULE_8__objects_EndMenu_js__["a" /* default */]({
                 game: this.game,
                 mode: mode,
-                score: this.mz.objects.score.group,
+                score: this.mz.objects.interface.score.group,
                 stats: {
                     time: this.mz.timePassed,
                     alive: this.mz.protesters.alive,
@@ -1892,7 +1851,7 @@ var Game = function () {
             });
 
             this.game.camera.unfollow();
-            this.mz.groups.menu.killAll();
+            this.mz.objects.interface.kill();
             this.mz.objects.timer.stop();
             this.mz.events.fieldClickHandler.kill();
 
@@ -2619,10 +2578,6 @@ var Cop = function (_Prefab) {
             }
             this.setSpeed(newSpeed);
 
-            if (this.mode === __WEBPACK_IMPORTED_MODULE_2__constants_js__["a" /* COP_MODE_CONVOY */] && !this.target.alive) {
-                this.setMode(__WEBPACK_IMPORTED_MODULE_2__constants_js__["d" /* COP_MODE_WANDER */], { coords: this.returnCoords });
-            }
-
             _get(Cop.prototype.__proto__ || Object.getPrototypeOf(Cop.prototype), 'update', this).call(this);
 
             this.FOV.update({
@@ -2679,7 +2634,9 @@ var Cop = function (_Prefab) {
 
                         this.FOV.kill();
                         this.returnCoords = { x: this.sprite.x, y: this.sprite.y };
-                        this.moveTo(jailCoords);
+                        this.moveTo(_extends({}, jailCoords, {
+                            callback: this.handleCovoyEnd.bind(this)
+                        }));
                         break;
                     }
                 case __WEBPACK_IMPORTED_MODULE_2__constants_js__["b" /* COP_MODE_ENTER */]:
@@ -2698,6 +2655,15 @@ var Cop = function (_Prefab) {
             }
 
             _get(Cop.prototype.__proto__ || Object.getPrototypeOf(Cop.prototype), 'setMode', this).call(this, mode);
+        }
+    }, {
+        key: 'handleCovoyEnd',
+        value: function handleCovoyEnd() {
+            for (var i = 0; i < this.sprite.children.length; i++) {
+                this.sprite.getChildAt(i).mz.kill();
+            }
+
+            this.setMode(__WEBPACK_IMPORTED_MODULE_2__constants_js__["d" /* COP_MODE_WANDER */], { coords: this.returnCoords });
         }
     }, {
         key: 'wander',
@@ -3196,9 +3162,7 @@ var ScoreMeter = function () {
         var game = _ref.game,
             x = _ref.x,
             y = _ref.y,
-            width = _ref.width,
-            parentGroup = _ref.parentGroup,
-            winPoint = _ref.winPoint;
+            width = _ref.width;
 
         _classCallCheck(this, ScoreMeter);
 
@@ -3208,40 +3172,33 @@ var ScoreMeter = function () {
         this.group.x = x;
         this.group.y = y;
         this.width = width;
-        this.winPoint = winPoint;
-        parentGroup.add(this.group);
 
         this.progressBar = this.game.add.graphics();
         this.group.add(this.progressBar);
-        // this.label = this.game.add.text(
-        //     -280,
-        //     0,
-        //     'Score:',
-        //     {
-        //         font: '14px Arial',
-        //         fill: '#000',
-        //         align: 'right'
-        //     }
-        // );
-        // this.group.add(this.label);
+        this.label = this.game.add.text(20, -15, 'Protest meter', {
+            font: '12px Arial',
+            fill: '#fff',
+            align: 'right'
+        });
+        this.label.setShadow(1, 1, 'rgba(0, 0, 0, .9)', 0);
+        this.group.add(this.label);
     }
 
     _createClass(ScoreMeter, [{
-        key: "update",
+        key: 'update',
         value: function update(value) {
             this.progressBar.clear();
-            value = this.game.math.clamp(value, 0, 100);
-            var height = 10;
+
+            var height = 14;
             var x = 0;
             var y = 0;
+            var colorThreshold = 30;
+            var color = Phaser.Color.RGBArrayToHex([this.game.math.clamp(1 + (colorThreshold - value) / (100 - colorThreshold), 0, 1), this.game.math.clamp(value / colorThreshold, 0, 1), 0]);
             this.progressBar.lineStyle(2, 0x333333, 1);
             this.progressBar.drawRect(x, y - height, this.width, height);
-            this.progressBar.lineStyle(height, 0x00ff00, 1);
+            this.progressBar.lineStyle(height, color, 1);
             this.progressBar.moveTo(x, y - height / 2);
             this.progressBar.lineTo(x + Math.round(this.width * value / 100), y - height / 2);
-            this.progressBar.lineStyle(3, 0xffff00, 1);
-            this.progressBar.moveTo(x + Math.round(this.width * this.winPoint / 100), y - height);
-            this.progressBar.lineTo(x + Math.round(this.width * this.winPoint / 100), y);
         }
     }]);
 
@@ -3423,6 +3380,94 @@ var EndMenu = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["a"] = (EndMenu);
+
+/***/ }),
+
+/***/ 339:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_ScoreMeter_js__ = __webpack_require__(336);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+var GameInterface = function () {
+    function GameInterface(_ref) {
+        var game = _ref.game;
+
+        _classCallCheck(this, GameInterface);
+
+        this.game = game;
+
+        this.group = this.game.add.group();
+        this.group.fixedToCamera = true;
+
+        this.score = new __WEBPACK_IMPORTED_MODULE_0__objects_ScoreMeter_js__["a" /* default */]({
+            game: this.game,
+            x: 10,
+            y: this.game.height - 10,
+            width: this.game.width - 20
+        });
+        this.group.add(this.score.group);
+
+        this.textTimer = this.game.add.text(this.game.width - 10, 20, '', {
+            font: '25px Arial',
+            fill: '#fff',
+            align: 'right'
+        });
+        this.textTimer.anchor.set(1, 0.5);
+        this.textTimer.setShadow(2, 2, 'rgba(0, 0, 0, .5)', 0);
+        this.group.add(this.textTimer);
+
+        this.textProtestersCount = this.game.add.text(this.game.width - 10, 60, '', {
+            font: '25px Arial',
+            fill: '#fff',
+            align: 'right'
+        });
+        this.textProtestersCount.anchor.set(1, 0.5);
+        this.textProtestersCount.setShadow(2, 2, 'rgba(0, 0, 0, .5)', 0);
+        this.group.add(this.textProtestersCount);
+
+        this.buttonSound = this.game.add.button(0, 0, 'soundButtons', this.handleClickSound, this, 1, 1, 1, 1, this.group);
+    }
+
+    _createClass(GameInterface, [{
+        key: 'update',
+        value: function update(_ref2) {
+            var score = _ref2.score,
+                protestersAlive = _ref2.protestersAlive,
+                protestersTotal = _ref2.protestersTotal;
+
+            this.buttonSound.frame = this.game.sound.mute ? 1 : 0;
+
+            this.score.update(score);
+
+            this.textProtestersCount.setText('Protesters count: ' + String(protestersAlive).padStart(2, '0') + ' / ' + protestersTotal);
+        }
+    }, {
+        key: 'updateTimer',
+        value: function updateTimer(time) {
+            this.textTimer.setText(time);
+        }
+    }, {
+        key: 'handleClickSound',
+        value: function handleClickSound() {
+            this.game.sound.mute = !this.game.sound.mute;
+        }
+    }, {
+        key: 'kill',
+        value: function kill() {
+            this.group.killAll();
+        }
+    }]);
+
+    return GameInterface;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (GameInterface);
 
 /***/ }),
 

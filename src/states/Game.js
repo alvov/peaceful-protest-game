@@ -4,7 +4,7 @@ import Cop from './../objects/Cop.js';
 import Journalist from './../objects/Journalist.js';
 import SWATSquad from '../objects/SWATSquad.js';
 import Shield from '../objects/Shield.js';
-import ScoreMeter from './../objects/ScoreMeter.js';
+import GameInterface from '../objects/GameInterface.js';
 import PauseMenu from './../objects/PauseMenu.js';
 import EndMenu from './../objects/EndMenu.js';
 
@@ -55,11 +55,8 @@ class Game {
                 player: null,
                 swat: null,
                 shield: null,
-                score: null,
-                textTimer: null,
-                textProtestersCount: null,
                 bgTile: null,
-                buttonSound: null,
+                interface: null,
                 audio: {},
                 pauseMenu: null,
                 endMenu: null
@@ -75,8 +72,7 @@ class Game {
                 droppedPosters: null,
                 copsFOV: null,
                 pressFOV: null,
-                playerFOV: null,
-                menu: null
+                playerFOV: null
             }
         };
     }
@@ -191,16 +187,8 @@ class Game {
         this.game.camera.follow(this.mz.objects.player.sprite);
         this.mz.groups.actors.add(this.mz.objects.player.sprite);
 
-        this.mz.groups.menu = this.game.add.group();
-        this.mz.groups.menu.fixedToCamera = true;
-
-        this.mz.objects.score = new ScoreMeter({
-            game: this.game,
-            x: 10,
-            y: this.game.height - 10,
-            width: this.game.width - 20,
-            parentGroup: this.mz.groups.menu,
-            winPoint: this.mz.level.winningScore
+        this.mz.objects.interface = new GameInterface({
+            game: this.game
         });
 
         // bottom borders
@@ -212,44 +200,6 @@ class Game {
         this.mz.objects.timer = this.game.time.create();
         this.mz.objects.timer.loop(Phaser.Timer.SECOND, this.updateTimer, this);
         this.mz.objects.timer.start();
-
-        this.mz.objects.textTimer = this.game.add.text(
-            this.game.width - 10,
-            20,
-            '',
-            {
-                font: '25px Arial',
-                fill: '#fff',
-                align: 'right'
-            }
-        );
-        this.mz.objects.textTimer.anchor.set(1, 0.5);
-        this.mz.objects.textTimer.setShadow(2, 2, 'rgba(0, 0, 0, .5)', 0);
-        this.mz.groups.menu.add(this.mz.objects.textTimer);
-
-        this.mz.objects.textProtestersCount = this.game.add.text(
-            this.game.width - 10,
-            60,
-            '',
-            {
-                font: '25px Arial',
-                fill: '#fff',
-                align: 'right'
-            }
-        );
-        this.mz.objects.textProtestersCount.anchor.set(1, 0.5);
-        this.mz.objects.textProtestersCount.setShadow(2, 2, 'rgba(0, 0, 0, .5)', 0);
-        this.mz.groups.menu.add(this.mz.objects.textProtestersCount);
-
-        this.mz.objects.buttonSound = this.game.add.button(
-            0,
-            0,
-            'soundButtons',
-            this.handleClickSound,
-            this,
-            1, 1, 1, 1,
-            this.mz.groups.menu
-        );
 
         // pause menu
         this.mz.objects.pauseMenu = new PauseMenu({ game: this.game });
@@ -281,8 +231,6 @@ class Game {
             this.playRandomSound();
         }
 
-        this.mz.objects.buttonSound.frame = this.game.sound.mute ? 1 : 0;
-
         // update player
         this.mz.objects.player.update();
 
@@ -295,7 +243,11 @@ class Game {
             const sprite = this.mz.arrays.protesters[i];
             if (!sprite.alive) {
                 if (this.mz.protesters.toRevive !== 0) {
-                    const mood = Math.max(lastTickMeanMood, this.mz.level.protesters.mood);
+                    const mood = this.game.math.clamp(
+                        lastTickMeanMood,
+                        this.mz.level.protesters.mood,
+                        (this.mz.level.winningThreshold - 1) / 100
+                    );
                     this.reviveProtester({
                         sprite,
                         mood
@@ -322,14 +274,22 @@ class Game {
         this.mz.protesters.meanMood = this.mz.protesters.alive !== 0 ?
             this.mz.protesters.meanMood / this.mz.protesters.alive :
             0;
-        this.mz.score = 100 * (
-            0.5 * this.mz.protesters.alive / this.mz.level.protesters.count.max +
-            0.5 * this.mz.protesters.meanMood
+        this.mz.score = 100 * this.game.math.clamp(
+            100 * (
+                0.5 * this.mz.protesters.alive / this.mz.level.protesters.count.max +
+                0.5 * this.mz.protesters.meanMood
+            ) / this.mz.level.winningThreshold,
+            0,
+            1
         );
 
-        // draw score
+        // update interface
         if (!this.mz.gameEnded) {
-            this.mz.objects.score.update(this.mz.score);
+            this.mz.objects.interface.update({
+                score: this.mz.score,
+                protestersAlive: this.mz.protesters.alive,
+                protestersTotal: this.mz.level.protesters.count.max
+            });
         }
 
         // update journalists
@@ -422,7 +382,7 @@ class Game {
                         protester.sprite === cop.target ||
                         protester.showPoster
                     ) {
-                        let distanceToProtesterSq = this.getDistanceSq(copSprite, protester.sprite);
+                        let distanceToProtesterSq = this.getDistanceSq(copSprite.body.center, protester.sprite.body.center);
                         // give higher priority to current target
                         if (protester.sprite === cop.target) {
                             distanceToProtesterSq *= 3 / 4;
@@ -445,39 +405,48 @@ class Game {
             cop.update();
         }
 
-        // cops vs protesters collision
-        this.game.physics.arcade.overlap(
-            this.mz.arrays.protesters,
-            this.mz.arrays.cops,
-            this.proceedToJail,
-            (protesterSprite, copSprite) =>
-                copSprite.mz.target === protesterSprite && protesterSprite.mz.mode !== PROTESTER_MODE_ARRESTED,
-            this
-        );
+        // protesters collision
+        for (let i = 0; i <= this.mz.arrays.protesters.length; i++) {
+            const protesterSprite = i === this.mz.arrays.protesters.length ?
+                this.mz.objects.player.sprite :
+                this.mz.arrays.protesters[i];
 
-        // swat vs protesters collision
-        if (this.mz.objects.swat) {
-            this.game.physics.arcade.overlap(
-                this.mz.objects.swat.sprites,
-                this.mz.arrays.protesters,
-                (swatSprite, protesterSprite) => {
+            if (
+                !protesterSprite.alive ||
+                protesterSprite.mz.mode === PROTESTER_MODE_ARRESTED
+            ) {
+                continue;
+            }
+
+            const protesterBounds = protesterSprite.getBounds();
+
+            // vs cops
+            for (let j = 0; j < this.mz.arrays.cops.length; j++) {
+                const copSprite = this.mz.arrays.cops[j];
+                if (
+                    !copSprite.alive ||
+                    copSprite.mz.target !== protesterSprite ||
+                    !Phaser.Rectangle.intersects(protesterBounds, copSprite.getBounds())
+                ) {
+                    continue;
+                }
+                this.proceedToJail(protesterSprite, copSprite);
+            }
+
+            // vs swat
+            if (this.mz.objects.swat) {
+                for (let j = 0; j < this.mz.objects.swat.sprites.length; j++) {
+                    const swatSprite = this.mz.objects.swat.sprites[j];
+                    if (
+                        swatSprite.children !== 0 ||
+                        !Phaser.Rectangle.intersects(protesterBounds, swatSprite.getBounds())
+                    ) {
+                        continue;
+                    }
                     this.arrest(protesterSprite, swatSprite);
-                },
-                (swatSprite, protesterSprite) =>
-                    swatSprite.children.length === 0 &&
-                    protesterSprite.mz.mode !== PROTESTER_MODE_ARRESTED
-            );
+                }
+            }
         }
-
-        // cars vs protesters collision
-        this.game.physics.arcade.overlap(
-            this.mz.arrays.protesters,
-            this.mz.groups.cars,
-            protesterSprite => {
-                protesterSprite.mz.kill();
-            },
-            protesterSprite => protesterSprite.mz.mode === PROTESTER_MODE_ARRESTED
-        );
 
         // player collisions
         if (this.mz.objects.player.mode !== PROTESTER_MODE_ARRESTED) {
@@ -489,66 +458,33 @@ class Game {
                     posterSprite.kill();
                 }
             });
-
-            // vs swat
-            if (this.mz.objects.swat) {
-                this.game.physics.arcade.overlap(
-                    this.mz.objects.player.sprite,
-                    this.mz.objects.swat.sprites,
-                    this.arrest,
-                    (playerSprite, swatSprite) => swatSprite.children.length === 0,
-                    this
-                );
-            }
-
-            // vs cops
-            this.game.physics.arcade.overlap(
-                this.mz.objects.player.sprite,
-                this.mz.arrays.cops,
-                (playerSprite, copSprite) => {
-                    this.mz.events.fieldClickHandler.events.onInputUp.remove(this.handleClick, this);
-                    this.proceedToJail(playerSprite, copSprite);
-                },
-                (playerSprite, copSprite) =>
-                    copSprite.mz.target === playerSprite
-            );
-
         }
 
         // player vs cars collision
         this.game.physics.arcade.collide(
             this.mz.objects.player.sprite,
-            this.mz.groups.cars,
-            playerSprite => {
-                if (playerSprite.mz.mode === PROTESTER_MODE_ARRESTED) {
-                    playerSprite.mz.kill();
-                }
-            }
+            this.mz.groups.cars
         );
 
         // player vs shield collision
-        this.game.physics.arcade.collide(
-            this.mz.objects.player.sprite,
-            this.mz.objects.shield.sprite,
-            playerSprite => {
-                playerSprite.body.collideWorldBounds = false;
-                if (playerSprite.health === 1) {
-                    this.beatUpProtester(playerSprite);
+        if (this.mz.gameEnded) {
+            this.game.physics.arcade.collide(
+                this.mz.objects.player.sprite,
+                this.mz.objects.shield.sprite,
+                playerSprite => {
+                    playerSprite.body.collideWorldBounds = false;
+                    if (playerSprite.health === 1) {
+                        this.beatUpProtester(playerSprite);
+                    }
                 }
-            }
-        );
+            );
+        }
 
         this.mz.groups.actors.sort('y', Phaser.Group.SORT_ASCENDING);
 
         if (!this.mz.gameEnded) {
             this.checkWin();
         }
-
-        this.mz.objects.textProtestersCount.setText(
-            'Protesters count: ' +
-            String(this.mz.protesters.alive).padStart(2, '0') + ' / ' +
-            this.mz.level.protesters.count.max
-        );
 
         // events
         if (this.mz.events.keys.esc.justUp) {
@@ -604,10 +540,6 @@ class Game {
         this.mz.protesters.toRevive += this.mz.level.protesters.count.add;
     }
 
-    handleClickSound() {
-        this.game.sound.mute = !this.game.sound.mute;
-    }
-
     handlePause() {
         if (this.game.paused) {
             this.mz.objects.pauseMenu.revive();
@@ -626,7 +558,7 @@ class Game {
 
     updateTimer() {
         this.mz.timePassed++;
-        this.mz.objects.textTimer.setText(this.getFormattedTime(this.mz.timePassed));
+        this.mz.objects.interface.updateTimer(this.getFormattedTime(this.mz.timePassed));
     }
 
     createCops() {
@@ -728,7 +660,7 @@ class Game {
         this.mz.groups.cars.forEach(carSprite => {
             const carCoords = {
                 x: (carSprite.right + carSprite.left) / 2,
-                y: (carSprite.bottom + carSprite.top) / 2
+                y: carSprite.bottom + 25
             };
             const distanceToCarSq = this.getDistanceSq(copSprite, carCoords);
             if (distanceToCarSq < minDistanceSq) {
@@ -737,15 +669,16 @@ class Game {
             }
         });
 
-        copSprite.mz.setMode(COP_MODE_CONVOY, { jailCoords: closestCarCoords });
-
         this.arrest(protesterSprite, copSprite);
+
+        copSprite.mz.setMode(COP_MODE_CONVOY, { jailCoords: closestCarCoords });
     }
 
     arrest(protesterSprite, copSprite) {
         this.beatUpProtester(protesterSprite);
 
         copSprite.addChild(protesterSprite);
+
         if (protesterSprite.name === 'player') {
             this.game.camera.follow(copSprite);
         }
@@ -759,7 +692,9 @@ class Game {
             y: protesterSprite.body.halfHeight
         });
 
-        this.mz.protesters.arrested++;
+        if (protesterSprite.name !== 'player') {
+            this.mz.protesters.arrested++;
+        }
     }
 
     launchSWAT() {
@@ -793,7 +728,7 @@ class Game {
             this.endGame(END_GAME_TIME_OUT);
         } else if (this.mz.score === 0) {
             this.endGame(END_GAME_PROTEST_RATE);
-        } else if (this.mz.score >= this.mz.level.winningScore) {
+        } else if (this.mz.score === 100) {
             this.endGame(END_GAME_WIN);
         } else if (
             this.mz.objects.player.mode === PROTESTER_MODE_ARRESTED ||
@@ -811,7 +746,7 @@ class Game {
         this.mz.objects.endMenu = new EndMenu({
             game: this.game,
             mode,
-            score: this.mz.objects.score.group,
+            score: this.mz.objects.interface.score.group,
             stats: {
                 time: this.mz.timePassed,
                 alive: this.mz.protesters.alive,
@@ -822,7 +757,7 @@ class Game {
         });
 
         this.game.camera.unfollow();
-        this.mz.groups.menu.killAll();
+        this.mz.objects.interface.kill();
         this.mz.objects.timer.stop();
         this.mz.events.fieldClickHandler.kill();
 

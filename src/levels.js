@@ -4,11 +4,11 @@ export default {
         worldWidth: 600,
         worldHeight: 600,
         duration: 3 * 60, // s
-        winningScore: 75,
+        winningThreshold: 75,
         cops: {
             count: [
-                [40, 0],
-                [60, 1],
+                [60, 0],
+                [85, 1],
                 [100, 2]
             ],
             speed: {
@@ -64,12 +64,13 @@ export default {
         worldWidth: 800,
         worldHeight: 800,
         duration: 4 * 60, // s
-        winningScore: 75,
+        winningThreshold: 75,
         cops: {
             count: [
-                [40, 3],
-                [60, 4],
-                [100, 5]
+                [40, 1],
+                [50, 2],
+                [60, 3],
+                [100, 4]
             ],
             speed: {
                 value: 60,
@@ -85,8 +86,8 @@ export default {
             speed: {
                 value: 200
             },
-            frequency: 10000,
-            scoreThreshold: 50
+            frequency: 15000,
+            scoreThreshold: 60
         },
         press: {
             count: 5,
@@ -101,7 +102,7 @@ export default {
         },
         protesters: {
             count: {
-                start: 30,
+                start: 20,
                 max: 60,
                 add: 10
             },
@@ -110,7 +111,7 @@ export default {
                 value: 60
             },
             mood: 0.25,
-            moodUp: 0.002,
+            moodUp: 0.0024,
             moodDown: 0.0001,
             dropPoster: 0.1
         },
@@ -121,7 +122,7 @@ export default {
                 clickSpeedUp: 1.05,
                 running: 1.5
             },
-            radius: 100,
+            radius: 120,
             stamina: 200,
             staminaCooldown: 5, // s
             powerUp: 0.1,

@@ -37,10 +37,6 @@ class Cop extends Prefab {
         }
         this.setSpeed(newSpeed);
 
-        if (this.mode === COP_MODE_CONVOY && !this.target.alive) {
-            this.setMode(COP_MODE_WANDER, { coords: this.returnCoords });
-        }
-
         super.update();
 
         this.FOV.update({
@@ -87,7 +83,10 @@ class Cop extends Prefab {
                 const { jailCoords } = props;
                 this.FOV.kill();
                 this.returnCoords = { x: this.sprite.x, y: this.sprite.y };
-                this.moveTo(jailCoords);
+                this.moveTo({
+                    ...jailCoords,
+                    callback: this.handleCovoyEnd.bind(this)
+                });
                 break;
             }
             case COP_MODE_ENTER: {
@@ -105,6 +104,14 @@ class Cop extends Prefab {
         }
 
         super.setMode(mode);
+    }
+
+    handleCovoyEnd() {
+        for (let i = 0; i < this.sprite.children.length; i++) {
+            this.sprite.getChildAt(i).mz.kill();
+        }
+
+        this.setMode(COP_MODE_WANDER, { coords: this.returnCoords });
     }
 
     wander() {
