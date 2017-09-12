@@ -5,6 +5,10 @@ import {
     END_GAME_TIME_OUT
 } from '../constants.js';
 
+import {
+    getFormattedTime
+} from '../utils.js';
+
 const STRIPE_HEIGHT = 100;
 const STRIPE_DURATION = 1500;
 const OVERLAY_DURATION = 3000;
@@ -95,12 +99,10 @@ class EndMenu {
         this.sprite.addChild(title);
 
         if (this.mode !== END_GAME_TIME_OUT) {
-            const timeString = String(Math.floor(this.stats.time / 60)).padStart(2, '0') + ':' +
-                String(this.stats.time % 60).padStart(2, '0');
             const time = this.game.add.text(
                 40,
                 100,
-                `Your time: ${timeString}`,
+                `Your time: ${getFormattedTime(this.stats.time)}`,
                 {
                     font: '24px Arial',
                     fill: '#fff'

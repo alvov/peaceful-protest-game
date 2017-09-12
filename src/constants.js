@@ -1,3 +1,6 @@
+export const LANG_RUS = 'rus';
+export const LANG_EN = 'en';
+
 export const FIELD_OFFSET = {
     top: 150,
     right: 50,

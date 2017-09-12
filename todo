@@ -21,9 +21,6 @@ TechDebt
 ? game config
 ? phaser custom build
 ? press shooting animation/sound
-? add 'show poster' button for mouse controls
-? common functions formatted time
-? shield for timeout
 ? lang
 - menu via html
 - extend sprite object

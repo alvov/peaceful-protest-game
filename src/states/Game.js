@@ -26,6 +26,10 @@ import {
     JOURNALIST_MODE_WANDER
 } from '../constants.js';
 
+import {
+    getFormattedTime
+} from '../utils.js';
+
 class Game {
     init(level) {
         this.mz = {
@@ -64,7 +68,8 @@ class Game {
             arrays: {
                 protesters: [],
                 cops: [],
-                press: []
+                press: [],
+                borders: []
             },
             groups: {
                 actors: null,
@@ -112,21 +117,32 @@ class Game {
         for (let i = 0; i < this.game.world.width; i += 300) {
             const autoSprite = this.game.add.sprite(i, 120, 'auto');
             autoSprite.anchor.set(0, 1);
-            this.game.physics.arcade.enable(autoSprite);
-            autoSprite.body.setSize(
-                autoSprite.width,
-                autoSprite.height - 10
-            );
-            autoSprite.body.immovable = true;
             this.mz.groups.cars.add(autoSprite);
         }
 
         this.mz.groups.actors = this.game.add.group();
 
+        // player
+        this.mz.objects.player = new Player({
+            game: this.game,
+            x: this.game.world.centerX,
+            y: this.game.world.centerY,
+            fovGroup: this.mz.groups.playerFOV,
+            ...this.mz.level.player,
+            onDropPoster: this.handleDropPoster.bind(this)
+        });
+        this.game.camera.follow(this.mz.objects.player.sprite);
+        this.mz.groups.actors.add(this.mz.objects.player.sprite);
+
         // top borders
         for (let i = 0; i < this.game.world.width; i += 100) {
-            const sprite = this.game.add.sprite(i, FIELD_OFFSET.top - 25, 'border', 0, this.mz.groups.actors);
-            sprite.anchor.set(0, 0.5);
+            const offset = Math.max(0, 50 - this.mz.objects.player.sprite.height);
+            const borderTop = this.game.add.sprite(i, FIELD_OFFSET.top - 25, 'border', 0, this.mz.groups.actors);
+            borderTop.anchor.set(0, 0.5);
+            this.game.physics.arcade.enable(borderTop);
+            borderTop.body.setSize(borderTop.width, offset);
+            borderTop.body.immovable = true;
+            this.mz.arrays.borders.push(borderTop);
         }
 
         // cops
@@ -146,7 +162,7 @@ class Game {
         this.mz.objects.shield = new Shield({
             game: this.game,
             speed: {
-                value: 400
+                value: 300
             }
         });
 
@@ -175,26 +191,23 @@ class Game {
         // protesters
         this.createProtesters();
 
-        // player
-        this.mz.objects.player = new Player({
-            game: this.game,
-            x: this.game.world.centerX,
-            y: this.game.world.centerY,
-            fovGroup: this.mz.groups.playerFOV,
-            ...this.mz.level.player,
-            onDropPoster: this.handleDropPoster.bind(this)
-        });
-        this.game.camera.follow(this.mz.objects.player.sprite);
-        this.mz.groups.actors.add(this.mz.objects.player.sprite);
-
+        // interface
         this.mz.objects.interface = new GameInterface({
-            game: this.game
+            game: this.game,
+            onTogglePoster: () => {
+                this.mz.objects.player.togglePoster();
+            }
         });
 
         // bottom borders
         for (let i = 0; i < this.game.world.width; i += 100) {
-            const sprite = this.game.add.sprite(i, this.game.world.height - 25, 'border', 0, this.mz.groups.actors);
-            sprite.anchor.set(0, 0.5);
+            const offset = Math.max(0, 50 - this.mz.objects.player.sprite.height);
+            const borderBottom = this.game.add.sprite(i, this.game.world.height - 25, 'border', 0, this.mz.groups.actors);
+            borderBottom.anchor.set(0, 0.5);
+            this.game.physics.arcade.enable(borderBottom);
+            borderBottom.body.setSize(borderBottom.width, offset, 0, borderBottom.height - offset);
+            borderBottom.body.immovable = true;
+            this.mz.arrays.borders.push(borderBottom);
         }
 
         this.mz.objects.timer = this.game.time.create();
@@ -288,7 +301,8 @@ class Game {
             this.mz.objects.interface.update({
                 score: this.mz.score,
                 protestersAlive: this.mz.protesters.alive,
-                protestersTotal: this.mz.level.protesters.count.max
+                protestersTotal: this.mz.level.protesters.count.max,
+                meanMood: this.mz.protesters.meanMood
             });
         }
 
@@ -446,6 +460,20 @@ class Game {
                     this.arrest(protesterSprite, swatSprite);
                 }
             }
+
+            // vs shield
+            if (this.mz.gameEnded) {
+                this.game.physics.arcade.collide(
+                    protesterSprite,
+                    this.mz.objects.shield.sprite,
+                    protesterSprite => {
+                        protesterSprite.body.collideWorldBounds = false;
+                        if (protesterSprite.health === 1) {
+                            this.beatUpProtester(protesterSprite);
+                        }
+                    }
+                );
+            }
         }
 
         // player collisions
@@ -460,25 +488,11 @@ class Game {
             });
         }
 
-        // player vs cars collision
+        // player vs borders collision
         this.game.physics.arcade.collide(
             this.mz.objects.player.sprite,
-            this.mz.groups.cars
+            this.mz.arrays.borders
         );
-
-        // player vs shield collision
-        if (this.mz.gameEnded) {
-            this.game.physics.arcade.collide(
-                this.mz.objects.player.sprite,
-                this.mz.objects.shield.sprite,
-                playerSprite => {
-                    playerSprite.body.collideWorldBounds = false;
-                    if (playerSprite.health === 1) {
-                        this.beatUpProtester(playerSprite);
-                    }
-                }
-            );
-        }
 
         this.mz.groups.actors.sort('y', Phaser.Group.SORT_ASCENDING);
 
@@ -493,10 +507,11 @@ class Game {
     }
 
     render() {
+        // this.game.debug.cameraInfo(this.game.camera, 32, 32);
         // this.game.debug.body(this.mz.objects.player.sprite);
         // this.game.debug.bodyInfo(this.mz.objects.player.sprite, 0, 100);
 
-        // this.mz.groups.cars.forEachExists(sprite => {
+        // this.mz.arrays.borders.forEach(sprite => {
         //     this.game.debug.body(sprite);
         // });
         // this.mz.arrays.cops.forEach(sprite => {
@@ -558,7 +573,7 @@ class Game {
 
     updateTimer() {
         this.mz.timePassed++;
-        this.mz.objects.interface.updateTimer(this.getFormattedTime(this.mz.timePassed));
+        this.mz.objects.interface.updateTimer(getFormattedTime(this.mz.level.duration - this.mz.timePassed));
     }
 
     createCops() {
@@ -660,7 +675,7 @@ class Game {
         this.mz.groups.cars.forEach(carSprite => {
             const carCoords = {
                 x: (carSprite.right + carSprite.left) / 2,
-                y: carSprite.bottom + 25
+                y: carSprite.bottom + 20
             };
             const distanceToCarSq = this.getDistanceSq(copSprite, carCoords);
             if (distanceToCarSq < minDistanceSq) {
@@ -719,7 +734,7 @@ class Game {
 
     launchShield() {
         this.mz.objects.shield.setMode(SHIELD_MODE_DRIVE, {
-            y: this.mz.objects.player.sprite.y
+            y: this.game.height / 2 + this.game.camera.y
         });
     }
 
@@ -783,6 +798,7 @@ class Game {
                     this.mz.arrays.protesters.forEach(sprite => {
                         sprite.mz.moodDown(1);
                     });
+                    this.launchShield();
                     break;
                 }
                 case END_GAME_PROTEST_RATE: {
@@ -831,12 +847,6 @@ class Game {
             FIELD_OFFSET.top,
             this.game.world.height - FIELD_OFFSET.bottom
         );
-    }
-
-    getFormattedTime(secondsPassed) {
-        const s = this.mz.level.duration - secondsPassed;
-        const min = Math.floor(s / 60);
-        return String(min).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
     }
 }
 

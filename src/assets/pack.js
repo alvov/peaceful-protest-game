@@ -36,6 +36,20 @@ export default {
             frameHeight: 50
         },
         {
+            type: 'spritesheet',
+            key: 'langButtons',
+            url: require('./langButtons.png'),
+            frameWidth: 50,
+            frameHeight: 50
+        },
+        {
+            type: 'spritesheet',
+            key: 'posterButton',
+            url: require('./posterButton.png'),
+            frameWidth: 60,
+            frameHeight: 60
+        },
+        {
             type: 'audio',
             key: 'theme',
             urls: require('./audio/theme.mp3')

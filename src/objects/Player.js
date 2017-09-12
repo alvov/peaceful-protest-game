@@ -73,9 +73,6 @@ class Player extends Protester {
         fovGroup.add(this.circleGraphics);
 
         // events
-        this.sprite.events.onInputDown.add(this.handleClickOnSelf, this);
-        this.sprite.input.priorityID = 2;
-
         this.game.onResume.add(this.handleGameResume, this);
 
         this.keys = {
@@ -202,7 +199,6 @@ class Player extends Protester {
 
                 this.sprite.body.collideWorldBounds = false;
 
-                this.sprite.events.onInputDown.removeAll();
                 this.cooldownTimer.stop(true);
                 break;
             }
@@ -273,7 +269,6 @@ class Player extends Protester {
 
     freeze() {
         if (this.sprite.alive) {
-            this.sprite.events.onInputDown.removeAll();
             this.moveTo(null);
         }
 
