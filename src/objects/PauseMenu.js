@@ -12,7 +12,7 @@ class PauseMenu {
         this.title = this.game.add.text(
             this.game.width / 2,
             2 / 3 * this.game.height / 2,
-            'Pause'
+            this.game.mz.i18n.getTranslation('Pause')
         );
         this.title.anchor.setTo(0.5);
 

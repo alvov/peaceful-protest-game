@@ -1,4 +1,4 @@
-export const LANG_RUS = 'rus';
+export const LANG_RU = 'ru';
 export const LANG_EN = 'en';
 
 export const FIELD_OFFSET = {

@@ -90,7 +90,7 @@ class EndMenu {
         const title = this.game.add.text(
             40,
             40,
-            titleText,
+            this.game.mz.i18n.getTranslation(titleText),
             {
                 font: '24px Arial',
                 fill: this.mode === END_GAME_WIN ? '#393' : '#933'
@@ -98,34 +98,44 @@ class EndMenu {
         );
         this.sprite.addChild(title);
 
+        const stats = [
+            ['Total protesters:', this.stats.revived],
+            ['Active:', this.stats.alive],
+            ['Arrested:', this.stats.arrested],
+            ['Left home:', this.stats.left]
+        ];
+
         if (this.mode !== END_GAME_TIME_OUT) {
-            const time = this.game.add.text(
-                40,
-                100,
-                `Your time: ${getFormattedTime(this.stats.time)}`,
-                {
-                    font: '24px Arial',
-                    fill: '#fff'
-                }
-            );
-            this.sprite.addChild(time);
+            stats.unshift(['Your time:', String(getFormattedTime(this.stats.time))]);
         }
 
-        const stats = this.game.add.text(
+        stats.forEach((args, i) => {
+            this.renderStat(i * 40 + 100, ...args);
+        });
+    }
+
+    renderStat(y, text, value) {
+        const label = this.game.add.text(
             40,
-            this.mode === END_GAME_TIME_OUT ? 100 : 130,
-`
-Total protesters: ${this.stats.revived}
-Active: ${this.stats.alive}
-Arrested: ${this.stats.arrested}
-Left home: ${this.stats.left}
-`,
+            y,
+            this.game.mz.i18n.getTranslation(text),
             {
                 font: '24px Arial',
                 fill: '#fff'
             }
         );
-        this.sprite.addChild(stats);
+        this.sprite.addChild(label);
+
+        const valueText = this.game.add.text(
+            300,
+            y,
+            String(value),
+            {
+                font: '24px Arial',
+                fill: '#fff'
+            }
+        );
+        this.sprite.addChild(valueText);
     }
 }
 

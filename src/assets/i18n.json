@@ -1,0 +1,41 @@
+{
+  "Loading": {
+    "ru": "Загрузка"
+  },
+  "Peaceful protest": {
+    "ru": "Мирная акция протеста"
+  },
+  "Protest meter": {
+    "ru": "Шкала протеста"
+  },
+  "You did it!": {
+    "ru": "Маладец!"
+  },
+  "They turned you in, pal": {
+    "ru": "Суши сухари, дружище"
+  },
+  "Time is out!": {
+    "ru": "Время вышло!"
+  },
+  "You let the protest fail :(": {
+    "ru": "Ты слил протест :("
+  },
+  "Your time:": {
+    "ru": "Время:"
+  },
+  "Total protesters:": {
+    "ru": "Всего протестующих:"
+  },
+  "Active:": {
+    "ru": "Осталось на митинге:"
+  },
+  "Arrested:": {
+    "ru": "Арестовано:"
+  },
+  "Left home:": {
+    "ru": "Ушло домой:"
+  },
+  "Pause": {
+    "ru": "Пауза"
+  }
+}

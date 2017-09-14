@@ -1,7 +1,5 @@
 import pack from '../assets/pack.js';
-// import {
-//     LANG_RUS
-// } from '../constants.js';
+import i18n from '../objects/i18n.js';
 
 class Boot {
     init() {
@@ -10,20 +8,26 @@ class Boot {
         this.scale.pageAlignVertically = true;
         this.scale.forceOrientation(true, false);
 
-        // this.game.mz = {
-        //     lang: LANG_RUS
-        // };
+        this.game.mz = {};
     }
 
-    preload() {}
-
     create() {
+        this.game.mz.i18n = new i18n({
+            game: this.game
+        });
+
+        this.state.onStateChange.add(this.handleStateChange, this);
+
         this.state.start('Loading', true, false, {
             assets: [
                 ['pack', 'initial', null, JSON.stringify(pack)]
             ],
             nextState: ['StartMenu']
         });
+    }
+
+    handleStateChange() {
+        this.game.mz.i18n.clear();
     }
 }
 

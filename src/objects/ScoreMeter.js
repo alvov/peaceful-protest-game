@@ -19,7 +19,7 @@ class ScoreMeter {
         this.label = this.game.add.text(
             -this.width / 2 + 20,
             -8,
-            'Protest meter',
+            this.game.mz.i18n.getTranslation('Protest meter'),
             {
                 font: '12px Arial',
                 fill: '#000',
