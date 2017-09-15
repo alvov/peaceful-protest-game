@@ -18,14 +18,18 @@ MVP
 - graphics
 
 TechDebt
-? game config
 ? phaser custom build
-? press shooting animation/sound
+? uglify-js
+? readme
+? github
+? virtual joystick
+
+- game config
+- press shooting animation/sound
 - menu via html
 - extend sprite object
 
 Cpx Prf Feature
-2   0   cops in disguise
 +   +   protesters: reappear
 +   +   cops FOV: cone
 +   +   cops: swat
@@ -33,6 +37,5 @@ Cpx Prf Feature
 +   +   extra points for position
 +   +   upgrades for posters
 +   +   kill: prison bus
-2   0   play for cops
 +   +   sounds
 +   +   music

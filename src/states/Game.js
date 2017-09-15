@@ -452,7 +452,7 @@ class Game {
                 for (let j = 0; j < this.mz.objects.swat.sprites.length; j++) {
                     const swatSprite = this.mz.objects.swat.sprites[j];
                     if (
-                        swatSprite.children !== 0 ||
+                        swatSprite.children.length !== 0 ||
                         !Phaser.Rectangle.intersects(protesterBounds, swatSprite.getBounds())
                     ) {
                         continue;

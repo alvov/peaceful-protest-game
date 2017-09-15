@@ -72,90 +72,96 @@
 /* harmony default export */ __webpack_exports__["a"] = ({
     initial: [{
         type: 'spritesheet',
-        key: 'level01',
-        url: __webpack_require__(306),
-        frameWidth: 300,
-        frameHeight: 150
-    }, {
-        type: 'spritesheet',
-        key: 'level02',
-        url: __webpack_require__(307),
-        frameWidth: 300,
-        frameHeight: 150
-    }, {
-        type: 'spritesheet',
         key: 'playButton',
-        url: __webpack_require__(308),
+        url: __webpack_require__(306),
         frameWidth: 100,
         frameHeight: 100
     }, {
         type: 'spritesheet',
         key: 'repeatButton',
-        url: __webpack_require__(309),
+        url: __webpack_require__(307),
         frameWidth: 100,
         frameHeight: 100
     }, {
         type: 'spritesheet',
         key: 'soundButtons',
-        url: __webpack_require__(310),
+        url: __webpack_require__(308),
         frameWidth: 50,
         frameHeight: 50
     }, {
         type: 'spritesheet',
         key: 'langButtons',
-        url: __webpack_require__(311),
+        url: __webpack_require__(309),
         frameWidth: 50,
         frameHeight: 50
     }, {
         type: 'spritesheet',
-        key: 'posterButton',
+        key: 'helpArrows',
+        url: __webpack_require__(310),
+        frameWidth: 150,
+        frameHeight: 50
+    }, {
+        type: 'spritesheet',
+        key: 'helpShift',
+        url: __webpack_require__(311),
+        frameWidth: 150,
+        frameHeight: 50
+    }, {
+        type: 'spritesheet',
+        key: 'helpSpacebar',
         url: __webpack_require__(312),
+        frameWidth: 200,
+        frameHeight: 50
+    }, {
+        type: 'spritesheet',
+        key: 'posterButton',
+        url: __webpack_require__(313),
         frameWidth: 60,
         frameHeight: 60
     }, {
         type: 'audio',
         key: 'theme',
-        urls: __webpack_require__(313)
-    }, {
-        type: 'audio',
-        key: 'punch01',
         urls: __webpack_require__(314)
     }, {
         type: 'audio',
-        key: 'punch02',
+        key: 'punch01',
         urls: __webpack_require__(315)
     }, {
         type: 'audio',
-        key: 'applause',
+        key: 'punch02',
         urls: __webpack_require__(316)
     }, {
         type: 'audio',
-        key: 'boo',
+        key: 'applause',
         urls: __webpack_require__(317)
     }, {
         type: 'audio',
-        key: 'croud',
+        key: 'boo',
         urls: __webpack_require__(318)
     }, {
         type: 'audio',
-        key: 'cough01',
+        key: 'croud',
         urls: __webpack_require__(319)
     }, {
         type: 'audio',
-        key: 'cough02',
+        key: 'cough01',
         urls: __webpack_require__(320)
     }, {
         type: 'audio',
-        key: 'scream03',
+        key: 'cough02',
         urls: __webpack_require__(321)
     }, {
         type: 'audio',
-        key: 'truck',
+        key: 'scream03',
         urls: __webpack_require__(322)
     }, {
         type: 'audio',
-        key: 'pick',
+        key: 'truck',
         urls: __webpack_require__(323)
+    }, {
+        type: 'audio',
+        key: 'pick',
+        urls: __webpack_require__(324)
     }],
     level1: [{
         type: 'spritesheet',
@@ -172,7 +178,7 @@
     }, {
         type: 'spritesheet',
         key: 'cop',
-        url: __webpack_require__(324),
+        url: __webpack_require__(325),
         frameWidth: 44,
         frameHeight: 49
     }, {
@@ -226,7 +232,7 @@
     }, {
         type: 'image',
         key: 'ground',
-        url: __webpack_require__(325),
+        url: __webpack_require__(326),
         overwrite: false
     }],
     level2: [{
@@ -244,13 +250,13 @@
     }, {
         type: 'spritesheet',
         key: 'cop',
-        url: __webpack_require__(326),
+        url: __webpack_require__(327),
         frameWidth: 46,
         frameHeight: 54
     }, {
         type: 'spritesheet',
         key: 'swat',
-        url: __webpack_require__(327),
+        url: __webpack_require__(328),
         frameWidth: 30,
         frameHeight: 46
     }, {
@@ -304,7 +310,7 @@
     }, {
         type: 'image',
         key: 'ground',
-        url: __webpack_require__(328),
+        url: __webpack_require__(329),
         overwrite: false
     }]
 });
@@ -678,9 +684,13 @@ var JOURNALIST_MODE_SHOOTING = 'shooting';
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states_Boot_js__ = __webpack_require__(305);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__ = __webpack_require__(331);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_Game_js__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_Help_js__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__states_Controls_js__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__states_Game_js__ = __webpack_require__(337);
+
+
 
 
 
@@ -698,7 +708,9 @@ var game = new Phaser.Game({
 game.state.add('Boot', __WEBPACK_IMPORTED_MODULE_0__states_Boot_js__["a" /* default */]);
 game.state.add('Loading', __WEBPACK_IMPORTED_MODULE_1__states_Loading_js__["a" /* default */]);
 game.state.add('StartMenu', __WEBPACK_IMPORTED_MODULE_2__states_StartMenu_js__["a" /* default */]);
-game.state.add('Game', __WEBPACK_IMPORTED_MODULE_3__states_Game_js__["a" /* default */]);
+game.state.add('Help', __WEBPACK_IMPORTED_MODULE_3__states_Help_js__["a" /* default */]);
+game.state.add('Controls', __WEBPACK_IMPORTED_MODULE_4__states_Controls_js__["a" /* default */]);
+game.state.add('Game', __WEBPACK_IMPORTED_MODULE_5__states_Game_js__["a" /* default */]);
 
 game.state.start('Boot');
 
@@ -709,7 +721,7 @@ game.state.start('Boot');
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_pack_js__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_i18n_js__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_i18n_js__ = __webpack_require__(330);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -763,169 +775,176 @@ var Boot = function () {
 /***/ 306:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/f92bc2f5d7aa8c5e8ccf000dd5f2268c.jpg";
+module.exports = __webpack_require__.p + "assets/121104892eaea3f65969e7beb7d9f45f.png";
 
 /***/ }),
 
 /***/ 307:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/c7118db4b46452ebb66ca9f1f72e7d53.jpg";
+module.exports = __webpack_require__.p + "assets/a41131e8dff8ee89ba12d9d36534a417.png";
 
 /***/ }),
 
 /***/ 308:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/121104892eaea3f65969e7beb7d9f45f.png";
+module.exports = __webpack_require__.p + "assets/14ca0f6714021de1e9776c79ad48e916.png";
 
 /***/ }),
 
 /***/ 309:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/a41131e8dff8ee89ba12d9d36534a417.png";
+module.exports = __webpack_require__.p + "assets/66dd3dd498c059b331146e5fe01f17dd.png";
 
 /***/ }),
 
 /***/ 310:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/14ca0f6714021de1e9776c79ad48e916.png";
+module.exports = __webpack_require__.p + "assets/4190e618de11fbf3ae3d41873529b2e0.png";
 
 /***/ }),
 
 /***/ 311:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/40909121a11d3720930c7934e6f10901.png";
+module.exports = __webpack_require__.p + "assets/3eb6c3176371a0f3cc4fc69f68d0daea.png";
 
 /***/ }),
 
 /***/ 312:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/d75ac66b714b8f2e53ccbf82f8fe4974.png";
+module.exports = __webpack_require__.p + "assets/faef552b2e7643fbca6e2dcd87dec01b.png";
 
 /***/ }),
 
 /***/ 313:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/31269e05cd13ab095ae3bbb217d2f567.mp3";
+module.exports = __webpack_require__.p + "assets/d75ac66b714b8f2e53ccbf82f8fe4974.png";
 
 /***/ }),
 
 /***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/0cb89b881decdf87d1ccaba4ae7aaffb.mp3";
+module.exports = __webpack_require__.p + "assets/31269e05cd13ab095ae3bbb217d2f567.mp3";
 
 /***/ }),
 
 /***/ 315:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/dca004f04dec60da50cca8fecc4161f2.mp3";
+module.exports = __webpack_require__.p + "assets/0cb89b881decdf87d1ccaba4ae7aaffb.mp3";
 
 /***/ }),
 
 /***/ 316:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/3745bf01cd4446437f37de7991ad805b.mp3";
+module.exports = __webpack_require__.p + "assets/dca004f04dec60da50cca8fecc4161f2.mp3";
 
 /***/ }),
 
 /***/ 317:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/52b53826ba253bf501d879893845b5f4.mp3";
+module.exports = __webpack_require__.p + "assets/3745bf01cd4446437f37de7991ad805b.mp3";
 
 /***/ }),
 
 /***/ 318:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/15a327358f08be2e673ef27c2e5dcaa1.mp3";
+module.exports = __webpack_require__.p + "assets/52b53826ba253bf501d879893845b5f4.mp3";
 
 /***/ }),
 
 /***/ 319:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/6632e8a1ef01b6e295413e6fa1606858.mp3";
+module.exports = __webpack_require__.p + "assets/15a327358f08be2e673ef27c2e5dcaa1.mp3";
 
 /***/ }),
 
 /***/ 320:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/2db995ce7f0661c455b95602348d7c50.mp3";
+module.exports = __webpack_require__.p + "assets/6632e8a1ef01b6e295413e6fa1606858.mp3";
 
 /***/ }),
 
 /***/ 321:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/05b4ea2cf7bcddf26622cdaafb40b881.mp3";
+module.exports = __webpack_require__.p + "assets/2db995ce7f0661c455b95602348d7c50.mp3";
 
 /***/ }),
 
 /***/ 322:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/b2187268a6f521f79c03adf9bedcf458.mp3";
+module.exports = __webpack_require__.p + "assets/05b4ea2cf7bcddf26622cdaafb40b881.mp3";
 
 /***/ }),
 
 /***/ 323:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/dd570435d42a0e42441e1fc12af0f4fa.mp3";
+module.exports = __webpack_require__.p + "assets/b2187268a6f521f79c03adf9bedcf458.mp3";
 
 /***/ }),
 
 /***/ 324:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/d98ae72532ed2e0fe2b7596a57c1cbac.png";
+module.exports = __webpack_require__.p + "assets/dd570435d42a0e42441e1fc12af0f4fa.mp3";
 
 /***/ }),
 
 /***/ 325:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/7780fada5b5def9a73f068e7dee87e98.jpg";
+module.exports = __webpack_require__.p + "assets/d98ae72532ed2e0fe2b7596a57c1cbac.png";
 
 /***/ }),
 
 /***/ 326:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/733d7ab8b793f60f4c77b9d837fa3693.png";
+module.exports = __webpack_require__.p + "assets/01689666662dc43509774a074f8236d2.png";
 
 /***/ }),
 
 /***/ 327:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/d0797776e88d180a0467e06d6899a8ae.png";
+module.exports = __webpack_require__.p + "assets/733d7ab8b793f60f4c77b9d837fa3693.png";
 
 /***/ }),
 
 /***/ 328:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "assets/ba54524471c2d26696759b97325dc4fd.jpg";
+module.exports = __webpack_require__.p + "assets/d0797776e88d180a0467e06d6899a8ae.png";
 
 /***/ }),
 
 /***/ 329:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/8afe7311bb2c99db9fb7c7ac970c905f.png";
+
+/***/ }),
+
+/***/ 330:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_i18n_json__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_i18n_json__ = __webpack_require__(331);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_i18n_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__assets_i18n_json__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_js__ = __webpack_require__(13);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -992,7 +1011,7 @@ var i18n = function () {
 
 /***/ }),
 
-/***/ 330:
+/***/ 331:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1001,6 +1020,42 @@ module.exports = {
 	},
 	"Peaceful protest": {
 		"ru": "Мирная акция протеста"
+	},
+	"> Level 01": {
+		"ru": "> Уровень 01"
+	},
+	"> Level 02": {
+		"ru": "> Уровень 02"
+	},
+	"How to play?": {
+		"ru": "Как играть?"
+	},
+	"Controls": {
+		"ru": "Управление"
+	},
+	"<   Back to menu": {
+		"ru": "<   Назад в меню"
+	},
+	"move around": {
+		"ru": "двигаться"
+	},
+	"run": {
+		"ru": "бегать"
+	},
+	"show poster": {
+		"ru": "показать плакат"
+	},
+	"Fill the protest scale before time runs out": {
+		"ru": "Заполните шкалу протеста на 100% пока не вышло время"
+	},
+	"Show your poster to people around you to cheer them up": {
+		"ru": "Показывайте плакат другим людям, чтобы их завести"
+	},
+	"Show your poster to journalists for several seconds to call out for more people": {
+		"ru": "Показывайте плакат журналистам несколько секунд, чтобы позвать больше людей"
+	},
+	"Cops will chase you and others for showing posters": {
+		"ru": "Полицейские вас задержат, если поймают с плакатом"
 	},
 	"Protest meter": {
 		"ru": "Шкала протеста"
@@ -1039,7 +1094,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 331:
+/***/ 332:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1126,13 +1181,15 @@ var Loading = function () {
 
 /***/ }),
 
-/***/ 332:
+/***/ 333:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__levels_js__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__levels_js__ = __webpack_require__(334);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_pack_js__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(13);
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1149,24 +1206,34 @@ var StartMenu = function () {
     _createClass(StartMenu, [{
         key: 'preload',
         value: function preload() {
-            this.game.stage.backgroundColor = '#ccc';
+            this.game.stage.backgroundColor = '#000';
         }
     }, {
         key: 'create',
         value: function create() {
+            var _this = this;
+
             this.game.world.resize(this.game.width, this.game.height);
 
-            this.title = this.game.mz.i18n.createText(this.game.world.centerX, 40, 'Peaceful protest');
+            this.title = this.game.mz.i18n.createText(this.game.world.centerX, 100, 'Peaceful protest', {
+                fill: '#fff'
+            });
             this.title.anchor.setTo(0.5);
 
-            this.level1Button = this.game.add.button(150, this.world.centerY, 'level02', this.handleClickPlay.bind(this, 'level1'));
-            this.level1Button.anchor.setTo(0.5);
+            this.menu = [['> Level 01', this.handleClickPlay.bind(this, 'level1')], ['> Level 02', this.handleClickPlay.bind(this, 'level2')], ['How to play?', this.handleClickHelp.bind(this)], ['Controls', this.handleClickControls.bind(this)]].map(function (_ref, i) {
+                var _ref2 = _slicedToArray(_ref, 2),
+                    itemTitle = _ref2[0],
+                    callback = _ref2[1];
 
-            this.level2Button = this.game.add.button(this.world.width - 150, this.world.centerY, 'level01', this.handleClickPlay.bind(this, 'level2'));
-            this.level2Button.anchor.setTo(0.5);
+                return [_this.game.mz.i18n.createText(40, i * 70 + 200, itemTitle, {
+                    fill: '#fff'
+                }), callback];
+            });
 
             this.langButton = this.game.add.button(this.game.world.width - 10, 10, 'langButtons', this.handleClickLang.bind(this));
             this.langButton.anchor.setTo(1, 0);
+
+            this.game.input.onDown.add(this.handleClickMenu, this);
         }
     }, {
         key: 'update',
@@ -1186,6 +1253,33 @@ var StartMenu = function () {
         value: function handleClickLang() {
             this.game.mz.i18n.setLang(this.game.mz.i18n.currentLang === __WEBPACK_IMPORTED_MODULE_2__constants_js__["o" /* LANG_RU */] ? __WEBPACK_IMPORTED_MODULE_2__constants_js__["n" /* LANG_EN */] : __WEBPACK_IMPORTED_MODULE_2__constants_js__["o" /* LANG_RU */]);
         }
+    }, {
+        key: 'handleClickMenu',
+        value: function handleClickMenu() {
+            var _this2 = this;
+
+            this.menu.some(function (_ref3) {
+                var _ref4 = _slicedToArray(_ref3, 2),
+                    item = _ref4[0],
+                    callback = _ref4[1];
+
+                if (item.getBounds().contains(_this2.game.input.x, _this2.game.input.y)) {
+                    _this2.game.input.onDown.remove(_this2.handleClickMenu, _this2);
+                    callback();
+                    return true;
+                }
+            });
+        }
+    }, {
+        key: 'handleClickHelp',
+        value: function handleClickHelp() {
+            this.state.start('Help', true, false);
+        }
+    }, {
+        key: 'handleClickControls',
+        value: function handleClickControls() {
+            this.state.start('Controls', true, false);
+        }
     }]);
 
     return StartMenu;
@@ -1195,7 +1289,7 @@ var StartMenu = function () {
 
 /***/ }),
 
-/***/ 333:
+/***/ 334:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1325,19 +1419,135 @@ var StartMenu = function () {
 
 /***/ }),
 
-/***/ 334:
+/***/ 335:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(335);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_NPCProtester_js__ = __webpack_require__(336);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(337);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(338);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__objects_SWATSquad_js__ = __webpack_require__(339);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__objects_Shield_js__ = __webpack_require__(340);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__objects_GameInterface_js__ = __webpack_require__(341);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__objects_PauseMenu_js__ = __webpack_require__(343);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__objects_EndMenu_js__ = __webpack_require__(344);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Help = function () {
+    function Help() {
+        _classCallCheck(this, Help);
+    }
+
+    _createClass(Help, [{
+        key: 'preload',
+        value: function preload() {
+            this.game.stage.backgroundColor = '#000';
+        }
+    }, {
+        key: 'create',
+        value: function create() {
+            var _this = this;
+
+            this.back = this.game.add.text(40, 40, this.game.mz.i18n.getTranslation('<   Back to menu'), {
+                fill: '#fff'
+            });
+
+            ['Fill the protest scale before time runs out', 'Show your poster to people around you to cheer them up', 'Show your poster to journalists for several seconds to call out for more people', 'Cops will chase you and others for showing posters'].forEach(function (text, i) {
+                _this.game.add.text(40, i * 80 + 150, i + 1 + '. ' + _this.game.mz.i18n.getTranslation(text) + '.', {
+                    font: '22px Arial',
+                    fill: '#fff',
+                    wordWrap: true,
+                    wordWrapWidth: _this.game.width - 80
+                });
+            });
+
+            this.game.input.onDown.add(this.handleClickBack, this);
+        }
+    }, {
+        key: 'handleClickBack',
+        value: function handleClickBack() {
+            if (this.back.getBounds().contains(this.game.input.x, this.game.input.y)) {
+                this.game.input.onDown.remove(this.handleClickBack, this);
+                this.state.start('StartMenu', true, false);
+                return true;
+            }
+        }
+    }]);
+
+    return Help;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Help);
+
+/***/ }),
+
+/***/ 336:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Controls = function () {
+    function Controls() {
+        _classCallCheck(this, Controls);
+    }
+
+    _createClass(Controls, [{
+        key: 'preload',
+        value: function preload() {
+            this.game.stage.backgroundColor = '#000';
+        }
+    }, {
+        key: 'create',
+        value: function create() {
+            var _this = this;
+
+            this.back = this.game.add.text(40, 40, this.game.mz.i18n.getTranslation('<   Back to menu'), {
+                fill: '#fff'
+            });
+
+            [['helpArrows', 'move around'], ['helpShift', 'run'], ['helpSpacebar', 'show poster']].forEach(function (_ref, i) {
+                var _ref2 = _slicedToArray(_ref, 2),
+                    spriteKey = _ref2[0],
+                    text = _ref2[1];
+
+                _this.game.add.sprite(40, i * 100 + 200, spriteKey);
+                _this.game.add.text(300, i * 100 + 210, _this.game.mz.i18n.getTranslation(text), {
+                    fill: '#fff'
+                });
+            });
+
+            this.game.input.onDown.add(this.handleClickBack, this);
+        }
+    }, {
+        key: 'handleClickBack',
+        value: function handleClickBack() {
+            if (this.back.getBounds().contains(this.game.input.x, this.game.input.y)) {
+                this.game.input.onDown.remove(this.handleClickBack, this);
+                this.state.start('StartMenu', true, false);
+                return true;
+            }
+        }
+    }]);
+
+    return Controls;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Controls);
+
+/***/ }),
+
+/***/ 337:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_Player_js__ = __webpack_require__(338);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_NPCProtester_js__ = __webpack_require__(339);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_Cop_js__ = __webpack_require__(340);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_Journalist_js__ = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__objects_SWATSquad_js__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__objects_Shield_js__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__objects_GameInterface_js__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__objects_PauseMenu_js__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__objects_EndMenu_js__ = __webpack_require__(347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__constants_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_js__ = __webpack_require__(128);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -1738,7 +1948,7 @@ var Game = function () {
                 if (this.mz.objects.swat) {
                     for (var _j = 0; _j < this.mz.objects.swat.sprites.length; _j++) {
                         var swatSprite = this.mz.objects.swat.sprites[_j];
-                        if (swatSprite.children !== 0 || !Phaser.Rectangle.intersects(protesterBounds, swatSprite.getBounds())) {
+                        if (swatSprite.children.length !== 0 || !Phaser.Rectangle.intersects(protesterBounds, swatSprite.getBounds())) {
                             continue;
                         }
                         this.arrest(protesterSprite, swatSprite);
@@ -2144,7 +2354,7 @@ var Game = function () {
 
 /***/ }),
 
-/***/ 335:
+/***/ 338:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2468,7 +2678,7 @@ var Player = function (_Protester) {
 
 /***/ }),
 
-/***/ 336:
+/***/ 339:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2706,7 +2916,7 @@ var NPCProtester = function (_Protester) {
 
 /***/ }),
 
-/***/ 337:
+/***/ 340:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2926,7 +3136,7 @@ var Cop = function (_Prefab) {
 
 /***/ }),
 
-/***/ 338:
+/***/ 341:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3111,7 +3321,7 @@ var Journalist = function (_Prefab) {
 
 /***/ }),
 
-/***/ 339:
+/***/ 342:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3244,7 +3454,7 @@ var SWATSquad = function () {
 
 /***/ }),
 
-/***/ 340:
+/***/ 343:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3345,11 +3555,11 @@ var Shield = function () {
 
 /***/ }),
 
-/***/ 341:
+/***/ 344:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_ScoreMeter_js__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__objects_ScoreMeter_js__ = __webpack_require__(345);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3377,11 +3587,11 @@ var GameInterface = function () {
         });
         this.group.add(this.score.group);
 
-        this.textTimer = this.game.add.text(this.game.width - 10, 20, '', {
+        this.textTimer = this.game.add.text(this.game.width - 20, 20, '', {
             font: '25px Arial',
             fill: '#fff'
         });
-        this.textTimer.anchor.set(1, 0.5);
+        this.textTimer.anchor.set(1, 0);
         this.textTimer.setShadow(2, 2, 'rgba(0, 0, 0, .8)', 0);
         this.group.add(this.textTimer);
 
@@ -3440,7 +3650,7 @@ var GameInterface = function () {
 
 /***/ }),
 
-/***/ 342:
+/***/ 345:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3592,7 +3802,7 @@ var ScoreMeter = function () {
 
 /***/ }),
 
-/***/ 343:
+/***/ 346:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3648,7 +3858,7 @@ var PauseMenu = function () {
 
 /***/ }),
 
-/***/ 344:
+/***/ 347:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -5,6 +5,42 @@
   "Peaceful protest": {
     "ru": "Мирная акция протеста"
   },
+  "> Level 01": {
+    "ru": "> Уровень 01"
+  },
+  "> Level 02": {
+    "ru": "> Уровень 02"
+  },
+  "How to play?": {
+    "ru": "Как играть?"
+  },
+  "Controls": {
+    "ru": "Управление"
+  },
+  "<   Back to menu": {
+    "ru": "<   Назад в меню"
+  },
+  "move around": {
+    "ru": "двигаться"
+  },
+  "run": {
+    "ru": "бегать"
+  },
+  "show poster": {
+    "ru": "показать плакат"
+  },
+  "Fill the protest scale before time runs out": {
+    "ru": "Заполните шкалу протеста на 100% пока не вышло время"
+  },
+  "Show your poster to people around you to cheer them up": {
+    "ru": "Показывайте плакат другим людям, чтобы их завести"
+  },
+  "Show your poster to journalists for several seconds to call out for more people": {
+    "ru": "Показывайте плакат журналистам несколько секунд, чтобы позвать больше людей"
+  },
+  "Cops will chase you and others for showing posters": {
+    "ru": "Полицейские вас задержат, если поймают с плакатом"
+  },
   "Protest meter": {
     "ru": "Шкала протеста"
   },

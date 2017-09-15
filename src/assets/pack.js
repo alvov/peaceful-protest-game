@@ -2,20 +2,6 @@ export default {
     initial: [
         {
             type: 'spritesheet',
-            key: 'level01',
-            url: require('./level01.jpg'),
-            frameWidth: 300,
-            frameHeight: 150
-        },
-        {
-            type: 'spritesheet',
-            key: 'level02',
-            url: require('./level02.jpg'),
-            frameWidth: 300,
-            frameHeight: 150
-        },
-        {
-            type: 'spritesheet',
             key: 'playButton',
             url: require('./playButton.png'),
             frameWidth: 100,
@@ -40,6 +26,27 @@ export default {
             key: 'langButtons',
             url: require('./langButtons.png'),
             frameWidth: 50,
+            frameHeight: 50
+        },
+        {
+            type: 'spritesheet',
+            key: 'helpArrows',
+            url: require('./helpArrows.png'),
+            frameWidth: 150,
+            frameHeight: 50
+        },
+        {
+            type: 'spritesheet',
+            key: 'helpShift',
+            url: require('./helpShift.png'),
+            frameWidth: 150,
+            frameHeight: 50
+        },
+        {
+            type: 'spritesheet',
+            key: 'helpSpacebar',
+            url: require('./helpSpacebar.png'),
+            frameWidth: 200,
             frameHeight: 50
         },
         {
@@ -186,7 +193,7 @@ export default {
         {
             type: 'image',
             key: 'ground',
-            url: require('./ground01.jpg'),
+            url: require('./ground01.png'),
             overwrite: false
         }
     ],
@@ -278,7 +285,7 @@ export default {
         {
             type: 'image',
             key: 'ground',
-            url: require('./ground02.jpg'),
+            url: require('./ground02.png'),
             overwrite: false
         }
     ]
