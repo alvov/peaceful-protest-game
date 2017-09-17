@@ -2,14 +2,16 @@ import {
     END_GAME_WIN,
     END_GAME_PLAYER_KILLED,
     END_GAME_PROTEST_RATE,
-    END_GAME_TIME_OUT
+    END_GAME_TIME_OUT,
+    I18N_END_ARRESTED, I18N_END_FAIL, I18N_END_TIME, I18N_END_WIN, I18N_STATS_ACTIVE, I18N_STATS_ARRESTED,
+    I18N_STATS_LEFT, I18N_STATS_TIME,
+    I18N_STATS_TOTAL
 } from '../constants.js';
 
 import {
     getFormattedTime
 } from '../utils.js';
 
-const STRIPE_HEIGHT = 100;
 const STRIPE_DURATION = 1500;
 const OVERLAY_DURATION = 3000;
 
@@ -19,25 +21,27 @@ class EndMenu {
         this.mode = mode;
         this.stats = stats;
 
+        const stripeHeight = this.game.height / 6;
+
         this.sprite = this.game.add.sprite(0, 0);
         this.sprite.fixedToCamera = true;
 
         this.topStripe = this.game.add.graphics(0, 0);
         this.topStripe.beginFill(0);
-        this.topStripe.drawRect(0, -STRIPE_HEIGHT, this.game.width, STRIPE_HEIGHT);
+        this.topStripe.drawRect(0, -stripeHeight, this.game.width, stripeHeight);
         this.topStripe.endFill();
 
         const stripesTween = this.game.add.tween(this.topStripe)
-            .to({ top: STRIPE_HEIGHT }, STRIPE_DURATION)
+            .to({ top: stripeHeight }, STRIPE_DURATION)
             .start();
         stripesTween.onComplete.addOnce(this.handleTweenComplete, this);
 
         this.bottomStripe = this.game.add.graphics(0, 0);
         this.bottomStripe.beginFill(0);
-        this.bottomStripe.drawRect(0, this.game.height, this.game.width, this.game.height + STRIPE_HEIGHT);
+        this.bottomStripe.drawRect(0, this.game.height, this.game.width, this.game.height + stripeHeight);
         this.bottomStripe.endFill();
         this.game.add.tween(this.bottomStripe)
-            .to({ top: -STRIPE_HEIGHT }, STRIPE_DURATION)
+            .to({ top: -stripeHeight }, STRIPE_DURATION)
             .start();
 
         this.overlay = this.game.add.graphics(0, 0);
@@ -57,7 +61,7 @@ class EndMenu {
             this.handleClickPlay,
             this
         );
-        this.replayButton.anchor.setTo(0.5);
+        this.replayButton.anchor.set(0.5);
         this.replayButton.visible = false;
 
         this.sprite.addChild(this.topStripe);
@@ -78,13 +82,13 @@ class EndMenu {
     showStats() {
         let titleText = '';
         if (this.mode === END_GAME_WIN) {
-            titleText = 'You did it!';
+            titleText = I18N_END_WIN;
         } else if (this.mode === END_GAME_PLAYER_KILLED) {
-            titleText = 'They turned you in, pal';
+            titleText = I18N_END_ARRESTED;
         } else if (this.mode === END_GAME_TIME_OUT) {
-            titleText = 'Time is out!';
+            titleText = I18N_END_TIME;
         } else if (this.mode === END_GAME_PROTEST_RATE) {
-            titleText = 'You let the protest fail :(';
+            titleText = I18N_END_FAIL;
         }
 
         const title = this.game.add.text(
@@ -92,21 +96,21 @@ class EndMenu {
             40,
             this.game.mz.i18n.getTranslation(titleText),
             {
-                font: '24px Arial',
+                font: '26px Arial',
                 fill: this.mode === END_GAME_WIN ? '#393' : '#933'
             }
         );
         this.sprite.addChild(title);
 
         const stats = [
-            ['Total protesters:', this.stats.revived],
-            ['Active:', this.stats.alive],
-            ['Arrested:', this.stats.arrested],
-            ['Left home:', this.stats.left]
+            [I18N_STATS_TOTAL, this.stats.revived],
+            [I18N_STATS_ACTIVE, this.stats.alive],
+            [I18N_STATS_ARRESTED, this.stats.arrested],
+            [I18N_STATS_LEFT, this.stats.left]
         ];
 
         if (this.mode !== END_GAME_TIME_OUT) {
-            stats.unshift(['Your time:', String(getFormattedTime(this.stats.time))]);
+            stats.unshift([I18N_STATS_TIME, String(getFormattedTime(this.stats.time))]);
         }
 
         stats.forEach((args, i) => {
@@ -118,7 +122,7 @@ class EndMenu {
         const label = this.game.add.text(
             40,
             y,
-            this.game.mz.i18n.getTranslation(text),
+            this.game.mz.i18n.getTranslation(text) + ':',
             {
                 font: '24px Arial',
                 fill: '#fff'
@@ -127,7 +131,7 @@ class EndMenu {
         this.sprite.addChild(label);
 
         const valueText = this.game.add.text(
-            300,
+            this.game.width / 2,
             y,
             String(value),
             {

@@ -75,7 +75,7 @@ export default {
             ],
             speed: {
                 value: 60,
-                running: 1.7
+                running: 1.8
             },
             fov: {
                 distance: 150,
@@ -112,9 +112,9 @@ export default {
                 value: 60
             },
             mood: 0.25,
-            moodUp: 0.0024,
+            moodUp: 0.002,
             moodDown: 0.0001,
-            dropPoster: 0.1
+            dropPoster: 0.12
         },
         player: {
             speed: {

@@ -18,16 +18,14 @@ MVP
 - graphics
 
 TechDebt
-? phaser custom build
-? uglify-js
-? readme
 ? github
-? virtual joystick
+? poster lifetime
 
 - game config
 - press shooting animation/sound
 - menu via html
 - extend sprite object
+- virtual joystick
 
 Cpx Prf Feature
 +   +   protesters: reappear

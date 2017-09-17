@@ -30,8 +30,8 @@ class GameInterface {
         this.group.add(this.textTimer);
 
         this.buttonSound = this.game.add.button(
-            0,
-            0,
+            10,
+            10,
             'soundButtons',
             this.handleClickSound,
             this,
@@ -39,11 +39,11 @@ class GameInterface {
             this.group
         );
 
-        if (Phaser.Device.touch) {
+        if (!Phaser.Device.desktop) {
             this.buttonPoster = this.game.add.button(
                 20,
                 this.game.height - 20,
-                'posterButton',
+                'helpPoster',
                 this.handleTogglePoster,
                 this,
                 1, 1, 1, 1,

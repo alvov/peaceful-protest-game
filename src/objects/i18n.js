@@ -1,4 +1,4 @@
-import data from '../assets/i18n.json';
+import data from '../assets/i18n.js';
 import {
     LANG_RU,
     LANG_EN
@@ -34,9 +34,6 @@ class i18n {
     }
 
     getTranslation(text) {
-        if (this.currentLang === LANG_EN) {
-            return text;
-        }
         return this.translations[text][this.currentLang];
     }
 

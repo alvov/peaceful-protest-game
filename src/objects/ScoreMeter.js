@@ -1,3 +1,5 @@
+import { I18N_UI_SCALE } from '../constants';
+
 class ScoreMeter {
     constructor({ game, x, y, width }) {
         this.game = game;
@@ -19,7 +21,7 @@ class ScoreMeter {
         this.label = this.game.add.text(
             -this.width / 2 + 20,
             -8,
-            this.game.mz.i18n.getTranslation('Protest meter'),
+            this.game.mz.i18n.getTranslation(I18N_UI_SCALE),
             {
                 font: '12px Arial',
                 fill: '#000',

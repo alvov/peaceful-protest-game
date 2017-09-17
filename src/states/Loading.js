@@ -1,3 +1,5 @@
+import { I18N_UI_LOADING } from '../constants';
+
 class Loading {
     init(config) {
         this.mz = {
@@ -28,7 +30,7 @@ class Loading {
         this.mz.objects.textLoading = this.game.add.text(
             this.game.world.centerX - 5,
             this.game.world.centerY,
-            this.game.mz.i18n.getTranslation('Loading'),
+            this.game.mz.i18n.getTranslation(I18N_UI_LOADING),
             {
                 font: '26px Arial',
                 fill: '#fff'

@@ -1,3 +1,7 @@
+import {
+    I18N_HOW_TO_CALL, I18N_HOW_TO_CHEER, I18N_HOW_TO_COPS, I18N_HOW_TO_SCALE, I18N_MENU_BACK
+} from '../constants';
+
 class Help {
     preload() {
         this.game.stage.backgroundColor = '#000';
@@ -6,25 +10,28 @@ class Help {
     create() {
         this.back = this.game.add.text(
             40,
-            40,
-            this.game.mz.i18n.getTranslation('<   Back to menu'),
+            this.game.height / 15,
+            this.game.mz.i18n.getTranslation(I18N_MENU_BACK),
             {
                 fill: '#fff'
             }
         );
 
+        const offset = this.game.height / 4;
+        const spacing = Math.min(80, this.game.height / 5);
+        const fontSize = Math.min(22, Math.round(this.game.height / 19));
         [
-            'Fill the protest scale before time runs out',
-            'Show your poster to people around you to cheer them up',
-            'Show your poster to journalists for several seconds to call out for more people',
-            'Cops will chase you and others for showing posters'
+            I18N_HOW_TO_SCALE,
+            I18N_HOW_TO_CHEER,
+            I18N_HOW_TO_CALL,
+            I18N_HOW_TO_COPS
         ].forEach((text, i) => {
             this.game.add.text(
                 40,
-                i * 80 + 150,
+                i * spacing + offset,
                 `${i + 1}. ${this.game.mz.i18n.getTranslation(text)}.`,
                 {
-                    font: '22px Arial',
+                    font: `${fontSize}px Arial`,
                     fill: '#fff',
                     wordWrap: true,
                     wordWrapWidth: this.game.width - 80

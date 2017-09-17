@@ -1,5 +1,60 @@
-export default {
+const pack = {
     initial: [
+        {
+            type: 'spritesheet',
+            key: 'langButtons',
+            url: require('./langButtons.png'),
+            frameWidth: 50,
+            frameHeight: 50
+        }
+    ],
+    helpTouch: [
+        {
+            type: 'spritesheet',
+            key: 'helpMove',
+            url: require('./helpMoveTouch.png'),
+            frameWidth: 100,
+            frameHeight: 100
+        },
+        {
+            type: 'spritesheet',
+            key: 'helpRun',
+            url: require('./helpRunTouch.png'),
+            frameWidth: 100,
+            frameHeight: 100
+        },
+        {
+            type: 'spritesheet',
+            key: 'helpPoster',
+            url: require('./posterButton.png'),
+            frameWidth: 70,
+            frameHeight: 70
+        }
+    ],
+    helpDesktop: [
+        {
+            type: 'spritesheet',
+            key: 'helpMove',
+            url: require('./helpMoveDesktop.png'),
+            frameWidth: 150,
+            frameHeight: 50
+        },
+        {
+            type: 'spritesheet',
+            key: 'helpRun',
+            url: require('./helpRunDesktop.png'),
+            frameWidth: 150,
+            frameHeight: 50
+        },
+        {
+            type: 'spritesheet',
+            key: 'helpPoster',
+            url: require('./helpPosterDesktop.png'),
+            frameWidth: 250,
+            frameHeight: 50
+        }
+    ],
+    levelCommon: [
         {
             type: 'spritesheet',
             key: 'playButton',
@@ -20,41 +75,6 @@ export default {
             url: require('./soundButtons.png'),
             frameWidth: 50,
             frameHeight: 50
-        },
-        {
-            type: 'spritesheet',
-            key: 'langButtons',
-            url: require('./langButtons.png'),
-            frameWidth: 50,
-            frameHeight: 50
-        },
-        {
-            type: 'spritesheet',
-            key: 'helpArrows',
-            url: require('./helpArrows.png'),
-            frameWidth: 150,
-            frameHeight: 50
-        },
-        {
-            type: 'spritesheet',
-            key: 'helpShift',
-            url: require('./helpShift.png'),
-            frameWidth: 150,
-            frameHeight: 50
-        },
-        {
-            type: 'spritesheet',
-            key: 'helpSpacebar',
-            url: require('./helpSpacebar.png'),
-            frameWidth: 200,
-            frameHeight: 50
-        },
-        {
-            type: 'spritesheet',
-            key: 'posterButton',
-            url: require('./posterButton.png'),
-            frameWidth: 60,
-            frameHeight: 60
         },
         {
             type: 'audio',
@@ -290,3 +310,5 @@ export default {
         }
     ]
 };
+
+export default JSON.stringify(pack);

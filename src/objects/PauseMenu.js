@@ -1,3 +1,5 @@
+import { I18N_UI_PAUSE } from '../constants';
+
 class PauseMenu {
     constructor({ game }) {
         this.game = game;
@@ -12,16 +14,16 @@ class PauseMenu {
         this.title = this.game.add.text(
             this.game.width / 2,
             2 / 3 * this.game.height / 2,
-            this.game.mz.i18n.getTranslation('Pause')
+            this.game.mz.i18n.getTranslation(I18N_UI_PAUSE)
         );
-        this.title.anchor.setTo(0.5);
+        this.title.anchor.set(0.5);
 
         this.replayButton = this.game.add.sprite(
             this.game.width / 2,
             this.game.height / 2,
             'playButton'
         );
-        this.replayButton.anchor.setTo(0.5);
+        this.replayButton.anchor.set(0.5);
 
         this.sprite.addChild(this.overlay);
         this.sprite.addChild(this.title);

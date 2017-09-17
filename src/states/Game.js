@@ -48,6 +48,7 @@ class Game {
             cops: {
                 alive: 0
             },
+            postersToRevive: [],
             events: {
                 keys: {},
                 fieldClickHandler: null,
@@ -222,7 +223,7 @@ class Game {
         // click on field
         const fieldClickHandler = this.game.add.sprite(0, 100);
         fieldClickHandler.fixedToCamera = true;
-        fieldClickHandler.scale.setTo(this.game.width, this.game.height - 100);
+        fieldClickHandler.scale.set(this.game.width, this.game.height - 100);
         fieldClickHandler.inputEnabled = true;
         fieldClickHandler.input.priorityID = 1;
         fieldClickHandler.events.onInputDown.add(this.handleClick, this);
@@ -453,6 +454,8 @@ class Game {
                     const swatSprite = this.mz.objects.swat.sprites[j];
                     if (
                         swatSprite.children.length !== 0 ||
+                        swatSprite.x <= 0 ||
+                        swatSprite.x >= this.game.world.width ||
                         !Phaser.Rectangle.intersects(protesterBounds, swatSprite.getBounds())
                     ) {
                         continue;
@@ -493,6 +496,10 @@ class Game {
             this.mz.objects.player.sprite,
             this.mz.arrays.borders
         );
+
+        // create posters
+        this.mz.postersToRevive.forEach(this.createPoster, this);
+        this.mz.postersToRevive = [];
 
         this.mz.groups.actors.sort('y', Phaser.Group.SORT_ASCENDING);
 
@@ -548,7 +555,8 @@ class Game {
     }
 
     handleDropPoster(coords) {
-        this.createPoster(coords);
+        // defer poster creation to the end of update method
+        this.mz.postersToRevive.push(coords);
     }
 
     handleFinishShooting() {

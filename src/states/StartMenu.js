@@ -2,7 +2,8 @@ import levels from '../levels.js';
 import pack from '../assets/pack.js';
 import {
     LANG_RU,
-    LANG_EN
+    LANG_EN,
+    I18N_GAME_TITLE, I18N_MENU_CONTROLS, I18N_MENU_HOW_TO, I18N_MENU_LEVEL_1, I18N_MENU_LEVEL_2
 } from '../constants.js';
 
 class StartMenu {
@@ -14,27 +15,30 @@ class StartMenu {
         this.game.world.resize(this.game.width, this.game.height);
 
         this.title = this.game.mz.i18n.createText(
-            this.game.world.centerX,
-            100,
-            'Peaceful protest',
+            this.game.width / 2,
+            this.game.height / 6,
+            I18N_GAME_TITLE,
             {
                 fill: '#fff'
             }
         );
-        this.title.anchor.setTo(0.5);
+        this.title.anchor.set(0.5);
 
+        const menuOffset = this.game.height / 3;
+        const menuVerticalSpacing = Math.min(this.game.height / 7, 70);
         this.menu = [
-            ['> Level 01', this.handleClickPlay.bind(this, 'level1')],
-            ['> Level 02', this.handleClickPlay.bind(this, 'level2')],
-            ['How to play?', this.handleClickHelp.bind(this)],
-            ['Controls', this.handleClickControls.bind(this)]
+            [I18N_MENU_LEVEL_1, this.handleClickPlay.bind(this, 'level1')],
+            [I18N_MENU_LEVEL_2, this.handleClickPlay.bind(this, 'level2')],
+            [I18N_MENU_HOW_TO, this.handleClickHelp.bind(this)],
+            [I18N_MENU_CONTROLS, this.handleClickControls.bind(this)]
         ].map(([itemTitle, callback], i) => {
             return [
                 this.game.mz.i18n.createText(
                     40,
-                    i * 70 + 200,
+                    i * menuVerticalSpacing + menuOffset,
                     itemTitle,
                     {
+                        font: '22px Arial',
                         fill: '#fff'
                     }
                 ),
@@ -44,11 +48,11 @@ class StartMenu {
 
         this.langButton = this.game.add.button(
             this.game.world.width - 10,
-            10,
+            0,
             'langButtons',
             this.handleClickLang.bind(this)
         );
-        this.langButton.anchor.setTo(1, 0);
+        this.langButton.anchor.set(1, 0);
 
         this.game.input.onDown.add(this.handleClickMenu, this);
     }
@@ -60,7 +64,8 @@ class StartMenu {
     handleClickPlay(level) {
         this.state.start('Loading', true, false, {
             assets: [
-                ['pack', level, null, JSON.stringify(pack)]
+                ['pack', 'levelCommon', null, pack],
+                ['pack', level, null, pack]
             ],
             nextState: [
                 'Game', true, false, levels[level]

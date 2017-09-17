@@ -1,3 +1,7 @@
+import {
+    I18N_CONTROLS_MOVE, I18N_CONTROLS_POSTER, I18N_CONTROLS_RUN, I18N_MENU_BACK
+} from '../constants';
+
 class Controls {
     preload() {
         this.game.stage.backgroundColor = '#000';
@@ -6,27 +10,37 @@ class Controls {
     create() {
         this.back = this.game.add.text(
             40,
-            40,
-            this.game.mz.i18n.getTranslation('<   Back to menu'),
+            this.game.height / 15,
+            this.game.mz.i18n.getTranslation(I18N_MENU_BACK),
             {
                 fill: '#fff'
             }
         );
 
+        const offset = this.game.height / 3.4;
+        const spacing = Math.min(100, this.game.height / 3.8);
+        const prefix = 'help';
         [
-            ['helpArrows', 'move around'],
-            ['helpShift', 'run'],
-            ['helpSpacebar', 'show poster']
+            ['Move', I18N_CONTROLS_MOVE],
+            ['Run', I18N_CONTROLS_RUN],
+            ['Poster', I18N_CONTROLS_POSTER]
         ].forEach(([spriteKey, text], i) => {
-            this.game.add.sprite(40, i * 100 + 200, spriteKey);
-            this.game.add.text(
-                300,
-                i * 100 + 210,
+            const imageObj = this.game.add.sprite(
+                this.game.width / 4,
+                i * spacing + offset,
+                prefix + spriteKey
+            );
+            imageObj.anchor.set(0.5);
+            const textObj = this.game.add.text(
+                this.game.width / 2,
+                i * spacing + offset,
                 this.game.mz.i18n.getTranslation(text),
                 {
+                    font: '20px Arial',
                     fill: '#fff'
                 }
             );
+            textObj.anchor.set(0, 0.5);
         });
 
         this.game.input.onDown.add(this.handleClickBack, this);
