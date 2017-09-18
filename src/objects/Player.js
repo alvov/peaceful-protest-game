@@ -3,7 +3,7 @@ import {
     PROTESTER_MODE_ARRESTED
 } from '../constants.js';
 
-const DEFAULT_CLICK_SPEED_UP = 1;
+const TAP_RUNNING_DELTA = 200;
 
 class Player extends Protester {
     constructor({
@@ -49,8 +49,8 @@ class Player extends Protester {
         this.cooldownTimer = this.game.time.create(false);
         this.staminaCooldown = staminaCooldown * 1000;
 
-        this.clickSpeedUp = null;
-        this.resetClickSpeedUp();
+        this.tapStartTimestamp = Date.now();
+        this.tapDelta = Infinity;
 
         this.progressBar = this.game.add.graphics();
         this.sprite.addChild(this.progressBar);
@@ -101,7 +101,6 @@ class Player extends Protester {
         this.circleGraphics.drawCircle(this.sprite.x, this.sprite.y, this.radius.graphic * 2);
 
         let newSpeed = this.speed.value;
-        newSpeed *= this.clickSpeedUp;
 
         const areMovingKeysDown = this.keys.up.isDown ||
             this.keys.down.isDown ||
@@ -109,7 +108,10 @@ class Player extends Protester {
             this.keys.right.isDown;
 
         if (!this.cooldownTimer.running) {
-            if (areMovingKeysDown && this.keys.shift.isDown) {
+            if (
+                areMovingKeysDown && this.keys.shift.isDown ||
+                this.tapDelta < TAP_RUNNING_DELTA
+            ) {
                 if (this.stamina > 0) {
                     this.stamina -= 1;
                     newSpeed *= this.speed.running;
@@ -164,7 +166,7 @@ class Player extends Protester {
                 this.sprite.body.velocity
             );
 
-            this.resetClickSpeedUp();
+            this.resetClickSpeed(true);
 
         } else if (
             this.keys.up.justUp ||
@@ -182,14 +184,6 @@ class Player extends Protester {
 
     handleGameResume() {
         this.moveTo(null);
-    }
-
-    handleClickOnSelf() {
-        if (this.moveTarget.length) {
-            this.moveTo(null);
-        } else {
-            this.togglePoster();
-        }
     }
 
     setMode(mode, props = {}) {
@@ -239,8 +233,14 @@ class Player extends Protester {
         this.posterSprite.scale.set(this.power);
     }
 
-    resetClickSpeedUp() {
-        this.clickSpeedUp = DEFAULT_CLICK_SPEED_UP;
+    resetClickSpeed(discard) {
+        if (discard) {
+            this.tapDelta = Infinity;
+        } else {
+            const now = Date.now();
+            this.tapDelta = now - this.tapStartTimestamp;
+            this.tapStartTimestamp = now;
+        }
     }
 
     resetRadius() {

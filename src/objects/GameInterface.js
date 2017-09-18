@@ -38,6 +38,7 @@ class GameInterface {
             1, 1, 1, 1,
             this.group
         );
+        this.buttonSound.input.priorityID = 2;
 
         if (!Phaser.Device.desktop) {
             this.buttonPoster = this.game.add.button(

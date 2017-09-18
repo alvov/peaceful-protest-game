@@ -84,6 +84,8 @@ class Game {
     }
 
     create() {
+        // this.game.time.advancedTiming = true;
+
         this.game.stage.backgroundColor = '#ccc';
 
         this.game.world.resize(this.mz.level.worldWidth, this.mz.level.worldHeight);
@@ -98,9 +100,7 @@ class Game {
             this.game.add.audio('punch02')
         ];
         this.mz.objects.audio.random = [
-            this.game.add.audio('croud'),
-            this.game.add.audio('cough01'),
-            this.game.add.audio('cough02')
+            this.game.add.audio('croud')
         ];
         this.mz.objects.audio.applause = this.game.add.audio('applause');
         this.mz.objects.audio.boo = this.game.add.audio('boo');
@@ -221,12 +221,12 @@ class Game {
         // events
 
         // click on field
-        const fieldClickHandler = this.game.add.sprite(0, 100);
+        const fieldClickHandler = this.game.add.sprite(0, 0);
         fieldClickHandler.fixedToCamera = true;
-        fieldClickHandler.scale.set(this.game.width, this.game.height - 100);
+        fieldClickHandler.scale.set(this.game.width, this.game.height);
         fieldClickHandler.inputEnabled = true;
         fieldClickHandler.input.priorityID = 1;
-        fieldClickHandler.events.onInputDown.add(this.handleClick, this);
+        fieldClickHandler.events.onInputDown.add(this.handleTap, this);
         this.mz.events.fieldClickHandler = fieldClickHandler;
 
         // pause
@@ -474,6 +474,7 @@ class Game {
                         if (protesterSprite.health === 1) {
                             this.beatUpProtester(protesterSprite);
                         }
+                        protesterSprite.mz.dropPosterRnd();
                     }
                 );
             }
@@ -514,6 +515,7 @@ class Game {
     }
 
     render() {
+        // this.game.debug.text(this.game.time.fps, 2, 14, "#00ff00");
         // this.game.debug.cameraInfo(this.game.camera, 32, 32);
         // this.game.debug.body(this.mz.objects.player.sprite);
         // this.game.debug.bodyInfo(this.mz.objects.player.sprite, 0, 100);
@@ -532,22 +534,19 @@ class Game {
         // });
     }
 
-    handleClick(sprite, pointer) {
+    handleTap(sprite, pointer) {
         const coords = {
             x: pointer.x + this.game.camera.x,
             y: pointer.y + this.game.camera.y
         };
         const player = this.mz.objects.player;
-        if (
-            player.moveTarget.length &&
-            this.game.math.fuzzyEqual(player.moveTarget[0].x, coords.x, 5) &&
-            this.game.math.fuzzyEqual(player.moveTarget[0].y, coords.y, 5)
-        ) {
-            player.clickSpeedUp *= player.speed.clickSpeedUp;
-        } else {
-            player.resetClickSpeedUp();
-            player.moveTo(coords);
-        }
+        player.resetClickSpeed();
+        player.moveTo({
+            ...coords,
+            callback() {
+                player.resetClickSpeed(true);
+            }
+        });
     }
 
     handleProtesterLeft() {
@@ -821,7 +820,7 @@ class Game {
     }
 
     playRandomSound() {
-        if (this.game.rnd.between(0, 200) === 0) {
+        if (this.game.rnd.between(0, 600 * (1 / this.mz.objects.audio.random.length)) === 0) {
             this.game.rnd.pick(this.mz.objects.audio.random).play('', 0, 0.25);
         }
     }

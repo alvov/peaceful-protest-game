@@ -38,10 +38,7 @@ class Protester extends Prefab {
     setMode(mode, props = {}) {
         switch (mode) {
             case PROTESTER_MODE_ARRESTED: {
-                if (this.game.rnd.frac() < this.dropPoster) {
-                    this.posterSprite.kill();
-                    this.onDropPoster({ x: this.sprite.x, y: this.sprite.y });
-                }
+                this.dropPosterRnd();
 
                 this.moveTo(null);
 
@@ -54,6 +51,13 @@ class Protester extends Prefab {
         }
 
         super.setMode(mode, props);
+    }
+
+    dropPosterRnd() {
+        if (this.game.rnd.frac() < this.dropPoster) {
+            this.posterSprite.kill();
+            this.onDropPoster({ x: this.sprite.x, y: this.sprite.y });
+        }
     }
 }
 

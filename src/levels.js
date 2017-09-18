@@ -49,7 +49,6 @@ export default {
             speed: {
                 value: 100,
                 withPoster: 0.6,
-                clickSpeedUp: 1.05,
                 running: 1.5
             },
             radius: 120,
@@ -120,7 +119,6 @@ export default {
             speed: {
                 value: 100,
                 withPoster: 0.6,
-                clickSpeedUp: 1.05,
                 running: 1.5
             },
             radius: 120,

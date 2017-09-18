@@ -108,16 +108,6 @@ const pack = {
         },
         {
             type: 'audio',
-            key: 'cough01',
-            urls: require('./audio/cough01.mp3')
-        },
-        {
-            type: 'audio',
-            key: 'cough02',
-            urls: require('./audio/cough02.mp3')
-        },
-        {
-            type: 'audio',
             key: 'scream03',
             urls: require('./audio/scream03.mp3')
         },

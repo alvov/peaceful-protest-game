@@ -7,6 +7,7 @@ body {
     margin: 0;
     background: #ccc;
     text-align: center;
+    font-size: 0;
 }
 
 body::before {
@@ -22,6 +23,6 @@ body::before {
     height: 100%;
     max-width: 600px;
     max-height: 600px;
-    min-height: 350px;
+    min-height: 330px;
     vertical-align: middle;
 }
