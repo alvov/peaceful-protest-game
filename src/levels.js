@@ -43,7 +43,10 @@ export default {
             mood: 0.3,
             moodUp: 0.001,
             moodDown: 0.0001,
-            dropPoster: 0.3
+            poster: {
+                drop: 0.3,
+                alive: 20 // s
+            }
         },
         player: {
             speed: {
@@ -113,7 +116,10 @@ export default {
             mood: 0.25,
             moodUp: 0.002,
             moodDown: 0.0001,
-            dropPoster: 0.12
+            poster: {
+                drop: 0.12,
+                alive: 20 // s
+            }
         },
         player: {
             speed: {

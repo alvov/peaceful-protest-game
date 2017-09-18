@@ -4,6 +4,7 @@ import Cop from './../objects/Cop.js';
 import Journalist from './../objects/Journalist.js';
 import SWATSquad from '../objects/SWATSquad.js';
 import Shield from '../objects/Shield.js';
+import DroppedPoster from '../objects/DroppedPoster.js';
 import GameInterface from '../objects/GameInterface.js';
 import PauseMenu from './../objects/PauseMenu.js';
 import EndMenu from './../objects/EndMenu.js';
@@ -70,7 +71,8 @@ class Game {
                 protesters: [],
                 cops: [],
                 press: [],
-                borders: []
+                borders: [],
+                droppedPosters: []
             },
             groups: {
                 actors: null,
@@ -483,13 +485,19 @@ class Game {
         // player collisions
         if (this.mz.objects.player.mode !== PROTESTER_MODE_ARRESTED) {
             // vs posters
-            this.mz.groups.droppedPosters.forEachAlive(posterSprite => {
-                if (Phaser.Rectangle.intersects(posterSprite.getBounds(), this.mz.objects.player.sprite.getBounds())) {
+            for (let i = 0; i < this.mz.arrays.droppedPosters.length; i++) {
+                const droppedPoster = this.mz.arrays.droppedPosters[i];
+                if (!droppedPoster.sprite.alive) {
+                    continue;
+                }
+                if (
+                    Phaser.Rectangle.intersects(droppedPoster.sprite.getBounds(), this.mz.objects.player.sprite.getBounds())
+                ) {
                     this.mz.objects.audio.pick.play('', 0, 0.25);
                     this.mz.objects.player.powerUp();
-                    posterSprite.kill();
+                    droppedPoster.kill();
                 }
-            });
+            }
         }
 
         // player vs borders collision
@@ -498,7 +506,12 @@ class Game {
             this.mz.arrays.borders
         );
 
-        // create posters
+        // update posters
+        this.mz.arrays.droppedPosters.forEach(droppedPoster => {
+            if (droppedPoster.sprite.alive) {
+                droppedPoster.update();
+            }
+        });
         this.mz.postersToRevive.forEach(this.createPoster, this);
         this.mz.postersToRevive = [];
 
@@ -642,7 +655,7 @@ class Game {
                 mood: this.mz.level.protesters.mood,
                 moodUp: this.mz.level.protesters.moodUp,
                 moodDown: this.mz.level.protesters.moodDown,
-                dropPoster: this.mz.level.protesters.dropPoster,
+                dropPoster: this.mz.level.protesters.poster.drop,
                 onLeft,
                 onDropPoster
             });
@@ -671,9 +684,25 @@ class Game {
     }
 
     createPoster(coords) {
-        const posterSprite = this.mz.groups.droppedPosters.getFirstDead(true, coords.x, coords.y, 'poster');
-        posterSprite.anchor.set(0.5);
-        posterSprite.rotation = this.game.rnd.sign() * Math.PI / 3;
+        let isRevived = false;
+        for (let i = 0; i < this.mz.arrays.droppedPosters.length; i++) {
+            const droppedPoster = this.mz.arrays.droppedPosters[i];
+            if (!droppedPoster.sprite.alive) {
+                droppedPoster.revive(coords);
+                isRevived = true;
+                break;
+            }
+        }
+        if (!isRevived) {
+            this.mz.arrays.droppedPosters.push(
+                new DroppedPoster({
+                    game: this.game,
+                    group: this.mz.groups.droppedPosters,
+                    ...coords,
+                    alive: this.mz.level.protesters.poster.alive
+                })
+            );
+        }
     }
 
     proceedToJail(protesterSprite, copSprite) {

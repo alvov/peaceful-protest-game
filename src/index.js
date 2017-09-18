@@ -32,3 +32,5 @@ setTimeout(function() {
 
     game.state.start('Boot');
 }, 50);
+
+document.body.style.backgroundImage = `url(${require('./assets/pattern.png')})`;

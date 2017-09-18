@@ -5,7 +5,6 @@ body {
 
 body {
     margin: 0;
-    background: #ccc;
     text-align: center;
     font-size: 0;
 }
@@ -25,4 +24,6 @@ body::before {
     max-height: 600px;
     min-height: 330px;
     vertical-align: middle;
+    box-shadow: 0 0 15px 1px;
+    background-color: #e0e0e0;
 }
