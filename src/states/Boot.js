@@ -6,7 +6,6 @@ class Boot {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
-        this.scale.forceOrientation(true, false);
 
         this.game.mz = {};
     }

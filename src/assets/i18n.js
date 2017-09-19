@@ -70,7 +70,7 @@ export default {
         ru: 'Митинг удался!'
     },
     [cnst.I18N_END_ARRESTED]: {
-        en: 'They turned you in, pal',
+        en: 'They got you, pal',
         ru: 'Суши сухари, дружище'
     },
     [cnst.I18N_END_TIME]: {
@@ -78,7 +78,7 @@ export default {
         ru: 'Время вышло!'
     },
     [cnst.I18N_END_FAIL]: {
-        en: 'You let the protest fail :(',
+        en: 'You failed :(',
         ru: 'Ты слил протест :('
     },
     [cnst.I18N_STATS_TIME]: {

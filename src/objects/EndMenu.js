@@ -91,13 +91,16 @@ class EndMenu {
             titleText = I18N_END_FAIL;
         }
 
+        const horizontalOffset = this.game.width / 15;
         const title = this.game.add.text(
-            40,
+            horizontalOffset,
             40,
             this.game.mz.i18n.getTranslation(titleText),
             {
                 font: '26px Arial',
-                fill: this.mode === END_GAME_WIN ? '#393' : '#933'
+                fill: this.mode === END_GAME_WIN ? '#393' : '#933',
+                wordWrap: true,
+                wordWrapWidth: this.replayButton.left - horizontalOffset * 2
             }
         );
         this.sprite.addChild(title);
@@ -113,33 +116,38 @@ class EndMenu {
             stats.unshift([I18N_STATS_TIME, String(getFormattedTime(this.stats.time))]);
         }
 
-        stats.forEach((args, i) => {
-            this.renderStat(i * 40 + 100, ...args);
+        const verticalOffset = title.bottom + title.top;
+        let leftColumnWidth = 0;
+        stats.forEach(([text], i) => {
+            const label = this.game.add.text(
+                horizontalOffset,
+                i * 40 + verticalOffset,
+                this.game.mz.i18n.getTranslation(text) + ':',
+                {
+                    font: '24px Arial',
+                    fill: '#fff'
+                }
+            );
+            if (label.width > leftColumnWidth) {
+                leftColumnWidth = label.width;
+            }
+            this.sprite.addChild(label);
         });
-    }
 
-    renderStat(y, text, value) {
-        const label = this.game.add.text(
-            40,
-            y,
-            this.game.mz.i18n.getTranslation(text) + ':',
-            {
-                font: '24px Arial',
-                fill: '#fff'
-            }
-        );
-        this.sprite.addChild(label);
+        leftColumnWidth += 2 * horizontalOffset;
 
-        const valueText = this.game.add.text(
-            this.game.width / 2,
-            y,
-            String(value),
-            {
-                font: '24px Arial',
-                fill: '#fff'
-            }
-        );
-        this.sprite.addChild(valueText);
+        stats.forEach(([_, value], i) => {
+            const valueText = this.game.add.text(
+                leftColumnWidth,
+                i * 40 + verticalOffset,
+                String(value),
+                {
+                    font: '24px Arial',
+                    fill: '#fff'
+                }
+            );
+            this.sprite.addChild(valueText);
+        });
     }
 }
 

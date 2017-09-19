@@ -25,5 +25,5 @@ body::before {
     min-height: 330px;
     vertical-align: middle;
     box-shadow: 0 0 15px 1px;
-    background-color: #e0e0e0;
+    background-color: #000;
 }

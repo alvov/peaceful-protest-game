@@ -483,7 +483,10 @@ class Game {
         }
 
         // player collisions
-        if (this.mz.objects.player.mode !== PROTESTER_MODE_ARRESTED) {
+        if (
+            this.mz.objects.player.mode !== PROTESTER_MODE_ARRESTED &&
+            !this.mz.gameEnded
+        ) {
             // vs posters
             for (let i = 0; i < this.mz.arrays.droppedPosters.length; i++) {
                 const droppedPoster = this.mz.arrays.droppedPosters[i];

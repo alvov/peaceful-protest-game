@@ -12,7 +12,7 @@ class GameInterface {
             game: this.game,
             x: this.game.width / 2,
             y: this.game.height - 20,
-            width: 300
+            width: Math.min(this.game.width / 2, 250)
         });
         this.group.add(this.score.group);
 
@@ -42,7 +42,7 @@ class GameInterface {
 
         if (!Phaser.Device.desktop) {
             this.buttonPoster = this.game.add.button(
-                20,
+                this.game.width - 20,
                 this.game.height - 20,
                 'helpPoster',
                 this.handleTogglePoster,
@@ -50,7 +50,7 @@ class GameInterface {
                 1, 1, 1, 1,
                 this.group
             );
-            this.buttonPoster.anchor.set(0, 1);
+            this.buttonPoster.anchor.set(1, 1);
             this.buttonPoster.input.priorityID = 2;
         }
     }

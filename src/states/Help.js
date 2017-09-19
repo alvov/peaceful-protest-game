@@ -8,8 +8,10 @@ class Help {
     }
 
     create() {
+        const horizontalOffset = this.game.width / 15;
+
         this.back = this.game.add.text(
-            40,
+            horizontalOffset,
             this.game.height / 15,
             this.game.mz.i18n.getTranslation(I18N_MENU_BACK),
             {
@@ -17,8 +19,9 @@ class Help {
             }
         );
 
-        const offset = this.game.height / 4;
-        const spacing = Math.min(80, this.game.height / 5);
+        const textGroup = this.game.add.group();
+        let verticalOffset = 0;
+        const spacing = this.game.height / 30;
         const fontSize = Math.min(22, Math.round(this.game.height / 19));
         [
             I18N_HOW_TO_SCALE,
@@ -26,18 +29,21 @@ class Help {
             I18N_HOW_TO_CALL,
             I18N_HOW_TO_COPS
         ].forEach((text, i) => {
-            this.game.add.text(
-                40,
-                i * spacing + offset,
+            const textObject = this.game.add.text(
+                horizontalOffset,
+                verticalOffset,
                 `${i + 1}. ${this.game.mz.i18n.getTranslation(text)}.`,
                 {
                     font: `${fontSize}px Arial`,
                     fill: '#fff',
                     wordWrap: true,
-                    wordWrapWidth: this.game.width - 80
+                    wordWrapWidth: this.game.width - horizontalOffset * 2
                 }
             );
+            verticalOffset += textObject.height + spacing;
+            textGroup.add(textObject);
         });
+        textGroup.y = (this.game.height + this.back.bottom - verticalOffset + spacing) / 2;
 
         this.game.input.onDown.add(this.handleClickBack, this);
     }
