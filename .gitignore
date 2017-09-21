@@ -129,3 +129,6 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# various unnececcary files
+temp/

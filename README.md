@@ -5,6 +5,8 @@ Survive in the center of a peaceful protest and
  illegally arrested you.
  
 [**Play the game**](https://alvov.github.io/peaceful-protest-game/)
+
+![gameplay screenshot](./screenshot-001.jpg)
  
 ## How to play
 

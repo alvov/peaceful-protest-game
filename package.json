@@ -9,8 +9,8 @@
   },
   "scripts": {
     "start": "http-server -c-1",
-    "build": "webpack",
-    "watch": "npm run build -- --watch"
+    "build": "webpack && cp node_modules/phaser-ce/build/custom/phaser-arcade-physics.min.js dist/phaser.js",
+    "watch": "webpack --watch"
   },
   "author": "",
   "dependencies": {
