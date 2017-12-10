@@ -255,6 +255,12 @@ class Game {
         this.mz.score = 0;
         this.mz.protesters.meanMood = 0;
         this.mz.protesters.alive = 0;
+        const posterProtesters = this.mz.arrays.protesters.filter(x => x.mz.showPoster);
+
+        if (this.mz.objects.player.showPoster)
+        {
+            posterProtesters.push(this.mz.objects.player.sprite);
+        }
         for (let i = 0; i < this.mz.arrays.protesters.length; i++) {
             const sprite = this.mz.arrays.protesters[i];
             if (!sprite.alive) {
@@ -273,10 +279,21 @@ class Game {
                 }
             } else {
                 sprite.mz.update();
+
+                let closeToPoster = false;
+                for (const protesterSprite of posterProtesters)
+                {
+                    if (
+                        this.getDistanceSq(sprite, protesterSprite) <= this.mz.objects.player.radius.actualSq
+                    )
+                    {
+                        closeToPoster = true;
+                        break;
+                    }
+                }
                 sprite.mz.toggleCheering(
                     !this.mz.gameEnded &&
-                    this.mz.objects.player.showPoster &&
-                    this.getDistanceSq(sprite, this.mz.objects.player.sprite) <= this.mz.objects.player.radius.actualSq
+                    closeToPoster
                 );
 
                 this.mz.protesters.alive++;
@@ -557,12 +574,7 @@ class Game {
         };
         const player = this.mz.objects.player;
         player.resetClickSpeed();
-        player.moveTo({
-            ...coords,
-            callback() {
-                player.resetClickSpeed(true);
-            }
-        });
+        player.moveTo(coords, { callback: () => player.resetClickSpeed(true) });
     }
 
     handleProtesterLeft() {

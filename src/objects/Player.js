@@ -1,4 +1,5 @@
 import Protester from './Protester.js';
+import Slot from './Slot';
 import {
     PROTESTER_MODE_ARRESTED
 } from '../constants.js';
@@ -18,7 +19,8 @@ class Player extends Protester {
         staminaCooldown,
         powerUp,
         powerDown,
-        onDropPoster
+        onDropPoster,
+        slots
     }) {
         super({
             game,
@@ -34,6 +36,7 @@ class Player extends Protester {
         this.sprite.input.priorityID = 1;
 
         this.sprite.body.collideWorldBounds = true;
+        this.direction = 0;
 
         this.power = 1;
         this.powerUpValue = powerUp;
@@ -59,6 +62,12 @@ class Player extends Protester {
 
         this.showPoster = false;
         this.isFrozen = false;
+
+
+        this.slots = slots || [
+            new Slot({target: this, x: -10, y: -10}),
+            new Slot({target: this, x: 10, y: 10}),
+        ];
 
         this.radius = {
             initial: radius,
@@ -87,8 +96,8 @@ class Player extends Protester {
 
     update() {
         this.resetRadius();
-
         super.update();
+        this.slots.filter(slot => !!slot.taken).forEach(slot => slot.update());
 
         this.circleGraphics.clear();
 
@@ -160,8 +169,10 @@ class Player extends Protester {
             if (this.keys.right.isDown) {
                 angles.push(0);
             }
+            const angle = angles.reduce((value, sum) => sum + value, 0) / angles.length;
+            this.direction = angle;
             this.game.physics.arcade.velocityFromAngle(
-                angles.reduce((value, sum) => sum + value, 0) / angles.length,
+                angle,
                 this.speed.current,
                 this.sprite.body.velocity
             );
@@ -274,6 +285,19 @@ class Player extends Protester {
 
         this.isFrozen = true;
     }
+
+    takeSlot(protester){
+        const slot = this.slots.find( x => !x.taken);
+        if (slot)
+        {
+            slot.take(protester);
+            return slot;
+        }
+        else
+            return null;
+    }
+
+
 
     kill() {
         this.game.onResume.removeAll();

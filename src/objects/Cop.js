@@ -60,10 +60,7 @@ class Cop extends Prefab {
                     this.FOV.revive();
                 }
                 if (coords) {
-                    this.moveTo({
-                        ...coords,
-                        callback: this.wander.bind(this)
-                    });
+                    this.moveTo(coords, { callback: () => this.wander() });
                 } else {
                     this.wander();
                 }
@@ -83,22 +80,18 @@ class Cop extends Prefab {
                 const { jailCoords } = props;
                 this.FOV.kill();
                 this.returnCoords = { x: this.sprite.x, y: this.sprite.y };
-                this.moveTo({
-                    ...jailCoords,
-                    callback: this.handleCovoyEnd.bind(this)
-                });
+                this.moveTo(jailCoords, () => this.handleCovoyEnd())
                 break;
             }
             case COP_MODE_ENTER: {
                 const { coords } = props;
                 this.moveTo(coords[0]);
-                this.addMoveTarget({
-                    ...coords[1],
-                    callback: () => {
-                        this.FOV.revive();
-                        this.setMode(COP_MODE_WANDER);
-                    }
-                });
+
+                const callback = () => {
+                    this.FOV.revive();
+                    this.setMode(COP_MODE_WANDER);
+                }
+                this.moveTo(coords[0], { callback, reset: false })
                 break;
             }
         }
@@ -117,10 +110,7 @@ class Cop extends Prefab {
     wander() {
         const nextAction = this.attractionStrength > 0 ? 1 : this.game.rnd.between(0, 2);
         if (nextAction !== 0) {
-            this.moveTo({
-                ...this.getNextCoords(),
-                callback: this.wander.bind(this)
-            });
+            this.moveTo(this.getNextCoords(), { callback: () => this.wander() });
         } else {
             this.stayingTimer.stop(true);
             this.stayingTimer.add(this.game.rnd.between(1000, 3000), this.wander, this);

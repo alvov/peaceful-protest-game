@@ -2,7 +2,9 @@ import Protester from './Protester.js';
 import {
     PROTESTER_MODE_WANDER,
     PROTESTER_MODE_ARRESTED,
-    PROTESTER_MODE_LEAVE
+    PROTESTER_MODE_LEAVE,
+    PROTESTER_MODE_FOLLOW,
+    PROTESTER_MODE_NOD,
 } from '../constants.js';
 
 class NPCProtester extends Protester {
@@ -42,6 +44,11 @@ class NPCProtester extends Protester {
 
         this.onLeft = onLeft;
 
+        this.isFollower = Math.random() < 0.1;
+        this.isFollowing = false;
+        this.isNOD = !this.isFolower && Math.random() < 0.05;
+        this.slot = null;
+
         // initially dead
         this.kill();
     }
@@ -57,19 +64,36 @@ class NPCProtester extends Protester {
         } else if (this.mood > 0 && this.leavingTimer.running) {
             this.leavingTimer.stop(true);
         }
-        if (this.mood > 0 && this.mode === PROTESTER_MODE_LEAVE) {
+        if (this.mood > 0 && this.mode  === PROTESTER_MODE_LEAVE) {
             this.setMode(PROTESTER_MODE_WANDER);
         }
 
         if (this.isBeingCheeredUp) {
-            this.updateProgressBar(this.mood);
-            this.moodUp(this.moodUpValue);
+            if (this.isNOD)
+            {
+                this.setMode(PROTESTER_MODE_NOD);
+
+            }
+            else
+            {
+                this.updateProgressBar(this.mood);
+                this.moodUp(this.moodUpValue);
+            }
         } else if (this.mood < 0.75) {
             this.moodDown(this.moodDownValue);
             this.updateProgressBar(0);
         }
 
-        this.showPoster = this.mode !== PROTESTER_MODE_ARRESTED && this.mood >= 0.75;
+        this.showPoster = this.mode !== PROTESTER_MODE_ARRESTED && this.mood >= 0.75 && !this.isNOD;
+
+        if (this.showPoster && this.isFollower && !this.isFollowing)
+        {
+            this.isFollowing = true;
+            const slot = this.game.mz.player.takeSlot(this);
+            if (slot) {
+                this.setMode(PROTESTER_MODE_FOLLOW, {slot})
+            }
+        }
 
         this.sprite.tint = 0xffffff;
         if (this.mood >= 0.75) {
@@ -106,13 +130,16 @@ class NPCProtester extends Protester {
 
                 const { coords } = props;
                 if (coords) {
-                    this.moveTo({
-                        ...coords,
-                        callback: this.wander.bind(this)
-                    });
+                    this.moveTo(coords, { callback: () => this.wander() });
                 } else {
                     this.wander();
                 }
+                break;
+            }
+            case PROTESTER_MODE_FOLLOW: {
+                const { slot } = props;
+                slot.update();
+                // this.pursueTo(slot);
                 break;
             }
             case PROTESTER_MODE_ARRESTED: {
@@ -120,7 +147,10 @@ class NPCProtester extends Protester {
                 if (this.mode === PROTESTER_MODE_WANDER) {
                     this.stopWandering();
                 }
-
+                break;
+            }
+            case PROTESTER_MODE_NOD: {
+                this.moveTo(this.game.mz.objects.player.sprite);
                 break;
             }
             case PROTESTER_MODE_LEAVE: {
@@ -129,12 +159,10 @@ class NPCProtester extends Protester {
                     this.stopWandering();
                 }
 
-                this.moveTo({
-                    x: this.sprite.x < this.game.world.width / 2 ? -100 : this.game.world.width + 100,
-                    y: this.sprite.y,
-                    callback: this.handleLeft.bind(this)
-                });
+                const x = this.sprite.x < this.game.world.width / 2 ? -100 : this.game.world.width + 100
+                const y = this.sprite.y
 
+                this.moveTo({ x, y }, { callback: () => this.handleLeft() });
                 break;
             }
         }
@@ -142,13 +170,25 @@ class NPCProtester extends Protester {
         super.setMode(mode, props);
     }
 
+    follow() {
+        // const coords = this.slot.getPosition();;
+        // this.moveTo({
+        //     ...coords,
+        //     callback: this.follow.bind(this)
+        // });
+    }
+
+    doNod(){
+        // this.moveTo({
+        //     ...this.getNextCoords(),
+        //     callback: this.wander.bind(this)
+        // });
+    }
+
     wander() {
         const nextAction = this.game.rnd.between(0, 10);
         if (nextAction === 0) {
-            this.moveTo({
-                ...this.getNextCoords(),
-                callback: this.wander.bind(this)
-            });
+            this.moveTo(this.getNextCoords(), { callback: () => this.wander() });
         } else {
             this.stayingTimer.stop(true);
             this.stayingTimer.add(this.game.rnd.between(3000, 6000), this.wander, this);
