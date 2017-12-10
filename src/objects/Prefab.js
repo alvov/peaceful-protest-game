@@ -70,12 +70,12 @@ class Prefab {
         this.game.physics.arcade.velocityFromRotation(rotationToTarget, this.speed.current, this.sprite.body.velocity);
     }
 
-    moveTo(target, {callback, isPursue, callbackPredicate}) {
+    moveTo(target) {
         if (target) {
             this.moveTarget = [{
                 x: target.x,
                 y: target.y,
-                callback: target.callback || calback
+                callback: target.callback
             }];
             this.setVelocity(target);
         } else {

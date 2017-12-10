@@ -4,7 +4,7 @@ export default class Slot {
         this.x = x;
         this.y = y;
         this.taken = null;
-        this.callback
+        this.callback = null;
     }
     update(){
         const {target: {x, y, direction}} = this;

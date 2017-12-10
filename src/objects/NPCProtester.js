@@ -142,7 +142,7 @@ class NPCProtester extends Protester {
             case PROTESTER_MODE_FOLLOW: {
                 const { slot } = props;
                 slot.update();
-                this.pursueTo(slot);
+                // this.pursueTo(slot);
                 break;
             }
             case PROTESTER_MODE_ARRESTED: {
@@ -153,7 +153,7 @@ class NPCProtester extends Protester {
                 break;
             }
             case PROTESTER_MODE_NOD: {
-                this.moveTo(this.game.mz.player.sprite, );
+                this.moveTo(this.game.mz.objects.player.sprite);
                 break;
             }
             case PROTESTER_MODE_LEAVE: {
@@ -176,18 +176,18 @@ class NPCProtester extends Protester {
     }
 
     follow() {
-        const coords = this.slot.getPosition();;
-        this.moveTo({
-            ...coords,
-            callback: this.follow.bind(this)
-        });
+        // const coords = this.slot.getPosition();;
+        // this.moveTo({
+        //     ...coords,
+        //     callback: this.follow.bind(this)
+        // });
     }
 
     doNod(){
-        this.moveTo({
-            ...this.getNextCoords(),
-            callback: this.wander.bind(this)
-        });
+        // this.moveTo({
+        //     ...this.getNextCoords(),
+        //     callback: this.wander.bind(this)
+        // });
     }
 
     wander() {
