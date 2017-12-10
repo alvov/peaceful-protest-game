@@ -399,7 +399,7 @@ class Game {
                 cop.attractionStrength = Math.min(1, attractionStrength * this.mz.objects.player.power);
 
                 // find target for a cop
-                let new Target = null;
+                let newTarget = null;
                 let distanceToTargetSq = Infinity;
                 for (let i = 0; i <= this.mz.arrays.protesters.length; i++) {
                     const protester = i === this.mz.arrays.protesters.length ?

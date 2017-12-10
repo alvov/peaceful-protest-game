@@ -141,7 +141,8 @@ class NPCProtester extends Protester {
             }
             case PROTESTER_MODE_FOLLOW: {
                 const { slot } = props;
-                this.moveTo(slot);
+                slot.update();
+                this.pursueTo(slot);
                 break;
             }
             case PROTESTER_MODE_ARRESTED: {
@@ -152,7 +153,7 @@ class NPCProtester extends Protester {
                 break;
             }
             case PROTESTER_MODE_NOD: {
-                this.moveTo(this.game.mz.player.sprite);
+                this.moveTo(this.game.mz.player.sprite, );
                 break;
             }
             case PROTESTER_MODE_LEAVE: {
