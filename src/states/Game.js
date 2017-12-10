@@ -574,12 +574,7 @@ class Game {
         };
         const player = this.mz.objects.player;
         player.resetClickSpeed();
-        player.moveTo({
-            ...coords,
-            callback() {
-                player.resetClickSpeed(true);
-            }
-        });
+        player.moveTo(coords, { callback: () => player.resetClickSpeed(true) });
     }
 
     handleProtesterLeft() {

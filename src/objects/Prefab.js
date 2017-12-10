@@ -2,6 +2,8 @@ import {
     FIELD_OFFSET
 } from '../constants.js';
 
+import MoveTarget from "./moveTarget"
+
 class Prefab {
     constructor({ game, x, y, speed, spriteKey, spriteName, props }) {
         this.props = props;
@@ -27,26 +29,12 @@ class Prefab {
     }
 
     update() {
-        if (this.moveTarget.length) {
-            const { x, y, callback } = this.moveTarget[0];
-            if (
-                this.game.math.fuzzyEqual(x, this.sprite.body.center.x, 1) &&
-                this.game.math.fuzzyEqual(y, this.sprite.body.center.y, 1)
-            ) {
-                // stop and call callback
-                this.stop();
+        const moveTarget = this.moveTarget[0]
+        if (!moveTarget) return
+        if (moveTarget.update(this)) return
 
-                // go to next target
-                this.moveTarget.shift();
-                if (this.moveTarget.length) {
-                    this.setVelocity(this.moveTarget[0]);
-                }
-
-                if (typeof callback === 'function') {
-                    callback();
-                }
-            }
-        }
+        this.moveTarget.shift()
+        this.update()
     }
 
     setMode(mode) {
@@ -70,18 +58,17 @@ class Prefab {
         this.game.physics.arcade.velocityFromRotation(rotationToTarget, this.speed.current, this.sprite.body.velocity);
     }
 
-    moveTo(target) {
-        if (target) {
-            this.moveTarget = [{
-                x: target.x,
-                y: target.y,
-                callback: target.callback
-            }];
-            this.setVelocity(target);
-        } else {
-            this.stop();
-            this.moveTarget = [];
-        }
+
+    moveTo(target, { callback, shouldStop, reset = true } = {}) {
+      if (reset) {
+        this.moveTarget.forEach(target => target.stop(this))
+        this.moveTarget = []
+      }
+
+      if (target) {
+        const newTarget = new MoveTarget({ target, callback, shouldStop })
+        this.moveTarget.push(newTarget)
+      }
     }
 
     getNextCoords(bounds) {
@@ -140,14 +127,6 @@ class Prefab {
             this.progressBar.lineStyle(height, color, 1);
             this.progressBar.moveTo(-width / 2, y);
             this.progressBar.lineTo(Math.round(width * (-0.5 + percent)), y);
-        }
-    }
-
-    addMoveTarget(target) {
-        if (!this.moveTarget.length) {
-            this.moveTo(target);
-        } else {
-            this.moveTarget.push(target);
         }
     }
 

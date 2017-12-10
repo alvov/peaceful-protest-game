@@ -130,10 +130,7 @@ class NPCProtester extends Protester {
 
                 const { coords } = props;
                 if (coords) {
-                    this.moveTo({
-                        ...coords,
-                        callback: this.wander.bind(this)
-                    });
+                    this.moveTo(coords, { callback: () => this.wander() });
                 } else {
                     this.wander();
                 }
@@ -162,12 +159,10 @@ class NPCProtester extends Protester {
                     this.stopWandering();
                 }
 
-                this.moveTo({
-                    x: this.sprite.x < this.game.world.width / 2 ? -100 : this.game.world.width + 100,
-                    y: this.sprite.y,
-                    callback: this.handleLeft.bind(this)
-                });
+                const x = this.sprite.x < this.game.world.width / 2 ? -100 : this.game.world.width + 100
+                const y = this.sprite.y
 
+                this.moveTo({ x, y }, { callback: () => this.handleLeft() });
                 break;
             }
         }
@@ -193,10 +188,7 @@ class NPCProtester extends Protester {
     wander() {
         const nextAction = this.game.rnd.between(0, 10);
         if (nextAction === 0) {
-            this.moveTo({
-                ...this.getNextCoords(),
-                callback: this.wander.bind(this)
-            });
+            this.moveTo(this.getNextCoords(), { callback: () => this.wander() });
         } else {
             this.stayingTimer.stop(true);
             this.stayingTimer.add(this.game.rnd.between(3000, 6000), this.wander, this);
